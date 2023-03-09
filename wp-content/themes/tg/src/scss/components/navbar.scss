@@ -1,9 +1,18 @@
 /*##############################################
 #                  VARIABLES                   #
 ################################################*/
+//general
+$navbar-height: 6rem;
 $burger-color: $color-primary;
+$burger-close-color: $color-primary;
+//desktop
 $navbar-bg-color: rgba(255, 255, 255, 0.8);
-$navbar-text-color: $black;
+$navbar-link-color: $black;
+$navbar-link-hover-color: $color-primary;
+//mobile
+$mobile-menu-bg-color: rgba(255, 255, 255, 0.9);
+$mobile-menu-item-hover-color: rgba(0, 0, 0, 0.03);
+$mobile-menu-item-hover-text-color: $black;
 
 /*##############################################*/
 
@@ -16,40 +25,137 @@ $navbar-text-color: $black;
     backdrop-filter: blur(5px);
     width: 100%;
     padding: 1rem;
+    height: $navbar-height;
 
+    //BURGER
+    .theme-burger-wrapper {
+        display: none;
 
+        @include when(tab-port) {
+            display: flex;
+        }
 
+        .burger-icon {
+            cursor: pointer;
+            margin-inline: 1.5rem;
+            width: 3.8rem;
+            height: 2.9rem;
+            background-color: $burger-color;
+            -webkit-mask-image: url("/wp-content/themes/tg/static/img/burger.svg");
+            mask-image: url("/wp-content/themes/tg/static/img/burger.svg");
+
+        }
+
+        &.close {
+
+            .burger-icon {
+                width: 2.4rem;
+                height: 2.4rem;
+                -webkit-mask-image: url("/wp-content/themes/tg/static/img/burger-close.svg");
+                mask-image: url("/wp-content/themes/tg/static/img/burger-close.svg");
+                -webkit-mask-size: contain;
+                mask-size: contain;
+                mask-position: center;
+                -webkit-mask-position: center;
+
+            }
+
+        }
+    }
+
+    //Site Branding
     .site-branding {
 
         .logo {
             width: auto;
             height: 45px;
         }
+
+        @include when(tab-port) {
+            flex: 1;
+        }
     }
 
+    //Nav Element
     .main-navigation {
+        position: relative;
         flex: 1;
         display: flex;
         justify-content: flex-end;
 
-        .menu {
-            margin-left: auto;
 
-            ul {
+        @include when(tab-port) {
+            height: 100%;
 
+            &[data-visible="false"] {
+                display: none;
+            }
 
-                li {
-                    a {
-                        color: $navbar-text-color;
-                    }
-                }
-
+            &[data-visible="true"] {
+                display: flex;
+                justify-content: center;
+                position: absolute;
+                inset: 0;
+                height: 100vh;
+                z-index: 100;
+                margin-top: $navbar-height;
+                background: $mobile-menu-bg-color;
+                backdrop-filter: blur(5px);
             }
 
         }
 
-        .theme-burger {
-            color: $burger-color !important;
+        //Menu Inner DIV
+        .menu {
+            margin-left: auto;
+
+            @include when(tab-port) {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            ul {
+                margin-inline: 5rem;
+
+                @include when(tab-port) {
+                    margin-inline: unset;
+
+
+                    li {
+                        width: 100%;
+
+
+                        a {
+                            padding-block: 1.5rem;
+                            padding-inline: 1.5rem;
+                            display: block;
+                            color: $navbar-link-color !important;
+
+                            &:hover,
+                            &:focus,
+                            &:active {
+                                background: $mobile-menu-item-hover-color !important;
+                                color: $mobile-menu-item-hover-text-color !important;
+                            }
+                        }
+                    }
+
+
+                }
+
+                li {
+                    a {
+                        color: $navbar-link-color !important;
+
+                        &:hover,
+                        &:active,
+                        &:focus {
+                            color: $navbar-link-hover-color !important;
+                        }
+                    }
+                }
+
+            }
         }
 
     }

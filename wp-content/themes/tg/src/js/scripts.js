@@ -2,10 +2,8 @@
   $(function () {
     "use strict";
 
-    
-
     //** SWIPER SLIDER EXAMPLE*/
-    console.log("test");
+
     //   var heroSlider = new Swiper("#hero-slider", {
     //     direction: "horizontal",
     //     lazyLoading: true,

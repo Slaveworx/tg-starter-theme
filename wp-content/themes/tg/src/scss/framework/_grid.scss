@@ -4,9 +4,8 @@
 
 .container {
   margin: auto;
-  max-width: 181.4rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
+  max-width: $width-container;
+  padding-inline: $default-container-inline-padding;
 
 
   @include when(tab-port) {
@@ -16,9 +15,8 @@
 
 .container-medium {
   margin: auto;
-  max-width: 148rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
+  max-width: $width-container-medium;
+  padding-inline: $default-container-inline-padding;
 
 
   @include when(tab-port) {
@@ -29,9 +27,8 @@
 
 .container-small {
   margin: auto;
-  max-width: 131rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
+  max-width: $width-container-small;
+  padding-inline: $default-container-inline-padding;
 
 
   @include when(tab-port) {

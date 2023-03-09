@@ -2,6 +2,7 @@
 
 class TG
 {
+
     /** Add timber support. */
     public function __construct()
     {
@@ -20,7 +21,6 @@ class TG
         add_action('after_setup_theme', array($this, 'theme_supports'));
         add_action('init', array($this, 'register_post_types'));
         add_action('init', array($this, 'register_taxonomies'));
-
     }
 
     /** Register Custom Post Types. */
@@ -49,40 +49,39 @@ class TG
      * 
      * @return void This function does not return a value; it simply outputs HTML to the page.
      */
-    public static function img($name, $svg = false, $classes = array(), $attributes = array())
+    public static function img($name, $classes = array(), $attributes = array())
     {
+        $template_dir = get_template_directory_uri() . "/static/img/";
         $class_string = "";
         $attribute_string = "";
-        $template_dir = get_template_directory_uri() . "/static/img/";
 
-        if (sizeof($classes) > 0):
-            foreach ($classes as $class):
+        if (sizeof($classes) > 0) :
+            foreach ($classes as $class) :
                 $class_string .= $class;
             endforeach;
         endif;
 
-        if (sizeof($attributes) > 0): foreach ($attributes as $attribute):
+        if (sizeof($attributes) > 0) : foreach ($attributes as $attribute) :
                 $attribute_string .= $attribute;
             endforeach;
         endif;
 
-        if ($svg === true):
-            $svg_file = file_get_contents($template_dir . $name);
+        echo sprintf('<img src="%s" %s %s/>', $template_dir . $name, 'class="' . $class_string . '"', $attribute_string);
+    }
 
-            $find_string = '<svg';
-            $position = strpos($svg_file, $find_string);
-
-            $svg_code = substr($svg_file, $position);
-
-            echo $svg_code;
-
-        else:
-
-            echo sprintf('<img src="%s" %s %s/>', $template_dir . $name, 'class="' . $class_string . '"', $attribute_string);
-
-        endif;
+    public static function svg($svg)
+    {
+        $template_dir = get_template_directory_uri() . "/static/img/";
 
 
+        $svg_file = file_get_contents($template_dir . $svg);
+
+        $find_string = '<svg';
+        $position = strpos($svg_file, $find_string);
+
+        $svg_code = substr($svg_file, $position);
+
+        echo $svg_code;
     }
 
     /**
@@ -109,5 +108,4 @@ class TG
             }
         }
     }
-
 }

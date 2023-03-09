@@ -8,34 +8,6 @@ const apiProxy = createProxyMiddleware("/", {
   pathRewrite: {
     "^/": "/",
   },
-  onProxyRes: function (proxyRes, req, res) {
-    if (
-      proxyRes.headers["content-type"] &&
-      proxyRes.headers["content-type"].match(/text\/html/)
-    ) {
-      const chunks = [];
-      proxyRes.on("data", function (chunk) {
-        chunks.push(chunk);
-      });
-      proxyRes.on("end", function () {
-        let body = Buffer.concat(chunks);
-        const $ = cheerio.load(body.toString());
-        $("a").each(function () {
-          const href = $(this).attr("href");
-          if (href && href.match(/tg\.local/)) {
-            $(this).attr("href", href.replace(/tg\.local/g, "localhost:3000"));
-          }
-        });
-        const modifiedBody = $.html();
-        const modifiedLength = Buffer.byteLength(modifiedBody, "utf-8");
-        proxyRes.headers["content-length"] = modifiedLength;
-        res.setHeader("content-length", modifiedLength);
-        res.setHeader("content-type", "text/html");
-        res.write(modifiedBody);
-        res.end();
-      });
-    }
-  },
 });
 
 browserSync({

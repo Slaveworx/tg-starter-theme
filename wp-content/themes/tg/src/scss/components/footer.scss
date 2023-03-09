@@ -1,0 +1,44 @@
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+//general
+$footer-min-height: 35rem;
+$footer-bg-color: rgb(27, 24, 24);
+$footer-bg-filter: none;
+$footer-text-color: $white;
+$footer-links-color: $white;
+$footer-links-hover-color: $color-primary;
+
+//desktop
+
+//mobile
+
+
+/*##############################################*/
+
+
+footer.site-footer {
+
+    min-height: $footer-min-height;
+    background: $footer-bg-color;
+    backdrop-filter: $footer-bg-filter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p,
+    small,
+    strong,
+    span {
+        color: $footer-text-color;
+    }
+
+    a {
+        color: $footer-links-color;
+
+        &:hover {
+            color: $footer-links-hover-color !important;
+        }
+    }
+
+}

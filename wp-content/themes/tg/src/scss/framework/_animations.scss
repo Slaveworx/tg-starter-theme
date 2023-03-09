@@ -6,7 +6,7 @@ a:not(.btn) {
     transition: all .35s ease-in-out;
 
     &:hover {
-        color: $color-primary !important;
+        color: $color-primary;
     }
 }
 

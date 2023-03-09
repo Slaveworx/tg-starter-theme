@@ -1,0 +1,103 @@
+/*##############################################
+#                HTML AND BODY                 #
+################################################*/
+
+html {
+    font-size: 62.5%;
+    accent-color: $color-primary;
+    position: relative;
+}
+
+body {
+    background: $body-bg-color;
+    color: $body-text-color;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+}
+
+//Worpress specific class - makes the main container expand to occupy entire page
+.site {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-main {
+    position: relative;
+    flex: 1;
+}
+
+
+/*##############################################
+#                   HEADINGS                   #
+################################################*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-family: $default-font !important;
+    color: $white;
+    line-height: 1;
+
+}
+
+
+/*##############################################
+#            OTHER TEXT ELEMENTS               #
+################################################*/
+span.text,
+span,
+p,
+a,
+ul,
+li,
+address {
+    font-size: 1.6rem;
+}
+
+
+/*##############################################
+#            SELECTION COLORS                  #
+################################################*/
+::-moz-selection {
+    background: $color-primary;
+    color: $white;
+}
+
+::selection {
+    background: $color-primary;
+    color: $white;
+}
+
+/*##############################################
+#            PLACEHOLDER COLORS                #
+################################################*/
+// Params: (has defaults)
+// @mixin place($color, $opacity, $fontfamily, $fontsize, $fontweight)
+@include placeholderColor($black, 0.8, $default-font, 1.6rem, regular);
+
+
+/*##############################################
+#                   LINKS                      #
+################################################*/
+a {
+    outline: none;
+    text-decoration: none;
+    color: $white;
+    white-space: nowrap;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    a:active,
+    a:focus {
+        outline: none;
+    }
+}

@@ -1,0 +1,15 @@
+/wp-admin
+/wp-includes
+/wp-*.php
+/xml*
+/readme*
+/local-*
+/index*
+/.ht*
+/license*
+/wp-content/plugins/
+/wp-content/upgrade/
+/wp-content/uploads/
+/wp-content/index.php
+/wp-content/themes/index.php
+/wp-content/themes/twenty*

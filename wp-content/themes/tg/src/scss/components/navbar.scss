@@ -1,0 +1,57 @@
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+$burger-color: $color-primary;
+$navbar-bg-color: rgba(255, 255, 255, 0.8);
+$navbar-text-color: $black;
+
+/*##############################################*/
+
+.site-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: $navbar-bg-color;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    padding: 1rem;
+
+
+
+    .site-branding {
+
+        .logo {
+            width: auto;
+            height: 45px;
+        }
+    }
+
+    .main-navigation {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+
+        .menu {
+            margin-left: auto;
+
+            ul {
+
+
+                li {
+                    a {
+                        color: $navbar-text-color;
+                    }
+                }
+
+            }
+
+        }
+
+        .theme-burger {
+            color: $burger-color !important;
+        }
+
+    }
+
+}

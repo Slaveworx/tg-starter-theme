@@ -1,0 +1,41 @@
+/*##############################################
+#               COLOR VARIABLES                #
+################################################*/
+/*Please note that $black, $white, $color-primary and $color-secondary are staples of this framework.
+It means changing them might break other parts of the framework
+*/
+$color-primary: #D96019;
+$color-secondary: #D86018;
+$color-tertiary: #FF9D64;
+$gray-text: #909090;
+$form-bg: rgba(255, 255, 255, 15%);
+$light-gray: #EBEBEB;
+$black: #000;
+$white: #FFF;
+
+
+/*##############################################
+#            FONT WEIGHT VARIABLES             #
+################################################*/
+$light: 300 !important;
+$regular: 400 !important;
+$medium: 500 !important;
+$semibold: 600 !important;
+$bold: 700 !important;
+$extra-bold: 800 !important;
+$black-bold: 900 !important;
+
+/*##############################################
+#               FONT VARIABLES                 #
+################################################*/
+$heading-font: 'Kantumruy Pro',
+sans-serif;
+$default-font: 'Kantumruy Pro',
+sans-serif !important;
+
+/*##############################################
+#              FRAMEWORK VARIABLES             #
+################################################*/
+/* CHANGE THEIR VALUES BUT DO NOT DELETE THEM UNLESS YOU KNOW WHAT YOU'RE DOING */
+$body-bg-color: $color-primary;
+$body-text-color : $black;

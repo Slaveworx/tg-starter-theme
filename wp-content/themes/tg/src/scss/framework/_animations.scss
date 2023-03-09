@@ -1,0 +1,21 @@
+/*##############################################
+#            GENERAL ANIMATIONS                #
+################################################*/
+
+a:not(.btn) {
+    transition: all .35s ease-in-out;
+
+    &:hover {
+        color: $color-primary !important;
+    }
+}
+
+.logo {
+
+    transition: all .35s ease-in-out;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+}

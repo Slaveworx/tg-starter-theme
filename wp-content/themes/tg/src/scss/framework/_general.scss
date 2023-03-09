@@ -1,0 +1,153 @@
+/*##############################################
+#              WORDPRESS GENERAL               #
+################################################*/
+
+
+
+// helper class that gets added to body when mobile nav is open to prevent page scroll
+.scroll-blocked {
+    overflow: hidden !important;
+    height: 100%;
+}
+
+
+.not-found-description {
+    @include font(2.2rem, regular, $black);
+    text-align: center;
+}
+
+.search-results-count {
+    color: $white;
+    font-weight: $medium;
+    font-size: 1.6rem;
+}
+
+
+.regular-page-container {
+    margin-bottom: 8rem;
+
+    @include when(tab-port) {
+        margin-bottom: 6rem;
+    }
+}
+
+/*##############################################
+#              CONTACT FORM 7                  #
+################################################*/
+.wpcf7-form {
+    position: relative;
+
+    .wpcf7-form-control-wrap {
+        position: relative;
+
+        .wpcf7-not-valid-tip {
+            position: absolute;
+            @include font(1.2rem, regular, $color-primary);
+            bottom: 0;
+            left: 1.5rem;
+        }
+    }
+
+    .wpcf7-response-output {
+        border: none !important;
+        position: absolute;
+        bottom: -5rem;
+        right: 0;
+        margin: 0 !important;
+        @include font(1.2rem, regular, $color-primary);
+
+    }
+
+
+
+    .wpcf7-spinner {
+        display: none;
+    }
+
+    input:not(.wpcf7-submit),
+    textarea {
+        box-sizing: border-box;
+        background-color: $form-bg;
+        padding: 1.5rem;
+        border: none !important;
+        border-radius: 0.5rem;
+        font-size: 1.6rem;
+        min-height: 5.5rem;
+        outline: none;
+        color: $white;
+
+        &:focus,
+        &:active,
+        &:target,
+        &:focus-visible {
+            outline: none;
+            color: $white;
+        }
+
+    }
+
+    .wpcf7-submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        background-color: $color-primary;
+        text-transform: capitalize;
+        @include font(1.8rem, medium);
+        font-weight: $medium;
+        padding: 1.5rem 2.4rem;
+        border: none !important;
+        border-radius: 0.5rem;
+        color: $white;
+        min-height: 5.5rem;
+        transition: filter .5s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            filter: grayscale(30%);
+        }
+
+    }
+}
+
+/*##############################################
+#            CONTACT FORM 7 ERRORS             #
+################################################*/
+
+.wpcf7-validation-errors,
+.wpcf7-acceptance-missing {
+    font-family: $default-font;
+    border: none !important;
+    text-align: center;
+    color: $color-primary;
+}
+
+.wpcf7-response-output.wpcf7-display-none.wpcf7-mail-sent-ok {
+    border: none !important;
+    text-align: center;
+    color: $color-primary;
+}
+
+.wpcf7-mail-sent-ng,
+.wpcf7-aborted {
+    border: none !important;
+    text-align: center;
+    color: $color-primary;
+}
+
+.wpcf7-response-output {
+    padding: 0 !important;
+    margin: 0;
+    margin-top: 1.5rem;
+}
+
+ul {
+    li {
+        font-size: 1.6rem;
+    }
+}
+
+
+/*##############################################
+#              OTHER GENERAL                   #
+################################################*/

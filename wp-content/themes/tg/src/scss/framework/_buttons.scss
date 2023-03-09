@@ -1,0 +1,39 @@
+/*##############################################
+#                   BUTTONS                    #
+################################################*/
+
+.btn {
+    border-radius: 0.5rem !important;
+    font-size: 1.8rem;
+    font-weight: $medium;
+    cursor: pointer;
+    box-sizing: border-box !important;
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+        filter: grayscale(30%);
+        color: $white !important;
+    }
+
+    //PRIMARY
+    &__primary {
+        @extend .btn;
+        padding: 1.4rem 3rem;
+        background-color: $color-primary;
+    }
+
+    //SECONDARY
+    &__secondary {
+        @extend .btn;
+        padding: 1.3rem 2.3rem;
+        background-color: transparent !important;
+        border: 2px solid $color-primary;
+
+        &:hover {
+            color: $color-primary !important;
+        }
+    }
+
+
+
+}

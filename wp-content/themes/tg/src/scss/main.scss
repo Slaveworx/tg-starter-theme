@@ -1,0 +1,16 @@
+//BASE FRAMEWORK
+@import 'framework/variables';
+@import 'framework/typography';
+@import 'framework/mixins';
+@import 'framework/grid';
+@import 'framework/general';
+@import 'framework/animations';
+@import 'framework/reset';
+@import 'framework/buttons';
+@import 'framework/base';
+
+//COMPONENTS
+@import 'components/navbar';
+
+//TEMPLATES
+//@import 'components/xxxxx';

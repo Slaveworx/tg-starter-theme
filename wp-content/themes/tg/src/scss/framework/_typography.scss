@@ -1,0 +1,53 @@
+/*##############################################
+#               APPLY DEFAULT FONT             #
+################################################*/
+
+//Set the body default font
+body {
+    font-family: $default-font;
+}
+
+/*##############################################
+#            TYPOGRAPHY HELPERS                #
+################################################*/
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+//font helper classes
+.light {
+    font-weight: $light;
+}
+
+.regular {
+    font-weight: $regular;
+}
+
+.medium {
+    font-weight: $medium;
+}
+
+.semibold {
+    font-weight: $semibold;
+}
+
+.bold {
+    font-weight: $bold;
+}
+
+.extra-bold {
+    font-weight: $extra-bold;
+}
+
+.black-bold {
+    font-weight: $black-bold;
+}

@@ -9,24 +9,22 @@ html {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     background: $body-bg-color;
     color: $body-text-color;
     margin: 0;
     padding: 0;
     overflow-x: hidden !important;
+    min-height: 100vh;
 }
 
 //Worpress specific class - makes the main container expand to occupy entire page
 .site {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.site-main {
     position: relative;
     flex: 1;
 }
+
 
 
 /*##############################################

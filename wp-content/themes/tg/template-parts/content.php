@@ -21,15 +21,12 @@
 		if ( 'post' === get_post_type() ) :
 			?>
 			<div class="entry-meta">
-				<?php
-				tg_posted_on();
-				tg_posted_by();
-				?>
+				<!-- Entry MEta here -->
 			</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
-	<?php tg_post_thumbnail(); ?>
+	
 
 	<div class="entry-content">
 		<?php
@@ -58,6 +55,6 @@
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
-		<?php tg_entry_footer(); ?>
+		<!-- Entry footer here -->
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

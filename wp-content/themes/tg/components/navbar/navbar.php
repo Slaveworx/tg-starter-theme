@@ -13,9 +13,9 @@
 <header id="masthead" class="site-header">
 
     <div class="site-branding">
-        <?php
-        TG::img("logo.png", ["logo"]);
-        ?>
+        
+        <a href="<?php echo home_url("/");?>"><?php TG::img("logo.png", ["logo"]);?></a>
+        
 
     </div><!-- .site-branding -->
 

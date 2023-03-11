@@ -12,9 +12,9 @@
 
 ?>
 
-<?php TG::load_component("footer") ?>
-
 </div><!-- #page -->
+
+<?php TG::load_component("footer") ?>
 
 <?php wp_footer(); ?>
 

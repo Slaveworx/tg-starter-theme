@@ -106,12 +106,11 @@ class TG
                 include $template;
 
                 // Load the JavaScript file if it exists
-                $js_file = sprintf('%s/static/js/components/%s/%s.js', get_template_directory(), $slug, $slug);
+                $js_file = sprintf('%s/components/%s/%s.js', get_template_directory(), $slug, $slug);
+                $js_file_to_enqueue = sprintf('%s/static/js/components/%s/%s.js', get_template_directory(), $slug, $slug);
                 if (file_exists($js_file)) {
-                    wp_enqueue_script($slug."-min-component", get_template_directory_uri() . '/static/js/components/' . $slug . '/' . $slug . '.js', array('jquery'), _S_VERSION, true);
+                    wp_enqueue_script($slug."-min-component", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
                 }
-
-
                 return;
             }
         }

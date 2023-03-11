@@ -17,7 +17,7 @@ get_header();
 ?>
 
 <main id="primary" class="site-main">
-    <?php TG::load_component("navbar"); ?>
+    <?php TG::load_component("faq-block"); ?>
 </main><!-- #main -->
 
 <?php

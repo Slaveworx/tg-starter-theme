@@ -1,0 +1,123 @@
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+//##############################################
+// faq-block
+// @version 1.0
+// @package tg
+//##############################################
+
+//general variables
+$faq-section-bg: none;
+$faq-block-padding-block: 12rem;
+$faq-block-width: 100.4rem;;
+$faq-block-title-color: $white;
+$faq-block-title-padding-block: 2rem;
+$faq-item-spacing: 1rem;
+
+//question
+$faq-question-arrow-color: $black;
+$faq-question-bg: $white;
+$faq-question-text-color: $black;
+$faq-question-padding-block: 2rem;
+$faq-question-padding-inline: 2rem;
+
+//answer
+$faq-answer-bg-color: $white;
+$faq-answer-text-color: $black;
+$faq-answer-padding-block: 2rem;
+$faq-answer-padding-inline: 2rem;
+
+/*##############################################*/
+
+.faq-block {
+   padding-block: $faq-block-padding-block;
+   background: $faq-section-bg;
+
+    @include when(tab-port) {
+        margin-block: 6rem;
+    }
+
+    .container {
+        max-width: $faq-block-width;
+    }
+
+    &__title {
+        margin-inline: auto;
+        padding-block: $faq-block-title-padding-block;
+        text-align: center;
+        @include font(6rem, semibold, $faq-block-title-color);
+
+        @include when(tab-port) {
+            @include font(4.2rem, semibold, $faq-block-title-color);
+        }
+    }
+
+    .faq-item {
+        padding-block: $faq-item-spacing;
+
+        &[open] {
+            .faq-item__question {
+                .arrow {
+                    transition: all 250ms ease-in-out;
+                    transform: scaleY(-1);
+                }
+            }
+        }
+
+
+        &__question {
+            display: flex;
+            align-items: center;
+            background: $faq-question-bg;
+            padding-block: $faq-question-padding-block;
+            padding-inline: $faq-question-padding-inline;
+            @include font(2rem, medium, $faq-question-text-color);
+            display: flex;
+            cursor: pointer;
+
+            @include when(tab-port) {
+                @include font(1.8rem, medium, $black);
+
+            }
+
+            .arrow {
+                width: 2rem;
+                height: 1.2rem;
+                transition: all 150ms ease-in-out;
+                margin-left: auto;
+                padding-left: 2rem;
+                background-color: $faq-question-arrow-color;
+                -webkit-mask-image: url("/wp-content/themes/tg/static/img/arrow-down.svg");
+                mask-image: url("/wp-content/themes/tg/static/img/arrow-down.svg");
+                -webkit-mask-size: contain;
+                mask-size: contain;
+                mask-position: center;
+                -webkit-mask-position: center;
+            }
+
+            list-style: none;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+
+            &::marker {
+                display: none;
+            }
+        }
+
+        &__answer {
+            @include font(1.8rem, regular, $faq-answer-text-color);
+            background: $faq-answer-bg-color;
+            padding-block: $faq-answer-padding-block;
+            padding-inline: $faq-answer-padding-inline;
+
+            @include when(tab-port) {
+                @include font(1.6rem, regular, $black);
+            }
+        }
+
+    }
+
+}

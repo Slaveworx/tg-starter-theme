@@ -68,6 +68,7 @@ gulp.task("serve", function () {
   });
 
   gulp.watch("./components/**/*.scss", gulp.series("sass"));
+  gulp.watch("./src/scss/**/*.scss", gulp.series("sass"));
   gulp.watch("./components/**/*.js", gulp.series("minify-components-js"));
   gulp.watch("./src/js/*.js", gulp.series("scripts"));
   gulp.watch("./*.php").on("change", browserSync.reload);

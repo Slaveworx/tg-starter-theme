@@ -8,7 +8,7 @@
 //##############################################
 
 //general variables
-$footer-min-height: 35rem;
+$footer-height: 10rem;
 $footer-bg-color: rgb(27, 24, 24);
 $footer-bg-filter: none;
 $footer-text-color: $white;
@@ -24,8 +24,7 @@ $footer-links-hover-color: $color-primary;
 
 
 footer.site-footer {
-
-    min-height: $footer-min-height;
+    height: $footer-height;
     background: $footer-bg-color;
     backdrop-filter: $footer-bg-filter;
     display: flex;

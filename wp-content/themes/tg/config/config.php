@@ -89,13 +89,13 @@ class TG
      *
      * @param string $slug The slug name for the generic template.
      */
-    public static function load($slug)
+    public static function load_component($slug)
     {
 
         $templates = array();
 
         // Add the custom folder path to the file path.
-        $templates[] = sprintf('%s/components/%s.php', get_template_directory(), $slug);
+        $templates[] = sprintf('%s/components/%s/%s.php', get_template_directory(), $slug, $slug);
 
         // Allow 3rd party plugins or themes to override the templates with their own.
         $templates = apply_filters('load', $templates, $slug);
@@ -104,6 +104,14 @@ class TG
         foreach ($templates as $template) {
             if (file_exists($template)) {
                 include $template;
+
+                // Load the JavaScript file if it exists
+                $js_file = sprintf('%s/static/js/components/%s/%s.js', get_template_directory(), $slug, $slug);
+                if (file_exists($js_file)) {
+                    wp_enqueue_script($slug."-min-component", get_template_directory_uri() . '/static/js/components/' . $slug . '/' . $slug . '.js', array('jquery'), _S_VERSION, true);
+                }
+
+
                 return;
             }
         }

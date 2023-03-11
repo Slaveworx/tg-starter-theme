@@ -12,7 +12,7 @@
 
 ?>
 
-<?php TG::load("footer") ?>
+<?php TG::load_component("footer") ?>
 
 </div><!-- #page -->
 

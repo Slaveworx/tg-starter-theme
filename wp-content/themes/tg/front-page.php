@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying front page
  *
@@ -16,7 +17,7 @@ get_header();
 ?>
 
 <main id="primary" class="site-main">
-    <?php TG::load("navbar"); ?>
+    <?php TG::load_component("navbar"); ?>
 </main><!-- #main -->
 
 <?php

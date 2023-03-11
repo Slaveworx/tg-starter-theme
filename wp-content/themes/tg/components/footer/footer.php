@@ -1,16 +1,13 @@
 <?php
-
-/************************************
- * 
- * * FOOTER COMPONENT
- * ? version 1.0
- * ! styles -> src/components/footer.scss
- * 
- ************************************/
+//#####################################
+// COMPONENT: footer
+// @version 1.0
+// @package tg
+//#####################################
 ?>
 
 <!-- ########################### -->
-<!-- ### COMPONENT - CONTENT ### -->
+<!-- footer -->
 <!-- ########################### -->
 
 <footer id="colophon" class="site-footer">
@@ -24,11 +21,3 @@
     </div><!-- .site-info -->
 </footer><!-- #colophon -->
 
-<!-- ########################### -->
-<!-- ### COMPONENT - SCRIPTS ### -->
-<!-- ########################### -->
-<script>
-    jQuery(document).ready(($) => {
-
-    });
-</script>

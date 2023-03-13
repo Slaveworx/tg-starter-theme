@@ -25,7 +25,7 @@ TG::create_cpt(
 );
 
 TG::create_cpt(
-    "course",
+    "courses",
     array(
         'menu_position'     => 0,
         'menu_icon'         => 'dashicons-welcome-learn-more',

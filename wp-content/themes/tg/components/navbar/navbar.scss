@@ -120,6 +120,7 @@ $mobile-menu-item-hover-text-color: $black;
             }
 
             ul {
+                display: flex;
                 margin-inline: 5rem;
 
                 @include when(tab-port) {
@@ -128,6 +129,7 @@ $mobile-menu-item-hover-text-color: $black;
 
                     li {
                         width: 100%;
+
 
 
                         a {
@@ -148,7 +150,10 @@ $mobile-menu-item-hover-text-color: $black;
 
                 }
 
+                //Default
                 li {
+                    padding-inline: 1.5rem;
+
                     a {
                         color: $navbar-link-color !important;
 

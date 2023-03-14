@@ -4,7 +4,7 @@ class TG
 {
     private static $context_transient_name = "tg_transient_all_posts_cache_context";
 
-    /** Add timber support. */
+
     public function __construct()
     {
         //### STYLES ######################################################
@@ -30,9 +30,18 @@ class TG
 
         //Add All Post Types to Context
         add_action('init', array($this, 'add_all_posts_to_context'));
+
+        //Change wordpress's logic of where to look for available page templates
+        add_filter('theme_page_templates', array($this, 'modify_wp_default_page_templates_dir'));
+
+        //Change default archive page templates directory
+        add_filter('archive_template', array($this, 'tg_archive_templates_dir'));
+
+        //Change default page templates directory
+        add_filter('page_template', array($this, 'tg_page_templates_dir'));
     }
 
-    
+
 
     /** Set Context Values */
     public static function set_context($key, $value)
@@ -44,7 +53,7 @@ class TG
             $context = array();
         }
         $context[$key] = $value;
-        set_transient($transient_name, $context, DAY_IN_SECONDS);
+        set_transient($transient_name, $context, HOUR_IN_SECONDS);
     }
 
     /** Get Context Values */
@@ -56,17 +65,116 @@ class TG
 
         // If no key is specified, return the entire context array
         if ($key === null) {
+            global $ctx;
+            $ctx = $context;
             return $context;
         }
 
         // If the context array exists and contains the specified key, return its value
         if (isset($context[$key])) {
+            global $ctx;
+            $ctx = $context[$key];
             return $context[$key];
         }
 
         // Otherwise, return an error message
         return "Error: Value does not exist inside the global context.";
     }
+
+    /** Change Default Archive Templates Directory*/
+    public function tg_archive_templates_dir($template)
+    {
+        if (is_archive()) {
+            $post_type = get_query_var('post_type');
+            $template_filenames = array(
+                "archive-{$post_type}.php",
+                'archive.php',
+            );
+            foreach ($template_filenames as $filename) {
+                $subdirectories = scandir(get_stylesheet_directory() . '/template-archives'); // Replace 'archive-templates' with the name of the directory containing your subfolders
+                foreach ($subdirectories as $subdirectory) {
+                    if ('.' !== $subdirectory && '..' !== $subdirectory) {
+                        $archive_template = get_stylesheet_directory() . '/template-archives/' . $subdirectory . '/' . $filename;
+                        if (file_exists($archive_template)) {
+                            $template = $archive_template;
+                            break 2;
+                        }
+                    }
+                }
+            }
+        }
+        return $template;
+    }
+
+
+    /** Change Default Page Templates Directory */
+    public function tg_page_templates_dir($template)
+    {
+
+        if (is_page()) {
+            if (is_page()) {
+                $pagename = get_query_var('pagename');
+                $page_template_slug = get_page_template_slug();
+                if (empty($page_template_slug)) {
+                    $template_filenames = array(
+                        "{$pagename}.php",
+                        "page-{$pagename}.php",
+                        "page-{$pagename}",
+                        'page.php',
+                    );
+                    foreach ($template_filenames as $filename) {
+                        $subdirectories = scandir(get_stylesheet_directory() . '/template-pages');
+                        foreach ($subdirectories as $subdirectory) {
+                            if ('.' !== $subdirectory && '..' !== $subdirectory) {
+                                $page_template = get_stylesheet_directory() . '/template-pages/' . $subdirectory . '/' . $filename;
+                                if (file_exists($page_template)) {
+                                    $template = $page_template;
+                                    break 2;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $template = get_stylesheet_directory() . '/template-pages/' . $page_template_slug;
+                }
+            }
+            return $template;
+        }
+    }
+
+
+    /** Make Wordpress look for page templates in the custom folder */
+    function modify_wp_default_page_templates_dir($page_templates)
+    {
+        $template_dir = get_stylesheet_directory() . '/template-pages';
+        $subdirectories = scandir($template_dir);
+        foreach ($subdirectories as $subdirectory) {
+            if ('.' !== $subdirectory && '..' !== $subdirectory) {
+                $page_templates_subdirectory = array();
+                $files = scandir($template_dir . '/' . $subdirectory);
+                foreach ($files as $file) {
+                    if ('.' !== $file && '..' !== $file && preg_match('|^([_a-zA-Z0-9-]+)\.php$|', $file, $matches)) {
+                        if ($file === 'page.php') {
+                            continue;
+                        }
+                        $template_file = $template_dir . '/' . $subdirectory . '/' . $file;
+                        if ($file_data = get_file_data($template_file, array('Template Name'))) {
+                            $template_name = str_replace(array('/*', '*/', '*'), '', $file_data[0]);
+                        } else {
+                            $template_name = str_replace(array('-', '_'), ' ', basename($file, '.php'));
+                        }
+                        $template_name = trim($template_name);
+                        $page_templates_subdirectory[$subdirectory . '/' . $file] = $template_name;
+                    }
+                }
+                $page_templates = array_merge($page_templates, $page_templates_subdirectory);
+            }
+        }
+        return $page_templates;
+    }
+
+
+
 
     /** Add All Post Types to Context */
     public static function add_all_posts_to_context()
@@ -91,7 +199,7 @@ class TG
                 }
                 wp_reset_postdata();
             }
-            set_transient($cache_key, $posts, DAY_IN_SECONDS);
+            set_transient($cache_key, $posts, HOUR_IN_SECONDS);
         } else {
             // If the posts are stored in the cache, update the context with the cached data
             foreach ($posts as $post_type => $post_list) {
@@ -116,7 +224,6 @@ class TG
     {
         require_once("theme-support.php");
     }
-
 
     /**
      * Outputs an HTML img tag with the specified image source, CSS classes, and HTML attributes.
@@ -191,7 +298,7 @@ class TG
 
                 // Load the JavaScript file if it exists
                 $js_file = sprintf('%s/components/%s/%s.js', get_template_directory(), $slug, $slug);
-                $js_file_to_enqueue = sprintf('%s/static/js/components/%s/%s.js', get_template_directory(), $slug, $slug);
+                $js_file_to_enqueue = sprintf('%s/static/js/components/%s/%s.js', get_template_directory_uri(), $slug, $slug);
                 if (file_exists($js_file)) {
                     wp_enqueue_script($slug . "-min-component", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
                 }

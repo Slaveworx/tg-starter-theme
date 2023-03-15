@@ -48,6 +48,12 @@ class TG
 
         //Change default page templates directory
         add_filter('page_template', array($this, 'tg_page_templates_dir'));
+
+        // Add Button to Clean Context Transient
+        add_action('admin_bar_menu', array($this, 'add_cleanup_btn_to_admin_bar'), 999);
+
+        // Add Cleanup Function to Clean Transient
+        add_action('wp_ajax_clean_context_transient', array($this, 'clean_context_transient'));
     }
 
     /** Register Custom Post Types. */

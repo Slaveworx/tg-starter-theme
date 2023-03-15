@@ -48,10 +48,6 @@ trait Context
     /** Add All Post Types to Context */
     public static function add_all_posts_to_context()
     {
-
-        /**
-         * !TODO: CREATE A BUTTON IN WORDPRESS BACKEND TO ERASE THEME CONTEXT
-         */
         // Check if the retrieved posts are stored in the cache.
         $cache_key = self::$context_transient_name;
         $posts = get_transient($cache_key);
@@ -79,5 +75,35 @@ trait Context
                 self::set_context($post_type, $post_list);
             }
         }
+    }
+
+
+    /**
+     * TRANSIENTS CLEAN UP
+     */
+
+    /** Add Button to admin bar to Purge Context Transient */
+    function add_cleanup_btn_to_admin_bar()
+    {
+        global $wp_admin_bar;
+        $args = array(
+            'id' => 'my-transient-button',
+            'title' => 'Purge Context',
+            'href' => wp_nonce_url(admin_url('admin-ajax.php?action=clean_context_transient'), 'clean_context_transient'),
+            'meta' => array(
+                'class' => 'my-transient-button-class',
+                'title' => 'Purge Context',
+            ),
+        );
+        $wp_admin_bar->add_node($args);
+    }
+
+    /** The actual cleanup */
+    function clean_context_transient()
+    {
+        check_ajax_referer('clean_context_transient');
+        delete_transient(self::$context_transient_name);
+        wp_redirect(home_url());
+        exit();
     }
 }

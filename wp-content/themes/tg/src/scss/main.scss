@@ -9,11 +9,13 @@
 @import 'framework/buttons';
 @import 'framework/base';
 
-//TEMPLATES
-//@import 'templates/template-name';
 
 
-//COMPONENTS
+//COMPONENTS & TEMPLATES (AUTO IMPORTS)
 @import './components/navbar/navbar';
 @import './components/footer/footer';
 @import './components/faq-block/faq-block';
+
+
+
+

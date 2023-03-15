@@ -1,5 +1,5 @@
 <?php
-
+namespace TG;
 /**
  * CREATE CUSTOM POST TYPES
  */

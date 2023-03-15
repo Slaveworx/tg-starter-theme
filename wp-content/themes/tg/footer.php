@@ -1,5 +1,5 @@
 <?php
-
+namespace TG;
 /**
  * The template for displaying the footer
  *

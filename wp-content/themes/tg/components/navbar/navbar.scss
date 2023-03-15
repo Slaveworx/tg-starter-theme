@@ -125,10 +125,12 @@ $mobile-menu-item-hover-text-color: $black;
 
                 @include when(tab-port) {
                     margin-inline: unset;
+                    flex-direction: column;
 
 
                     li {
                         width: 100%;
+                        padding-inline: unset !important;
 
 
 

@@ -11,9 +11,6 @@ import chokidar from "chokidar";
 
 dotenv.config();
 
-/**
- * !TODO: Find a way to add autoprefixer...
- */
 gulp.task("sass", function () {
   const sass = gulpSass(dartSass);
   return gulp
@@ -42,7 +39,26 @@ gulp.task("minify-components-js", function () {
     .pipe(browserSync.stream());
 });
 
-gulp.task("garbage-collector", function () {
+gulp.task("minify-pages-js", function () {
+  return gulp
+    .src("./template-pages/**/*.js")
+    .pipe(uglify())
+    .pipe(gulp.dest("./static/js/template-pages/"))
+    .pipe(browserSync.stream());
+});
+
+gulp.task("serve", function () {
+  browserSync.init({
+    proxy: process.env.LOCAL_SITE,
+  });
+
+  gulp.watch("./components/**/*.scss", gulp.series("sass"));
+  gulp.watch("./src/scss/**/*.scss", gulp.series("sass"));
+  gulp.watch("./components/**/*.js", gulp.series("minify-components-js"));
+  gulp.watch("./template-pages/**/*.js", gulp.series("minify-pages-js"));
+  gulp.watch("./src/js/*.js", gulp.series("scripts"));
+  gulp.watch("./*.php").on("change", browserSync.reload);
+  //Components Garbage Collector
   chokidar
     .watch("./components/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
@@ -60,30 +76,19 @@ gulp.task("garbage-collector", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
-});
-
-gulp.task("serve", function () {
-  browserSync.init({
-    proxy: process.env.LOCAL_SITE,
-  });
-
-  gulp.watch("./components/**/*.scss", gulp.series("sass"));
-  gulp.watch("./src/scss/**/*.scss", gulp.series("sass"));
-  gulp.watch("./components/**/*.js", gulp.series("minify-components-js"));
-  gulp.watch("./src/js/*.js", gulp.series("scripts"));
-  gulp.watch("./*.php").on("change", browserSync.reload);
-  chokidar
-    .watch("./components/", { ignored: /(^|[\/\\])\../ })
+    //Page templates garbage collector
+    chokidar
+    .watch("./template-pages/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
-      const componentName = dirPath.split("\\").pop();
-      console.log("Successfuly Deleted Component: ", componentName);
-      deleteSync(['static/js/components/' + `${componentName}`, '!static/js/components/']);
+      const templateName = dirPath.split("\\").pop();
+      console.log("Successfuly Deleted Page Template: ", templateName);
+      deleteSync(['static/js/template-pages/' + `${templateName}`, '!static/js/template-pages/']);
       gulp
         .src("./src/scss/main.scss")
         .pipe(
           replace(
             //the quotes on the line below must be single quotes, otherwise it will not recognize any text
-            `@import './components/${componentName}/${componentName}';`,
+            `@import './template-pages/${templateName}/page-${templateName}';`,
             ""
           )
         )
@@ -97,6 +102,7 @@ gulp.task(
     "sass",
     "scripts",
     "minify-components-js",
+    "minify-pages-js",
     "serve",
     function (done) {
       console.log("Gulp is running...");

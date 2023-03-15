@@ -1,4 +1,5 @@
 <?php
+namespace TG;
 //#####################################
 // COMPONENT: navbar
 // @version 1.0

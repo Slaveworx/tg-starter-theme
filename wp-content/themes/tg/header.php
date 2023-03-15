@@ -1,4 +1,5 @@
 <?php
+namespace TG;
 /**
  * The header for our theme
  *

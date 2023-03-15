@@ -177,7 +177,7 @@ program
 
       // Append import statement to main.scss file
       const mainScssPath = "./src/scss/main.scss";
-      const importStatement = `@import './template-pages/${fileNameValue}/${fileNameValue}';\n`;
+      const importStatement = `@import './template-pages/${fileNameValue}/page-${fileNameValue}';\n`;
       fs.appendFileSync(mainScssPath, importStatement);
 
       console.log(`Page Template ${pageNameValue} generated successfully!`);

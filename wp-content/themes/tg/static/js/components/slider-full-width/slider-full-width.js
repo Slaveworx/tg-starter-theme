@@ -1,0 +1,1 @@
+jQuery(document).ready(e=>{new Swiper("#slider-full-width",{pagination:{el:".swiper-pagination",dynamicBullets:!0}})});

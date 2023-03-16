@@ -1,0 +1,46 @@
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+//##############################################
+// hero
+// @version 1.0
+// @package tg
+//##############################################
+
+//general variables
+//$example-var: red;
+
+//desktop variables
+//$example-var-desktop: blue;
+
+//mobile variables
+//$example-var-mobile: blue;
+
+/*##############################################*/
+
+.hero {
+    height: 100vh;
+    min-height: 100vh;
+    background: linear-gradient(tomato, crimson);
+    display: flex;
+    align-items: center;
+
+    .container-small {
+        width: 100%;
+    }
+
+    &__title {
+        font-family: $heading-font;
+        color: $white;
+    }
+
+    &__description {
+        color: $white;
+        font-size: 1.8rem;
+        padding-block: 2.5rem;
+    }
+
+    &__cta {
+        margin-block: 2.5rem;
+    }
+}

@@ -1,5 +1,7 @@
 <?php
+
 namespace TG;
+
 /**
  * TG Theme Functions & Definitions
  *

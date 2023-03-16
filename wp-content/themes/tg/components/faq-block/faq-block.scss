@@ -9,8 +9,9 @@
 
 //general variables
 $faq-section-bg: none;
-$faq-block-padding-block: 12rem;
-$faq-block-width: 100.4rem;;
+$faq-block-padding-block: none;
+$faq-block-max-width: 100rem;
+
 $faq-block-title-color: $black;
 $faq-block-title-padding-block: 2rem;
 $faq-item-spacing: 1rem;
@@ -31,15 +32,19 @@ $faq-answer-padding-inline: 2rem;
 /*##############################################*/
 
 .faq-block {
-   padding-block: $faq-block-padding-block;
-   background: $faq-section-bg;
+    padding-block: $faq-block-padding-block;
+    background: $faq-section-bg;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 
     @include when(tab-port) {
         margin-block: 6rem;
     }
 
     .container {
-        max-width: $faq-block-width;
+        width: 100%;
+        max-width: $faq-block-max-width;
     }
 
     &__title {

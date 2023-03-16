@@ -66,7 +66,7 @@ gulp.task("serve", function () {
   gulp.watch("./template-pages/**/*.js", gulp.series("minify-pages-js"));
   gulp.watch("./template-archives/**/*.js", gulp.series("minify-archives-js"));
   gulp.watch("./src/js/*.js", gulp.series("scripts"));
-  gulp.watch("./").on("change", browserSync.reload);
+  gulp.watch("**/*").on("change", browserSync.reload);
   //Components Garbage Collector
   chokidar
     .watch("./components/", { ignored: /(^|[\/\\])\../ })

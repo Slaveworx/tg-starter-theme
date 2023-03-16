@@ -1,5 +1,7 @@
 <?php
+
 namespace TG;
+
 /**
  * The template for displaying front page
  *
@@ -15,19 +17,12 @@ namespace TG;
 
 get_header();
 ?>
+<?php TG::get_context(); ?>
 
 <main id="primary" class="site-main">
+    <?php TG::load_component("hero"); ?>
     <?php TG::load_component("faq-block"); ?>
-    <?php TG::get_context(); ?>
-
-
-    <?php
-    foreach ($ctx['post'] as $post) {
-        setup_postdata($post); ?>
-        <p><?php echo the_title(); ?></p>
-    <?php  }
-
-    ?>
+    <?php TG::load_component("slider-full-width"); ?>
 </main><!-- #main -->
 
 <?php

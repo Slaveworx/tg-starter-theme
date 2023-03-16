@@ -22,7 +22,7 @@ get_header();
 
 
     <?php
-    foreach ($ctx['courses'] as $post) {
+    foreach ($ctx['post'] as $post) {
         setup_postdata($post); ?>
         <p><?php echo the_title(); ?></p>
     <?php  }

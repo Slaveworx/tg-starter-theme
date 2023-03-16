@@ -26,4 +26,28 @@ jQuery(document).ready(($) => {
       navbar.removeClass("menu-open");
     }
   });
+
+  // ON SCROLL EFFECTS
+  let vh = $(window).height();
+  let initialFold = 100;
+  let prevScrollPos = 0;
+
+  $(window).on("scroll", function () {
+    let currentScrollPos = $(window).scrollTop();
+
+    if (currentScrollPos > initialFold) {
+      navbar.addClass("fixed");
+      if (currentScrollPos > prevScrollPos) {
+        navbar.css("opacity", 1);
+      } else {
+        let opacity = Math.max(0, 1 - (currentScrollPos - initialFold) / vh);
+        navbar.css("opacity", opacity);
+      }
+    } else {
+      navbar.removeClass("fixed").css("opacity", 1);
+    }
+
+    prevScrollPos = currentScrollPos;
+  });
+  navbar.css("transition", "opacity 0.2s ease-in-out");
 });

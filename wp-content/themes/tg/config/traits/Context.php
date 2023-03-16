@@ -87,11 +87,11 @@ trait Context
     {
         global $wp_admin_bar;
         $args = array(
-            'id' => 'my-transient-button',
-            'title' => 'Purge Context',
+            'id' => 'transient-purge-button',
+            'title' => '<div style="display:flex;align-items:center;color:tomato; font-weight:700;"><img src="'. get_template_directory_uri() .'/config/sources/assets/trash.svg" style="width:20px; height:20px; display:inline-block;">- PURGE CONTEXT -</div>',
             'href' => wp_nonce_url(admin_url('admin-ajax.php?action=clean_context_transient'), 'clean_context_transient'),
             'meta' => array(
-                'class' => 'my-transient-button-class',
+                'class' => 'transient-purge-button',
                 'title' => 'Purge Context',
             ),
         );

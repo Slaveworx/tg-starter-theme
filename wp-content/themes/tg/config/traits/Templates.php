@@ -1,7 +1,9 @@
 <?php
+
 namespace TG;
 
-trait Templates{
+trait Templates
+{
 
     /** Change Default Archive Templates Directory*/
     public function tg_archive_templates_dir($template)
@@ -33,57 +35,74 @@ trait Templates{
     /** Change Default Page Templates Directory */
     public function tg_page_templates_dir($template)
     {
-
         /**
-         * !ERROR : Right now, when a page has a page template set in the backend and it gets deleted, then if we navigate to the page it will show an error:
-         * ! Warning: include(C:\Users\slave\Local Sites\tg\app\public/wp-content/themes/tg/template-pages/flexible-content/page-flexible-content.php): Failed to open stream: No such file or directory
-         * ? TODO: Need to find a way to detect that deletion and fallback to default page template...
+         * !TODO: Refactor this function to avoid repeated code
+         * ? Maybe the scripts enqueue can be externalized to Helpers trait...
          */
-
         if (is_page()) {
-            if (is_page()) {
-                $pagename = get_query_var('pagename');
-                $page_template_slug = get_page_template_slug();
+            $pagename = get_query_var('pagename');
+            $page_template_slug = get_page_template_slug();
 
-                //load minified scripts for the custom page template
-                if ($page_template_slug) {
-                    $slug = dirname($page_template_slug);
-                    $page_template_name = pathinfo(basename($page_template_slug), PATHINFO_FILENAME);
+            //load minified scripts for the custom page template
+            if ($page_template_slug) {
+                $slug = dirname($page_template_slug);
+                $page_template_name = pathinfo(basename($page_template_slug), PATHINFO_FILENAME);
 
-                    // Load the JavaScript file if it exists
-                    $js_file = sprintf('%s/template-pages/%s/%s.js', get_template_directory(), $slug, $page_template_name);
-                    $js_file_to_enqueue = sprintf('%s/static/js/template-pages/%s/%s.js', get_template_directory_uri(), $slug, $page_template_name);
-                    if (file_exists($js_file)) {
-                        wp_enqueue_script($page_template_name . "-min-page-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
-                    }
+                // Load the JavaScript file if it exists
+                $js_file = sprintf('%s/template-pages/%s/%s.js', get_template_directory(), $slug, $page_template_name);
+                $js_file_to_enqueue = sprintf('%s/static/js/template-pages/%s/%s.js', get_template_directory_uri(), $slug, $page_template_name);
+                if (file_exists($js_file)) {
+                    wp_enqueue_script($page_template_name . "-min-page-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
                 }
+            }
 
-                if (empty($page_template_slug)) {
-                    $template_filenames = array(
-                        "{$pagename}.php",
-                        "page-{$pagename}.php",
-                        "page-{$pagename}",
-                        'page.php',
-                    );
-                    foreach ($template_filenames as $filename) {
-                        $subdirectories = scandir(get_stylesheet_directory() . '/template-pages');
-                        foreach ($subdirectories as $subdirectory) {
-                            if ('.' !== $subdirectory && '..' !== $subdirectory) {
-                                $page_template = get_stylesheet_directory() . '/template-pages/' . $subdirectory . '/' . $filename;
-                                if (file_exists($page_template)) {
-                                    $template = $page_template;
-                                    break 2;
+            // Check if the current custom set template file exists
+            if ($page_template_slug) {
+                $path = get_template_directory() . "/template-pages/" . $page_template_slug;
+                $template_exists = file_exists($path);
+                $template = $path;
+            }
+
+            if (empty($page_template_slug) || !$template_exists) {
+                // If no custom template has been set or the current template file doesn't exist, look for a matching file in the "template-pages" directory
+                $template_filenames = array(
+                    "{$pagename}.php",
+                    "page-{$pagename}.php",
+                    "page-{$pagename}",
+                    'page.php',
+                );
+                foreach ($template_filenames as $filename) {
+                    $subdirectories = scandir(get_stylesheet_directory() . '/template-pages');
+                    foreach ($subdirectories as $subdirectory) {
+                        if ('.' !== $subdirectory && '..' !== $subdirectory) {
+                            $page_template = get_stylesheet_directory() . '/template-pages/' . $subdirectory . '/' . $filename;
+                            if (file_exists($page_template)) {
+
+                                $template = $page_template;
+                                $slug = basename(dirname($page_template));
+                                $page_template_name = pathinfo(basename($page_template), PATHINFO_FILENAME);
+                                // Load the JavaScript file if it exists
+                                $js_file = sprintf('%s/template-pages/%s/%s.js', get_template_directory(), $slug, $page_template_name);
+                                $js_file_to_enqueue = sprintf('%s/static/js/template-pages/%s/%s.js', get_template_directory_uri(), $slug, $page_template_name);
+                                if (file_exists($js_file)) {
+                                    wp_enqueue_script($page_template_name . "-min-page-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
                                 }
+                                break 2;
                             }
                         }
                     }
-                } else {
-                    $template = get_stylesheet_directory() . '/template-pages/' . $page_template_slug;
                 }
             }
-            return $template;
+
+            // If no matching template has been found, fall back to the default template
+            if (!$template_exists && !file_exists($template)) {
+                $template = get_page_template();
+            }
         }
+
+        return $template;
     }
+
 
 
     /** Make Wordpress look for page templates in the custom folder */
@@ -115,6 +134,4 @@ trait Templates{
         }
         return $page_templates;
     }
-
-
 }

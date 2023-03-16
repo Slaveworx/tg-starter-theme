@@ -4,8 +4,6 @@ namespace TG;
 
 trait Helpers
 {
-
-
     /**
      * Outputs an HTML img tag with the specified image source, CSS classes, and HTML attributes.
      *

@@ -11,62 +11,73 @@ import chokidar from "chokidar";
 
 dotenv.config();
 
+// Define input and output directories
+const dirs = {
+  src: {
+    scss: "./src/scss",
+    js: "./src/js",
+    components: "./components",
+    pages: "./template-pages",
+    archives: "./template-archives",
+  },
+  dest: {
+    css: "./static/css",
+    js: "./static/js",
+  },
+};
+
+// Define JS files to be minified
+const jsFiles = {
+  components: `${dirs.src.components}/**/*.js`,
+  pages: `${dirs.src.pages}/**/*.js`,
+  archives: `${dirs.src.archives}/**/*.js`,
+  scripts: `${dirs.src.js}/*.js`,
+};
+
+// Define functions to handle minification of JS files
+function minifyJS(src, dest) {
+  return gulp.src(src)
+    .pipe(uglify())
+    .pipe(gulp.dest(dest))
+    .pipe(browserSync.stream());
+}
+
 gulp.task("sass", function () {
   const sass = gulpSass(dartSass);
-  return gulp
-    .src("./src/scss/main.scss")
+  return gulp.src(`${dirs.src.scss}/main.scss`)
     .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-    .pipe(autoprefixer({
-			cascade: false
-		}))
-    .pipe(gulp.dest("./static/css/"))
-    .pipe(browserSync.stream());
-});
-
-gulp.task("scripts", function () {
-  return gulp
-    .src("./src/js/scripts.js")
-    .pipe(uglify())
-    .pipe(gulp.dest("./static/js/"))
+    .pipe(autoprefixer({ cascade: false }))
+    .pipe(gulp.dest(dirs.dest.css))
     .pipe(browserSync.stream());
 });
 
 gulp.task("minify-components-js", function () {
-  return gulp
-    .src("./components/**/*.js")
-    .pipe(uglify())
-    .pipe(gulp.dest("./static/js/components/"))
-    .pipe(browserSync.stream());
+  return minifyJS(jsFiles.components, `${dirs.dest.js}/components`);
 });
 
 gulp.task("minify-pages-js", function () {
-  return gulp
-    .src("./template-pages/**/*.js")
-    .pipe(uglify())
-    .pipe(gulp.dest("./static/js/template-pages/"))
-    .pipe(browserSync.stream());
+  return minifyJS(jsFiles.pages, `${dirs.dest.js}/template-pages`);
 });
 
 gulp.task("minify-archives-js", function () {
-  return gulp
-    .src("./template-archives/**/*.js")
-    .pipe(uglify())
-    .pipe(gulp.dest("./static/js/template-archives/"))
-    .pipe(browserSync.stream());
+  return minifyJS(jsFiles.archives, `${dirs.dest.js}/template-archives`);
+});
+
+gulp.task("scripts", function () {
+  return minifyJS(jsFiles.scripts, dirs.dest.js);
 });
 
 gulp.task("serve", function () {
-  browserSync.init({
-    proxy: process.env.LOCAL_SITE,
-  });
+  browserSync.init({ proxy: process.env.LOCAL_SITE });
 
-  gulp.watch("./components/**/*.scss", gulp.series("sass"));
-  gulp.watch("./src/scss/**/*.scss", gulp.series("sass"));
-  gulp.watch("./components/**/*.js", gulp.series("minify-components-js"));
-  gulp.watch("./template-pages/**/*.js", gulp.series("minify-pages-js"));
-  gulp.watch("./template-archives/**/*.js", gulp.series("minify-archives-js"));
-  gulp.watch("./src/js/*.js", gulp.series("scripts"));
+  // Watch for changes in files and execute tasks accordingly
+  gulp.watch(`${dirs.src.scss}/**/*.scss`, gulp.series("sass"));
+  gulp.watch(jsFiles.components, gulp.series("minify-components-js"));
+  gulp.watch(jsFiles.pages, gulp.series("minify-pages-js"));
+  gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));
+  gulp.watch(jsFiles.scripts, gulp.series("scripts"));
   gulp.watch("**/*").on("change", browserSync.reload);
+
   //Components Garbage Collector
   chokidar
     .watch("./components/", { ignored: /(^|[\/\\])\../ })
@@ -123,18 +134,4 @@ gulp.task("serve", function () {
     });
 });
 
-gulp.task(
-  "default",
-  gulp.series(
-    "sass",
-    "scripts",
-    "minify-components-js",
-    "minify-pages-js",
-    "minify-archives-js",
-    "serve",
-    function (done) {
-      console.log("Gulp is running...");
-      done();
-    }
-  )
-);
+gulp.task("default", gulp.series("sass", "minify-components-js", "minify-pages-js", "minify-archives-js", "scripts", "serve"));

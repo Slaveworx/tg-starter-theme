@@ -47,6 +47,14 @@ gulp.task("minify-pages-js", function () {
     .pipe(browserSync.stream());
 });
 
+gulp.task("minify-archives-js", function () {
+  return gulp
+    .src("./template-archives/**/*.js")
+    .pipe(uglify())
+    .pipe(gulp.dest("./static/js/template-archives/"))
+    .pipe(browserSync.stream());
+});
+
 gulp.task("serve", function () {
   browserSync.init({
     proxy: process.env.LOCAL_SITE,
@@ -56,8 +64,9 @@ gulp.task("serve", function () {
   gulp.watch("./src/scss/**/*.scss", gulp.series("sass"));
   gulp.watch("./components/**/*.js", gulp.series("minify-components-js"));
   gulp.watch("./template-pages/**/*.js", gulp.series("minify-pages-js"));
+  gulp.watch("./template-archives/**/*.js", gulp.series("minify-archives-js"));
   gulp.watch("./src/js/*.js", gulp.series("scripts"));
-  gulp.watch("./*.php").on("change", browserSync.reload);
+  gulp.watch("./").on("change", browserSync.reload);
   //Components Garbage Collector
   chokidar
     .watch("./components/", { ignored: /(^|[\/\\])\../ })
@@ -94,6 +103,24 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
+    //Archives garbage collector
+    chokidar
+    .watch("./template-archives/", { ignored: /(^|[\/\\])\../ })
+    .on("unlinkDir", function (dirPath) {
+      const archiveName = dirPath.split("\\").pop();
+      console.log("Successfuly Deleted Archive Template: ", archiveName);
+      deleteSync(['static/js/template-archives/' + `${archiveName}`, '!static/js/template-archives/']);
+      gulp
+        .src("./src/scss/main.scss")
+        .pipe(
+          replace(
+            //the quotes on the line below must be single quotes, otherwise it will not recognize any text
+            `@import './template-archives/${archiveName}/archive-${archiveName}';`,
+            ""
+          )
+        )
+        .pipe(gulp.dest("./src/scss/"));
+    });
 });
 
 gulp.task(
@@ -103,6 +130,7 @@ gulp.task(
     "scripts",
     "minify-components-js",
     "minify-pages-js",
+    "minify-archives-js",
     "serve",
     function (done) {
       console.log("Gulp is running...");

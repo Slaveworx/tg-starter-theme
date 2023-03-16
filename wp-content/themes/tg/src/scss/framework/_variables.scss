@@ -4,7 +4,7 @@
 /*Please note that $black, $white, $color-primary and $color-secondary are staples of this framework.
 It means changing them might break other parts of the framework
 */
-$color-primary: #D96019;
+$color-primary: #f5853fd3;
 $color-secondary: #D86018;
 $color-tertiary: #FF9D64;
 $gray-text: #909090;
@@ -37,7 +37,7 @@ sans-serif !important;
 #              FRAMEWORK VARIABLES             #
 ################################################*/
 /* CHANGE THEIR VALUES BUT DO NOT DELETE THEM UNLESS YOU KNOW WHAT YOU'RE DOING */
-$body-bg-color: $color-primary;
+$body-bg-color: $white;
 $body-text-color : $black;
 
 //Containers

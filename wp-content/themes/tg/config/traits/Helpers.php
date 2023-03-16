@@ -34,6 +34,16 @@ trait Helpers
     }
 
     /**
+     * Returns an image URL
+     */
+    public static function img_url($img)
+    {
+        $template_dir = get_template_directory_uri() . "/static/img/";
+        $path = $template_dir . $img;
+        return $path;
+    }
+
+    /**
      * Outputs the SVG code for the specified SVG file in the theme's static/img directory.
      *
      * @param string $svg The filename of the SVG file to output, including the file extension.
@@ -136,4 +146,96 @@ trait Helpers
 
         register_post_type($name_lc, $args);
     }
+
+    /** Image Optimization */
+    public static function optimize_image($image_url, $quality = 80)
+    {
+        $image_path = parse_url($image_url, PHP_URL_PATH);
+        $image_abs_path = ABSPATH . $image_path;
+        $supports_webp = strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false;
+
+        if (file_exists($image_abs_path)) {
+            $image_info = getimagesize($image_abs_path);
+            $image_mime = $image_info['mime'];
+            $image_type = strtolower(str_replace('image/', '', $image_mime));
+
+            switch ($image_type) {
+                case 'jpg':
+                case 'jpeg':
+                    $image = imagecreatefromjpeg($image_abs_path);
+                    imagejpeg($image, $image_abs_path, $quality);
+                    break;
+                case 'png':
+                    $image = imagecreatefrompng($image_abs_path);
+                    imagealphablending($image, false);
+                    imagesavealpha($image, true);
+                    imagepng($image, $image_abs_path, 9);
+                    break;
+                case 'gif':
+                    $image = imagecreatefromgif($image_abs_path);
+                    imagegif($image, $image_abs_path);
+                    break;
+                case 'svg':
+                    $svg_data = file_get_contents($image_abs_path);
+                    $doc = new \DOMDocument();
+                    $doc->loadXML($svg_data);
+                    $xpath = new \DOMXPath($doc);
+                    foreach ($xpath->query('//@*') as $attr) {
+                        if ($attr->nodeName == 'class') {
+                            $attr->parentNode->removeAttribute('class');
+                        }
+                    }
+                    file_put_contents($image_abs_path, $doc->saveXML());
+                    break;
+                default:
+                    return $image_url;
+                    break;
+            }
+
+            // Convert to webP if supported
+            if ($supports_webp && function_exists('imagewebp')) {
+                $webp_path = ABSPATH . preg_replace('/\.(jpg|jpeg|png|gif|svg)$/i', '.webp', $image_path);
+                switch ($image_type) {
+                    case 'jpg':
+                    case 'jpeg':
+                        $image = imagecreatefromjpeg($image_abs_path);
+                        imagewebp($image, $webp_path, $quality);
+                        break;
+                    case 'png':
+                        $image = imagecreatefrompng($image_abs_path);
+                        imagewebp($image, $webp_path, 9);
+                        break;
+                    case 'gif':
+                        $image = imagecreatefromgif($image_abs_path);
+                        imagewebp($image, $webp_path);
+                        break;
+                    case 'svg':
+                        $svg_data = file_get_contents($image_abs_path);
+                        $doc = new \DOMDocument();
+                        $doc->loadXML($svg_data);
+                        $xpath = new \DOMXPath($doc);
+                        foreach ($xpath->query('//@*') as $attr) {
+                            if ($attr->nodeName == 'class') {
+                                $attr->parentNode->removeAttribute('class');
+                            }
+                        }
+                        file_put_contents($webp_path, $doc->saveXML());
+                        break;
+                }
+                if (file_exists($webp_path)) {
+                    $image_url = preg_replace('/\.(jpg|jpeg|png|gif|svg)$/i', '.webp', $image_url);
+                }
+            }
+
+            return $image_url;
+        } else {
+            return $image_url;
+        }
+    }
+
+    /** Will enqueue the custom admin styles */ 
+    public static function custom_login_css() {
+        wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login-styles.css');
+    }
+    
 }

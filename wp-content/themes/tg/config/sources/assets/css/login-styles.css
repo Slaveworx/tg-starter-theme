@@ -1,0 +1,109 @@
+body.login {
+    background-color: #f5853fd3;
+}
+
+body.login div#login h1 a {
+    background-image: url('../img/logo.png');
+    background-size: contain;
+    width: 48px;
+}
+
+body.login div#login {
+
+    width: 100%;
+    height: fit-content;
+}
+
+body.login div#login p#nav,
+body.login div#login p#backtoblog {
+    width: fit-content;
+    margin-inline: auto;
+}
+
+body.login div#login p#nav a,
+body.login div#login p#backtoblog a {
+    color: #fff;
+}
+
+body.login div#login p#nav a:hover,
+body.login div#login p#backtoblog a:hover {
+    color: crimson;
+}
+
+
+body.login form {
+    margin-inline: auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(255, 255, 255, .1);
+    padding: 30px;
+    width: min(500px, 100%);
+    height: fit-content;
+}
+
+/*checkbox*/
+body.login form #rememberme {
+    accent-color: crimson !important;
+}
+
+body.login form label {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+body.login div#login form#loginform button {
+    top: 20px;
+}
+
+body.login div#login form#loginform button span.dashicons.dashicons-visibility:before,
+body.login div#login form#loginform button span.dashicons.dashicons-hidden:before {
+    color: tomato;
+}
+
+body.login div#login form#loginform button:focus,
+body.login div#login form#loginform button:active {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+body.login form input[type="text"],
+body.login form input[type="password"] {
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+    min-height: 52px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px;
+    border: none;
+    margin-block: 15px;
+}
+
+
+body.login form input[type="text"]:focus,
+body.login form input[type="password"]:focus {
+    outline: 2px solid crimson;
+}
+
+
+body.login form #wp-submit {
+    transition: all 350ms ease-in-out;
+    background-color: tomato;
+    border-radius: 16px;
+    border: none;
+    padding: 5px 30px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+body.login form #wp-submit:hover {
+    background-color: crimson;
+}
+
+body.login form #wp-submit:focus {
+    outline: 2px solid crimson;
+}

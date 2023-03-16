@@ -7,13 +7,14 @@ import handlebars from "handlebars";
 
 const program = new Command();
 
+
+// GENERATE COMPONENT
 const phpTemplateName = "component-php.hbs";
 const scssTemplateName = "component-scss.hbs";
 const jsTemplateName = "component-js.hbs";
 
-// GENERATE COMPONENT
 program
-  .command("generate-component [componentName]")
+  .command("generate:component [componentName]")
   .description("Generate a new component")
   .action((componentName) => {
     let componentNameValue = componentName;
@@ -91,13 +92,100 @@ program
   });
 
 
+
+//GENERATE ARCHIVE TEMPLATES
+const phpArchiveTemplateName = "archive-php.hbs";
+const scssArchiveTemplateName = "archive-scss.hbs";
+const jsArchiveTemplateName = "archive-js.hbs";
+
+
+program
+  .command("generate:archive [archiveName]")
+  .description("Generate a new archive template")
+  .action((archiveName) => {
+    let archiveNameValue = archiveName;
+
+    const archiveNameQuestion = {
+      type: "input",
+      name: "archiveName",
+      message:
+        "What is the name of your post type (example: post)?",
+      default: archiveNameValue,
+      when: () => !archiveNameValue,
+    };
+
+    inquirer.prompt(archiveNameQuestion).then((answers) => {
+      archiveNameValue = archiveNameValue || answers.archiveName;
+
+      // Create a directory for the new archive template
+      fs.mkdirSync(`./template-archives/${archiveNameValue}`);
+
+      // Read in the PHP template and compile it
+      const phpArchiveTemplateSource = fs.readFileSync(
+        `./config/sources/archive/${phpArchiveTemplateName}`,
+        "utf8"
+      );
+      const phpTemplate = handlebars.compile(phpArchiveTemplateSource);
+
+      // Render the PHP template
+      const renderedPHPTemplate = phpTemplate({
+        archiveName: archiveNameValue,
+      });
+      fs.writeFileSync(
+        `./template-archives/${archiveNameValue}/archive-${archiveNameValue}.php`,
+        renderedPHPTemplate
+      );
+
+      // Read in the SCSS template and compile it
+      const scssArchiveTemplateSource = fs.readFileSync(
+        `./config/sources/archive/${scssArchiveTemplateName}`,
+        "utf8"
+      );
+      const scssTemplate = handlebars.compile(scssArchiveTemplateSource);
+
+      // Render the SCSS template
+      const renderedSCSSTemplate = scssTemplate({
+        archiveName: archiveNameValue,
+      });
+      fs.writeFileSync(
+        `./template-archives/${archiveNameValue}/archive-${archiveNameValue}.scss`,
+        renderedSCSSTemplate
+      );
+
+      // Read in the JS template and compile it
+      const jsArchiveTemplateSource = fs.readFileSync(
+        `./config/sources/archive/${jsArchiveTemplateName}`,
+        "utf8"
+      );
+      const jsTemplate = handlebars.compile(jsArchiveTemplateSource);
+
+      // Render the JS template
+      const renderedJsTemplate = jsTemplate({
+        archiveName: archiveNameValue,
+      });
+      fs.writeFileSync(
+        `./template-archives/${archiveNameValue}/archive-${archiveNameValue}.js`,
+        renderedJsTemplate
+      );
+
+      // Append import statement to main.scss file
+      const mainScssPath = "./src/scss/main.scss";
+      const importStatement = `@import './template-archives/${archiveNameValue}/archive-${archiveNameValue}';\n`;
+      fs.appendFileSync(mainScssPath, importStatement);
+
+      console.log(`Archive Template ${archiveNameValue} generated successfully!`);
+    });
+  });
+
+
+
+// GENERATE PAGE TEMPLATE
 const pagePhpTemplateName = "page-php.hbs";
 const pageScssTemplateName = "page-scss.hbs";
 const pageJsTemplateName = "page-js.hbs";
 
-// GENERATE PAGE TEMPLATE
 program
-  .command("generate-page [pageName] [fileName]")
+  .command("generate:page [pageName] [fileName]")
   .description("Generate a new page template")
   .action((args) => {
     let pageNameValue = "";
@@ -141,7 +229,10 @@ program
       const phpTemplate = handlebars.compile(phpTemplateSource);
 
       // Render the PHP template
-      const renderedPHPTemplate = phpTemplate({ pageName: pageNameValue, fileName: fileNameValue });
+      const renderedPHPTemplate = phpTemplate({
+        pageName: pageNameValue,
+        fileName: fileNameValue,
+      });
       fs.writeFileSync(
         `./template-pages/${fileNameValue}/page-${fileNameValue}.php`,
         renderedPHPTemplate
@@ -155,7 +246,10 @@ program
       const scssTemplate = handlebars.compile(scssTemplateSource);
 
       // Render the SCSS template
-      const renderedSCSSTemplate = scssTemplate({ pageName: pageNameValue, fileName: fileNameValue });
+      const renderedSCSSTemplate = scssTemplate({
+        pageName: pageNameValue,
+        fileName: fileNameValue,
+      });
       fs.writeFileSync(
         `./template-pages/${fileNameValue}/page-${fileNameValue}.scss`,
         renderedSCSSTemplate
@@ -169,7 +263,10 @@ program
       const jsTemplate = handlebars.compile(jsTemplateSource);
 
       // Render the JS template
-      const renderedJsTemplate = jsTemplate({ pageName: pageNameValue, fileName: fileNameValue});
+      const renderedJsTemplate = jsTemplate({
+        pageName: pageNameValue,
+        fileName: fileNameValue,
+      });
       fs.writeFileSync(
         `./template-pages/${fileNameValue}/page-${fileNameValue}.js`,
         renderedJsTemplate
@@ -183,6 +280,5 @@ program
       console.log(`Page Template ${pageNameValue} generated successfully!`);
     });
   });
-
 
 program.parse(process.argv);

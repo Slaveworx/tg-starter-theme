@@ -40,6 +40,7 @@ trait Templates
          * ? Maybe the scripts enqueue can be externalized to Helpers trait...
          */
         if (is_page()) {
+            $template_exists = null;
             $pagename = get_query_var('pagename');
             $page_template_slug = get_page_template_slug();
 

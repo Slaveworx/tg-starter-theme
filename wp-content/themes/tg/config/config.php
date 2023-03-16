@@ -54,6 +54,9 @@ class TG
 
         // Add Cleanup Function to Clean Transient
         add_action('wp_ajax_clean_context_transient', array($this, 'clean_context_transient'));
+
+        //Enqueue theme's custom admin login styles (to customize, change ./config/sources/assets/css/)login-styles.css)
+        add_action('login_enqueue_scripts', array($this, 'custom_login_css'));
     }
 
     /** Register Custom Post Types. */

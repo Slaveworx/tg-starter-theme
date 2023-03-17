@@ -72,6 +72,9 @@ gulp.task("serve", function () {
 
   // Watch for changes in files and execute tasks accordingly
   gulp.watch(`${dirs.src.scss}/**/*.scss`, gulp.series("sass"));
+  gulp.watch(`${dirs.src.components}/**/*.scss`, gulp.series("sass"));
+  gulp.watch(`${dirs.src.pages}/**/*.scss`, gulp.series("sass"));
+  gulp.watch(`${dirs.src.archives}/**/*.scss`, gulp.series("sass"));
   gulp.watch(jsFiles.components, gulp.series("minify-components-js"));
   gulp.watch(jsFiles.pages, gulp.series("minify-pages-js"));
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));

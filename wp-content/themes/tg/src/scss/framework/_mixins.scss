@@ -108,6 +108,29 @@
 }
 
 
+//When below X pixels
+@mixin when-below($breakpoint) {
+
+    @media only screen and (max-width: $breakpoint) {
+        @content
+    };
+
+
+}
+
+
+//When above X pixels
+@mixin when-above($breakpoint) {
+
+    @media only screen and (min-width: $breakpoint) {
+        @content
+    };
+
+
+}
+
+
+
 /*##############################################
 #       SET FONT SIZE WEIGHT & COLORS          #
 ################################################*/

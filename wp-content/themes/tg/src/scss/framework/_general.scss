@@ -2,14 +2,11 @@
 #              WORDPRESS GENERAL               #
 ################################################*/
 
-
-
 // helper class that gets added to body when mobile nav is open to prevent page scroll
 .scroll-blocked {
     overflow: hidden !important;
     height: 100%;
 }
-
 
 .not-found-description {
     @include font(2.2rem, regular, $black);

@@ -5,6 +5,7 @@ jQuery(document).ready(($) => {
   // @package tg
   //*********************************/
 
+  //Open and Close Navbar
   const headerNav = $("#site-navigation");
   const navBurger = $(".theme-burger-wrapper");
   const navbar = $(".site-header");
@@ -50,4 +51,15 @@ jQuery(document).ready(($) => {
     prevScrollPos = currentScrollPos;
   });
   navbar.css("transition", "opacity 0.2s ease-in-out");
+
+  // Fix Wp Admin Bar issue
+  if ($("body").hasClass("logged-in")) {
+    $("html").attr("style", "margin: 0 !important");
+
+    if ($(window).width() < 782) {
+      $("body").attr("style", "margin-top: 32px !important");
+    } else {
+      $("body").attr("style", "margin-top: 46px !important");
+    }
+  }
 });

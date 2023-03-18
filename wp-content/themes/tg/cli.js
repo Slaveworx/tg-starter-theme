@@ -59,7 +59,8 @@ function promptName(inputName, message) {
 // GENERATE COMPONENT
 program
   .command("generate:component [componentName]")
-  .description("Generate a new component")
+  .alias("C") // shortcut
+  .description("Generate a new component. (You can run the command without [componentName])")
   .action((componentName) => {
     promptName(
       componentName,
@@ -72,7 +73,8 @@ program
 // GENERATE ARCHIVE TEMPLATES
 program
   .command("generate:archive [archiveName]")
-  .description("Generate a new archive template")
+  .alias("A") // shortcut
+  .description("Generate a new archive template. (You can run the command without [archiveName])")
   .action((archiveName) => {
     promptName(
       archiveName,
@@ -84,17 +86,19 @@ program
 
 // GENERATE PAGE TEMPLATE
 program.command("generate:page [pageName] [fileName]")
-  .description("Generate a new page template")
+  .alias("P") // shortcut
+  .description("Generate a new page template. (You can run the command without [pageName] [fileName])")
   .action((pageName, fileName) => inquirer.prompt([
     { type: "input", name: "pageName", message: "What is the name of your page template (example: Contact Us Page)?", default: pageName, when: () => !pageName },
     { type: "input", name: "fileName", message: "What is the name for the file (example: contact-us)?", default: fileName, when: () => !fileName },
   ]).then(({ pageName, fileName }) => createTemplate("page", `./template-pages/${fileName}`, { fileName, pageName })));
 
-  
+
 // GENERATE SINGLE TEMPLATES
 program
   .command("generate:single [singleName]")
-  .description("Generate a new single template")
+  .alias("S") // shortcut
+  .description("Generate a new single template. (You can run the command without [singleName])")
   .action((singleName) => {
     promptName(
       singleName,
@@ -104,4 +108,22 @@ program
     );
   });
 
+  // COMBO COMMANDS
+  /** SINGLE AND ARCHIVE*/
+  program
+  .command("generate:combo [name]")
+  .alias("AS")
+  .description("Generate new archive and single templates.")
+  .action((name) => {
+    promptName(
+      name,
+      "What is the name of your post type (example: post)?"
+    ).then(({ singleName }) => {
+      createTemplate("archive", `./template-archives/${singleName}`, { fileName: singleName, archiveName: singleName });
+      createTemplate("single", `./template-singles/${singleName}`, { fileName: singleName, singleName: singleName });
+    });
+  });
+
+
 program.parse(process.argv);
+

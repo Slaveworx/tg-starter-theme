@@ -34,7 +34,7 @@
 			sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'tg' ),
+					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', THEME_TEXT_DOMAIN ),
 					array(
 						'span' => array(
 							'class' => array(),
@@ -47,7 +47,7 @@
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'tg' ),
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', THEME_TEXT_DOMAIN ),
 				'after'  => '</div>',
 			)
 		);

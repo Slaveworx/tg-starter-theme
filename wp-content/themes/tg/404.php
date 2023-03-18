@@ -15,13 +15,13 @@ get_header();
 	<section class="error-404 not-found">
 		<header class="page-header">
 			<h1 class="page-title">
-				<?php esc_html_e('Oops! That page can&rsquo;t be found.', 'tg'); ?>
+				<?php esc_html_e('Oops! That page can&rsquo;t be found.', THEME_TEXT_DOMAIN); ?>
 			</h1>
 		</header><!-- .page-header -->
 
 		<div class="page-content">
 			<p>
-				<?php esc_html_e('It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'tg'); ?>
+				<?php esc_html_e('It looks like nothing was found at this location. Maybe try one of the links below or a search?', THEME_TEXT_DOMAIN); ?>
 			</p>
 
 			<?php
@@ -32,7 +32,7 @@ get_header();
 
 			<div class="widget widget_categories">
 				<h2 class="widget-title">
-					<?php esc_html_e('Most Used Categories', 'tg'); ?>
+					<?php esc_html_e('Most Used Categories', THEME_TEXT_DOMAIN); ?>
 				</h2>
 				<ul>
 					<?php
@@ -51,7 +51,7 @@ get_header();
 
 			<?php
 			/* translators: %1$s: smiley */
-			$tg_archive_content = '<p>' . sprintf(esc_html__('Try looking in the monthly archives. %1$s', 'tg'), convert_smilies(':)')) . '</p>';
+			$tg_archive_content = '<p>' . sprintf(esc_html__('Try looking in the monthly archives. %1$s', THEME_TEXT_DOMAIN), convert_smilies(':)')) . '</p>';
 			the_widget('WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$tg_archive_content");
 
 			the_widget('WP_Widget_Tag_Cloud');

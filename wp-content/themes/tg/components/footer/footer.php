@@ -18,10 +18,10 @@
 
 <footer id="colophon" class="site-footer">
     <div class="site-info">
-        <a href="<?php echo esc_url(__('https://tiagogalvao.com', 'tg')); ?>">
+        <a href="<?php echo esc_url(__('https://tiagogalvao.com', THEME_TEXT_DOMAIN)); ?>">
             <?php
             /* translators: %s: CMS name, i.e. WordPress. */
-            printf(esc_html__('© %s %s', 'tg'), date("Y"), 'Tiago M. Galvão');
+            printf(esc_html__('© %s %s', THEME_TEXT_DOMAIN), date("Y"), 'Tiago M. Galvão');
             ?>
         </a>
     </div><!-- .site-info -->

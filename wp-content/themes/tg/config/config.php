@@ -54,7 +54,7 @@ class TG
         //Change default single templates directory
         add_filter('single_template', array($this, 'tg_single_templates_dir'));
 
-        // Add Button to Clean Context Transient
+        // Add Buttons to Clean Context Transient
         add_action('admin_bar_menu', array($this, 'add_cleanup_btn_to_admin_bar'), 999);
 
         // Add Cleanup Function to Clean Transient

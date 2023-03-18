@@ -83,23 +83,30 @@ trait Context
      */
 
     /** Add Button to admin bar to Purge Context Transient */
-    function add_cleanup_btn_to_admin_bar()
+    public static function add_cleanup_btn_to_admin_bar()
     {
         global $wp_admin_bar;
         $args = array(
             'id' => 'transient-purge-button',
-            'title' => '<div style="display:flex;align-items:center;color:tomato; font-weight:700;"><img src="'. get_template_directory_uri() .'/config/sources/assets/img/trash.svg" style="width:20px; height:20px; display:inline-block;">- PURGE CONTEXT -</div>',
+            'title' => '<div style="display:flex;align-items:center;color:tomato; font-weight:700;"><img src="' . get_template_directory_uri() . '/config/sources/assets/img/trash.svg" style="width:20px; height:20px; display:inline-block;">- PURGE CONTEXT -</div>',
             'href' => wp_nonce_url(admin_url('admin-ajax.php?action=clean_context_transient'), 'clean_context_transient'),
             'meta' => array(
                 'class' => 'transient-purge-button',
                 'title' => 'Purge Context',
             ),
         );
-        $wp_admin_bar->add_node($args);
+        // Add the button to the admin bar on desktop devices
+        if (!wp_is_mobile()) {
+            $wp_admin_bar->add_node($args);
+        }
+        // Add the button to the admin bar on mobile devices
+        else {
+            $wp_admin_bar->add_menu($args);
+        }
     }
 
     /** The actual cleanup */
-    function clean_context_transient()
+    public static function clean_context_transient()
     {
         check_ajax_referer('clean_context_transient');
         delete_transient(self::$context_transient_name);

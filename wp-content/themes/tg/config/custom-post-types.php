@@ -1,5 +1,7 @@
 <?php
+
 namespace TG;
+
 /**
  * CREATE CUSTOM POST TYPES
  */
@@ -12,26 +14,28 @@ TG::create_cpt(
         'menu_icon'         => 'dashicons-paperclip',
         'supports'          => array('title', 'page-attributes', 'revisions')
     ),
-    array('menu_name' => _x('Portfolio', 'textdomain'))
+    array('menu_name' => _x('Portfolio', THEME_TEXT_DOMAIN))
 );
 
 TG::create_cpt(
-    "technologies",
+    "technology",
     array(
         'menu_position'     => 0,
         'menu_icon'         => 'dashicons-media-code',
         'supports'          => array('title', 'page-attributes', 'revisions')
-    )
+    ),
+    array('menu_name' => _x('Technologies', THEME_TEXT_DOMAIN))
 );
 
 TG::create_cpt(
-    "courses",
+    "course",
     array(
         'menu_position'     => 0,
         'menu_icon'         => 'dashicons-welcome-learn-more',
-        'supports'          => array('title', 'page-attributes')
+        'supports'          => array('title', 'page-attributes'),
+        'has_archive'       => false
     ),
-    array('menu_name' => _x('Courses', 'textdomain'))
+    array('menu_name' => _x('Courses', THEME_TEXT_DOMAIN))
 );
 
 

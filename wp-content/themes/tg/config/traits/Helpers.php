@@ -110,21 +110,35 @@ trait Helpers
         $name_uc = ucfirst($name);
 
         $default_labels = array(
-            'name'               => $name_uc . 's',
-            'singular_name'      => $name_uc,
-            'menu_name'          => $name_uc . 's',
-            'name_admin_bar'     => $name_uc,
-            'add_new'            => 'Add New ' . $name_uc,
-            'add_new_item'       => 'Add New ' . $name_uc,
-            'new_item'           => 'New ' . $name_uc,
-            'edit_item'          => 'Edit ' . $name_uc,
-            'view_item'          => 'View ' . $name_uc,
-            'all_items'          => 'All ' . $name_uc . 's',
-            'search_items'       => 'Search ' . $name_uc . 's',
-            'parent_item_colon'  => 'Parent ' . $name_uc . 's:',
-            'not_found'          => 'No ' . $name_lc . 's found.',
-            'not_found_in_trash' => 'No ' . $name_lc . 's found in Trash.',
+            'name'                  => _x( $name_uc . 's', 'Post Type General Name', THEME_TEXT_DOMAIN ),
+            'singular_name'         => _x( $name_uc, 'Post Type Singular Name', THEME_TEXT_DOMAIN ),
+            'menu_name'             => __( $name_uc . 's', THEME_TEXT_DOMAIN ),
+            'name_admin_bar'        => __( $name_uc . 's', THEME_TEXT_DOMAIN ),
+            'archives'              => __( 'Item Archives', THEME_TEXT_DOMAIN ),
+            'attributes'            => __( 'Item Attributes', THEME_TEXT_DOMAIN ),
+            'parent_item_colon'     => __( 'Parent Item:', THEME_TEXT_DOMAIN ),
+            'all_items'             => __( 'All Items', THEME_TEXT_DOMAIN ),
+            'add_new_item'          => __( 'Add New Item', THEME_TEXT_DOMAIN ),
+            'add_new'               => __( 'Add New', THEME_TEXT_DOMAIN ),
+            'new_item'              => __( 'New Item', THEME_TEXT_DOMAIN ),
+            'edit_item'             => __( 'Edit Item', THEME_TEXT_DOMAIN ),
+            'update_item'           => __( 'Update Item', THEME_TEXT_DOMAIN ),
+            'view_item'             => __( 'View Item', THEME_TEXT_DOMAIN ),
+            'view_items'            => __( 'View Items', THEME_TEXT_DOMAIN ),
+            'search_items'          => __( 'Search Item', THEME_TEXT_DOMAIN ),
+            'not_found'             => __( 'Not found', THEME_TEXT_DOMAIN ),
+            'not_found_in_trash'    => __( 'Not found in Trash', THEME_TEXT_DOMAIN ),
+            'featured_image'        => __( 'Featured Image', THEME_TEXT_DOMAIN ),
+            'set_featured_image'    => __( 'Set featured image', THEME_TEXT_DOMAIN ),
+            'remove_featured_image' => __( 'Remove featured image', THEME_TEXT_DOMAIN ),
+            'use_featured_image'    => __( 'Use as featured image', THEME_TEXT_DOMAIN ),
+            'insert_into_item'      => __( 'Insert into item', THEME_TEXT_DOMAIN ),
+            'uploaded_to_this_item' => __( 'Uploaded to this item', THEME_TEXT_DOMAIN ),
+            'items_list'            => __( 'Items list', THEME_TEXT_DOMAIN ),
+            'items_list_navigation' => __( 'Items list navigation', THEME_TEXT_DOMAIN ),
+            'filter_items_list'     => __( 'Filter items list', THEME_TEXT_DOMAIN ),
         );
+
         $labels = wp_parse_args($labels, $default_labels);
 
         $default_args = array(
@@ -147,91 +161,6 @@ trait Helpers
         register_post_type($name_lc, $args);
     }
 
-    /** Image Optimization */
-    public static function optimize_image($image_url, $quality = 80)
-    {
-        $image_path = parse_url($image_url, PHP_URL_PATH);
-        $image_abs_path = ABSPATH . $image_path;
-        $supports_webp = strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false;
-
-        if (file_exists($image_abs_path)) {
-            $image_info = getimagesize($image_abs_path);
-            $image_mime = $image_info['mime'];
-            $image_type = strtolower(str_replace('image/', '', $image_mime));
-
-            switch ($image_type) {
-                case 'jpg':
-                case 'jpeg':
-                    $image = imagecreatefromjpeg($image_abs_path);
-                    imagejpeg($image, $image_abs_path, $quality);
-                    break;
-                case 'png':
-                    $image = imagecreatefrompng($image_abs_path);
-                    imagealphablending($image, false);
-                    imagesavealpha($image, true);
-                    imagepng($image, $image_abs_path, 9);
-                    break;
-                case 'gif':
-                    $image = imagecreatefromgif($image_abs_path);
-                    imagegif($image, $image_abs_path);
-                    break;
-                case 'svg':
-                    $svg_data = file_get_contents($image_abs_path);
-                    $doc = new \DOMDocument();
-                    $doc->loadXML($svg_data);
-                    $xpath = new \DOMXPath($doc);
-                    foreach ($xpath->query('//@*') as $attr) {
-                        if ($attr->nodeName == 'class') {
-                            $attr->parentNode->removeAttribute('class');
-                        }
-                    }
-                    file_put_contents($image_abs_path, $doc->saveXML());
-                    break;
-                default:
-                    return $image_url;
-                    break;
-            }
-
-            // Convert to webP if supported
-            if ($supports_webp && function_exists('imagewebp')) {
-                $webp_path = ABSPATH . preg_replace('/\.(jpg|jpeg|png|gif|svg)$/i', '.webp', $image_path);
-                switch ($image_type) {
-                    case 'jpg':
-                    case 'jpeg':
-                        $image = imagecreatefromjpeg($image_abs_path);
-                        imagewebp($image, $webp_path, $quality);
-                        break;
-                    case 'png':
-                        $image = imagecreatefrompng($image_abs_path);
-                        imagewebp($image, $webp_path, 9);
-                        break;
-                    case 'gif':
-                        $image = imagecreatefromgif($image_abs_path);
-                        imagewebp($image, $webp_path);
-                        break;
-                    case 'svg':
-                        $svg_data = file_get_contents($image_abs_path);
-                        $doc = new \DOMDocument();
-                        $doc->loadXML($svg_data);
-                        $xpath = new \DOMXPath($doc);
-                        foreach ($xpath->query('//@*') as $attr) {
-                            if ($attr->nodeName == 'class') {
-                                $attr->parentNode->removeAttribute('class');
-                            }
-                        }
-                        file_put_contents($webp_path, $doc->saveXML());
-                        break;
-                }
-                if (file_exists($webp_path)) {
-                    $image_url = preg_replace('/\.(jpg|jpeg|png|gif|svg)$/i', '.webp', $image_url);
-                }
-            }
-
-            return $image_url;
-        } else {
-            return $image_url;
-        }
-    }
 
     /** Will enqueue the custom admin styles */ 
     public static function custom_login_css() {

@@ -7,364 +7,101 @@ import handlebars from "handlebars";
 
 const program = new Command();
 
+const templateNames = {
+  component: ["component-php.hbs", "component-scss.hbs", "component-js.hbs"],
+  archive: ["archive-php.hbs", "archive-scss.hbs", "archive-js.hbs"],
+  page: ["page-php.hbs", "page-scss.hbs", "page-js.hbs"],
+  single: ["single-php.hbs", "single-scss.hbs", "single-js.hbs"],
+};
+
+const createTemplate = (type, targetDir, pageInfo) => {
+  const [phpTemplateName, scssTemplateName, jsTemplateName] = templateNames[type];
+  fs.mkdirSync(targetDir);
+
+  ["php", "scss", "js"].forEach((ext, idx) => {
+    const templateName = [phpTemplateName, scssTemplateName, jsTemplateName][idx];
+    const templateSource = fs.readFileSync(`./config/sources/${type}/${templateName}`, "utf8");
+    const template = handlebars.compile(templateSource);
+    const renderedTemplate = template(pageInfo);
+
+    const fileName = type === "component" ? `${pageInfo.fileName}.${ext}` : `${type}-${pageInfo.fileName}.${ext}`;
+    fs.writeFileSync(`${targetDir}/${fileName}`, renderedTemplate);
+  });
+
+  const mainScssPath = "./src/scss/main.scss";
+  const importStatement = `@import './${targetDir.replace("./", "")}/${type === "component" ? "" : type + "-"}${pageInfo.fileName}';\n`;
+  fs.appendFileSync(mainScssPath, importStatement);
+
+  console.log(`${type[0].toUpperCase() + type.slice(1)} Template ${pageInfo.fileName} generated successfully!`);
+};
+
+function promptName(inputName, message) {
+  if (inputName) {
+    return Promise.resolve({ singleName: inputName });
+  } else {
+    return inquirer.prompt([
+      {
+        type: "input",
+        name: "singleName",
+        message: message,
+        validate: function (value) {
+          if (value.length) {
+            return true;
+          } else {
+            return "Please enter a valid name.";
+          }
+        },
+      },
+    ]);
+  }
+}
 
 // GENERATE COMPONENT
-const phpTemplateName = "component-php.hbs";
-const scssTemplateName = "component-scss.hbs";
-const jsTemplateName = "component-js.hbs";
-
 program
   .command("generate:component [componentName]")
   .description("Generate a new component")
   .action((componentName) => {
-    let componentNameValue = componentName;
-
-    const componentNameQuestion = {
-      type: "input",
-      name: "componentName",
-      message:
-        "What is the name of your component (example: testimonials-block)?",
-      default: componentNameValue,
-      when: () => !componentNameValue,
-    };
-
-    inquirer.prompt(componentNameQuestion).then((answers) => {
-      componentNameValue = componentNameValue || answers.componentName;
-
-      // Create a directory for the new component
-      fs.mkdirSync(`./components/${componentNameValue}`);
-
-      // Read in the PHP template and compile it
-      const phpTemplateSource = fs.readFileSync(
-        `./config/sources/component/${phpTemplateName}`,
-        "utf8"
-      );
-      const phpTemplate = handlebars.compile(phpTemplateSource);
-
-      // Render the PHP template
-      const renderedPHPTemplate = phpTemplate({
-        componentName: componentNameValue,
-      });
-      fs.writeFileSync(
-        `./components/${componentNameValue}/${componentNameValue}.php`,
-        renderedPHPTemplate
-      );
-
-      // Read in the SCSS template and compile it
-      const scssTemplateSource = fs.readFileSync(
-        `./config/sources/component/${scssTemplateName}`,
-        "utf8"
-      );
-      const scssTemplate = handlebars.compile(scssTemplateSource);
-
-      // Render the SCSS template
-      const renderedSCSSTemplate = scssTemplate({
-        componentName: componentNameValue,
-      });
-      fs.writeFileSync(
-        `./components/${componentNameValue}/${componentNameValue}.scss`,
-        renderedSCSSTemplate
-      );
-
-      // Read in the JS template and compile it
-      const jsTemplateSource = fs.readFileSync(
-        `./config/sources/component/${jsTemplateName}`,
-        "utf8"
-      );
-      const jsTemplate = handlebars.compile(jsTemplateSource);
-
-      // Render the JS template
-      const renderedJsTemplate = jsTemplate({
-        componentName: componentNameValue,
-      });
-      fs.writeFileSync(
-        `./components/${componentNameValue}/${componentNameValue}.js`,
-        renderedJsTemplate
-      );
-
-      // Append import statement to main.scss file
-      const mainScssPath = "./src/scss/main.scss";
-      const importStatement = `@import './components/${componentNameValue}/${componentNameValue}';\n`;
-      fs.appendFileSync(mainScssPath, importStatement);
-
-      console.log(`Component ${componentNameValue} generated successfully!`);
-    });
+    promptName(
+      componentName,
+      "What is the name of your component (example: testimonials-block)?"
+    ).then(({ singleName }) =>
+      createTemplate("component", `./components/${singleName}`, { fileName: singleName, componentName: singleName })
+    );
   });
 
-
-
-//GENERATE ARCHIVE TEMPLATES
-const phpArchiveTemplateName = "archive-php.hbs";
-const scssArchiveTemplateName = "archive-scss.hbs";
-const jsArchiveTemplateName = "archive-js.hbs";
-
-
+// GENERATE ARCHIVE TEMPLATES
 program
   .command("generate:archive [archiveName]")
   .description("Generate a new archive template")
   .action((archiveName) => {
-    let archiveNameValue = archiveName;
-
-    const archiveNameQuestion = {
-      type: "input",
-      name: "archiveName",
-      message:
-        "What is the name of your post type (example: post)?",
-      default: archiveNameValue,
-      when: () => !archiveNameValue,
-    };
-
-    inquirer.prompt(archiveNameQuestion).then((answers) => {
-      archiveNameValue = archiveNameValue || answers.archiveName;
-
-      // Create a directory for the new archive template
-      fs.mkdirSync(`./template-archives/${archiveNameValue}`);
-
-      // Read in the PHP template and compile it
-      const phpArchiveTemplateSource = fs.readFileSync(
-        `./config/sources/archive/${phpArchiveTemplateName}`,
-        "utf8"
-      );
-      const phpTemplate = handlebars.compile(phpArchiveTemplateSource);
-
-      // Render the PHP template
-      const renderedPHPTemplate = phpTemplate({
-        archiveName: archiveNameValue,
-      });
-      fs.writeFileSync(
-        `./template-archives/${archiveNameValue}/archive-${archiveNameValue}.php`,
-        renderedPHPTemplate
-      );
-
-      // Read in the SCSS template and compile it
-      const scssArchiveTemplateSource = fs.readFileSync(
-        `./config/sources/archive/${scssArchiveTemplateName}`,
-        "utf8"
-      );
-      const scssTemplate = handlebars.compile(scssArchiveTemplateSource);
-
-      // Render the SCSS template
-      const renderedSCSSTemplate = scssTemplate({
-        archiveName: archiveNameValue,
-      });
-      fs.writeFileSync(
-        `./template-archives/${archiveNameValue}/archive-${archiveNameValue}.scss`,
-        renderedSCSSTemplate
-      );
-
-      // Read in the JS template and compile it
-      const jsArchiveTemplateSource = fs.readFileSync(
-        `./config/sources/archive/${jsArchiveTemplateName}`,
-        "utf8"
-      );
-      const jsTemplate = handlebars.compile(jsArchiveTemplateSource);
-
-      // Render the JS template
-      const renderedJsTemplate = jsTemplate({
-        archiveName: archiveNameValue,
-      });
-      fs.writeFileSync(
-        `./template-archives/${archiveNameValue}/archive-${archiveNameValue}.js`,
-        renderedJsTemplate
-      );
-
-      // Append import statement to main.scss file
-      const mainScssPath = "./src/scss/main.scss";
-      const importStatement = `@import './template-archives/${archiveNameValue}/archive-${archiveNameValue}';\n`;
-      fs.appendFileSync(mainScssPath, importStatement);
-
-      console.log(`Archive Template ${archiveNameValue} generated successfully!`);
-    });
+    promptName(
+      archiveName,
+      "What is the name of your post type (example: post)?"
+    ).then(({ singleName }) =>
+      createTemplate("archive", `./template-archives/${singleName}`, { fileName: singleName, archiveName: singleName })
+    );
   });
-
-
 
 // GENERATE PAGE TEMPLATE
-const pagePhpTemplateName = "page-php.hbs";
-const pageScssTemplateName = "page-scss.hbs";
-const pageJsTemplateName = "page-js.hbs";
-
-program
-  .command("generate:page [pageName] [fileName]")
+program.command("generate:page [pageName] [fileName]")
   .description("Generate a new page template")
-  .action((args) => {
-    let pageNameValue = "";
-    let fileNameValue = "";
+  .action((pageName, fileName) => inquirer.prompt([
+    { type: "input", name: "pageName", message: "What is the name of your page template (example: Contact Us Page)?", default: pageName, when: () => !pageName },
+    { type: "input", name: "fileName", message: "What is the name for the file (example: contact-us)?", default: fileName, when: () => !fileName },
+  ]).then(({ pageName, fileName }) => createTemplate("page", `./template-pages/${fileName}`, { fileName, pageName })));
 
-    if (args) {
-      const { pageName, fileName } = args;
-      pageNameValue = pageName || "";
-      fileNameValue = fileName || "";
-    }
-
-    const pageNameQuestion = {
-      type: "input",
-      name: "pageName",
-      message:
-        "What is the name of your page template (example: Contact Us Page)?",
-      default: pageNameValue,
-      when: () => !pageNameValue,
-    };
-
-    const fileNameQuestion = {
-      type: "input",
-      name: "fileName",
-      message: "What is the name for the file (example: contact-us)?",
-      default: fileNameValue,
-      when: () => !fileNameValue,
-    };
-
-    inquirer.prompt([pageNameQuestion, fileNameQuestion]).then((answers) => {
-      pageNameValue = pageNameValue || answers.pageName;
-      fileNameValue = fileNameValue || answers.fileName;
-
-      // Create a directory for the new page
-      fs.mkdirSync(`./template-pages/${fileNameValue}`);
-
-      // Read in the PHP template and compile it
-      const phpTemplateSource = fs.readFileSync(
-        `./config/sources/page/${pagePhpTemplateName}`,
-        "utf8"
-      );
-      const phpTemplate = handlebars.compile(phpTemplateSource);
-
-      // Render the PHP template
-      const renderedPHPTemplate = phpTemplate({
-        pageName: pageNameValue,
-        fileName: fileNameValue,
-      });
-      fs.writeFileSync(
-        `./template-pages/${fileNameValue}/page-${fileNameValue}.php`,
-        renderedPHPTemplate
-      );
-
-      // Read in the SCSS template and compile it
-      const scssTemplateSource = fs.readFileSync(
-        `./config/sources/page/${pageScssTemplateName}`,
-        "utf8"
-      );
-      const scssTemplate = handlebars.compile(scssTemplateSource);
-
-      // Render the SCSS template
-      const renderedSCSSTemplate = scssTemplate({
-        pageName: pageNameValue,
-        fileName: fileNameValue,
-      });
-      fs.writeFileSync(
-        `./template-pages/${fileNameValue}/page-${fileNameValue}.scss`,
-        renderedSCSSTemplate
-      );
-
-      // Read in the JS template and compile it
-      const jsTemplateSource = fs.readFileSync(
-        `./config/sources/page/${pageJsTemplateName}`,
-        "utf8"
-      );
-      const jsTemplate = handlebars.compile(jsTemplateSource);
-
-      // Render the JS template
-      const renderedJsTemplate = jsTemplate({
-        pageName: pageNameValue,
-        fileName: fileNameValue,
-      });
-      fs.writeFileSync(
-        `./template-pages/${fileNameValue}/page-${fileNameValue}.js`,
-        renderedJsTemplate
-      );
-
-      // Append import statement to main.scss file
-      const mainScssPath = "./src/scss/main.scss";
-      const importStatement = `@import './template-pages/${fileNameValue}/page-${fileNameValue}';\n`;
-      fs.appendFileSync(mainScssPath, importStatement);
-
-      console.log(`Page Template ${pageNameValue} generated successfully!`);
-    });
-  });
-
-
-
-  //GENERATE SINGLE TEMPLATES
-const phpSingleTemplateName = "single-php.hbs";
-const scssSingleTemplateName = "single-scss.hbs";
-const jsSingleTemplateName = "single-js.hbs";
-
-
+  
+// GENERATE SINGLE TEMPLATES
 program
   .command("generate:single [singleName]")
   .description("Generate a new single template")
   .action((singleName) => {
-    let singleNameValue = singleName;
-
-    const singleNameQuestion = {
-      type: "input",
-      name: "singleName",
-      message:
-        "What is the name of your post type (example: post)?",
-      default: singleNameValue,
-      when: () => !singleNameValue,
-    };
-
-    inquirer.prompt(singleNameQuestion).then((answers) => {
-      singleNameValue = singleNameValue || answers.singleName;
-
-      // Create a directory for the new single template
-      fs.mkdirSync(`./template-singles/${singleNameValue}`);
-
-      // Read in the PHP template and compile it
-      const phpSingleTemplateSource = fs.readFileSync(
-        `./config/sources/single/${phpSingleTemplateName}`,
-        "utf8"
-      );
-      const phpTemplate = handlebars.compile(phpSingleTemplateSource);
-
-      // Render the PHP template
-      const renderedPHPTemplate = phpTemplate({
-        singleName: singleNameValue,
-      });
-      fs.writeFileSync(
-        `./template-singles/${singleNameValue}/single-${singleNameValue}.php`,
-        renderedPHPTemplate
-      );
-
-      // Read in the SCSS template and compile it
-      const scssSingleTemplateSource = fs.readFileSync(
-        `./config/sources/single/${scssSingleTemplateName}`,
-        "utf8"
-      );
-      const scssTemplate = handlebars.compile(scssSingleTemplateSource);
-
-      // Render the SCSS template
-      const renderedSCSSTemplate = scssTemplate({
-        singleName: singleNameValue,
-      });
-      fs.writeFileSync(
-        `./template-singles/${singleNameValue}/single-${singleNameValue}.scss`,
-        renderedSCSSTemplate
-      );
-
-      // Read in the JS template and compile it
-      const jsSingleTemplateSource = fs.readFileSync(
-        `./config/sources/single/${jsSingleTemplateName}`,
-        "utf8"
-      );
-      const jsTemplate = handlebars.compile(jsSingleTemplateSource);
-
-      // Render the JS template
-      const renderedJsTemplate = jsTemplate({
-        singleName: singleNameValue,
-      });
-      fs.writeFileSync(
-        `./template-singles/${singleNameValue}/single-${singleNameValue}.js`,
-        renderedJsTemplate
-      );
-
-      // Append import statement to main.scss file
-      const mainScssPath = "./src/scss/main.scss";
-      const importStatement = `@import './template-singles/${singleNameValue}/single-${singleNameValue}';\n`;
-      fs.appendFileSync(mainScssPath, importStatement);
-
-      console.log(`Single Template ${singleNameValue} generated successfully!`);
-    });
+    promptName(
+      singleName,
+      "What is the name of your post type (example: post)?"
+    ).then(({ singleName }) =>
+      createTemplate("single", `./template-singles/${singleName}`, { fileName: singleName, singleName: singleName })
+    );
   });
 
 program.parse(process.argv);

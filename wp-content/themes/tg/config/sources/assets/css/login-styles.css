@@ -1,18 +1,58 @@
 body.login {
-    background-color: #f5853fd3;
+    background-color: #fff;
+}
+
+body.login div#login {
+    width: 100%;
+    height: fit-content;
+}
+
+@media only screen and (max-width: 600px) {
+    body.login div#login {
+        width: fit-content;
+        padding-top: 150px;
+    }
+}
+
+body.login div#login_error {
+    border: 3px solid crimson;
+}
+
+body.login p.message {
+    border: 3px solid slateblue;
+}
+
+body.login div#login_error,
+body.login p.message {
+    width: 530px;
+    border-radius: 16px;
+    height: fit-content;
+    margin-inline: auto;
+    background: rgba(87, 38, 38, 0.1);
+}
+
+@media only screen and (max-width: 600px) {
+
+    body.login div#login_error,
+    body.login p.message {
+        width: auto;
+        margin-inline: 15px;
+    }
 }
 
 body.login div#login h1 a {
     background-image: url('../img/logo.png');
     background-size: contain;
     width: 48px;
+    height: 48px;
 }
 
-body.login div#login {
-
-    width: 100%;
-    height: fit-content;
+body.login div#login h1 {
+    width: fit-content;
+    margin-inline: auto;
 }
+
+
 
 body.login div#login p#nav,
 body.login div#login p#backtoblog {
@@ -22,7 +62,7 @@ body.login div#login p#backtoblog {
 
 body.login div#login p#nav a,
 body.login div#login p#backtoblog a {
-    color: #fff;
+    color: #000;
 }
 
 body.login div#login p#nav a:hover,
@@ -33,15 +73,23 @@ body.login div#login p#backtoblog a:hover {
 
 body.login form {
     margin-inline: auto;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(87, 38, 38, 0.1);
     backdrop-filter: blur(5px);
     border-radius: 16px;
     border: none;
-    box-shadow: 0 2px 6px rgba(255, 255, 255, .1);
+    box-shadow: 0 2px 6px rgba(87, 38, 38, 0.1);
     padding: 30px;
-    width: min(500px, 100%);
+    width: 500px;
     height: fit-content;
 }
+
+@media only screen and (max-width: 600px) {
+    body.login form {
+        width: fit-content;
+        margin-inline: 15px;
+    }
+}
+
 
 /*checkbox*/
 body.login form #rememberme {
@@ -49,7 +97,7 @@ body.login form #rememberme {
 }
 
 body.login form label {
-    color: #fff;
+    color: #000;
     font-size: 18px;
     font-weight: 600;
 }
@@ -81,12 +129,14 @@ body.login form input[type="password"] {
     padding: 10px;
     border: none;
     margin-block: 15px;
+    width: 100%;
 }
 
 
 body.login form input[type="text"]:focus,
 body.login form input[type="password"]:focus {
     outline: 2px solid crimson;
+    border-radius: 16px;
 }
 
 
@@ -106,4 +156,5 @@ body.login form #wp-submit:hover {
 
 body.login form #wp-submit:focus {
     outline: 2px solid crimson;
+    border-radius: 16px;
 }

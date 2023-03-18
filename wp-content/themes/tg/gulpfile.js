@@ -19,6 +19,7 @@ const dirs = {
     components: "./components",
     pages: "./template-pages",
     archives: "./template-archives",
+    singles: "./template-singles",
   },
   dest: {
     css: "./static/css",
@@ -31,6 +32,7 @@ const jsFiles = {
   components: `${dirs.src.components}/**/*.js`,
   pages: `${dirs.src.pages}/**/*.js`,
   archives: `${dirs.src.archives}/**/*.js`,
+  singles: `${dirs.src.singles}/**/*.js`,
   scripts: `${dirs.src.js}/*.js`,
 };
 
@@ -63,6 +65,10 @@ gulp.task("minify-archives-js", function () {
   return minifyJS(jsFiles.archives, `${dirs.dest.js}/template-archives`);
 });
 
+gulp.task("minify-singles-js", function () {
+  return minifyJS(jsFiles.singles, `${dirs.dest.js}/template-singles`);
+});
+
 gulp.task("scripts", function () {
   return minifyJS(jsFiles.scripts, dirs.dest.js);
 });
@@ -75,9 +81,11 @@ gulp.task("serve", function () {
   gulp.watch(`${dirs.src.components}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.pages}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.archives}/**/*.scss`, gulp.series("sass"));
+  gulp.watch(`${dirs.src.singles}/**/*.scss`, gulp.series("sass"));
   gulp.watch(jsFiles.components, gulp.series("minify-components-js"));
   gulp.watch(jsFiles.pages, gulp.series("minify-pages-js"));
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));
+  gulp.watch(jsFiles.singles, gulp.series("minify-singles-js"));
   gulp.watch(jsFiles.scripts, gulp.series("scripts"));
   gulp.watch("**/*").on("change", browserSync.reload);
 
@@ -99,7 +107,7 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
-    //Page templates garbage collector
+    //Pages templates garbage collector
     chokidar
     .watch("./template-pages/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
@@ -135,6 +143,25 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
+
+    //Singles garbage collector
+    chokidar
+    .watch("./template-singles/", { ignored: /(^|[\/\\])\../ })
+    .on("unlinkDir", function (dirPath) {
+      const singleName = dirPath.split("\\").pop();
+      console.log("Successfuly Deleted Single Template: ", singleName);
+      deleteSync(['static/js/template-singles/' + `${singleName}`, '!static/js/template-singles/']);
+      gulp
+        .src("./src/scss/main.scss")
+        .pipe(
+          replace(
+            //the quotes on the line below must be single quotes, otherwise it will not recognize any text
+            `@import './template-singles/${singleName}/single-${singleName}';`,
+            ""
+          )
+        )
+        .pipe(gulp.dest("./src/scss/"));
+    });
 });
 
-gulp.task("default", gulp.series("sass", "minify-components-js", "minify-pages-js", "minify-archives-js", "scripts", "serve"));
+gulp.task("default", gulp.series("sass", "minify-components-js", "minify-pages-js", "minify-archives-js", "minify-singles-js", "scripts", "serve"));

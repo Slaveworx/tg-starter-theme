@@ -281,4 +281,90 @@ program
     });
   });
 
+
+
+  //GENERATE SINGLE TEMPLATES
+const phpSingleTemplateName = "single-php.hbs";
+const scssSingleTemplateName = "single-scss.hbs";
+const jsSingleTemplateName = "single-js.hbs";
+
+
+program
+  .command("generate:single [singleName]")
+  .description("Generate a new single template")
+  .action((singleName) => {
+    let singleNameValue = singleName;
+
+    const singleNameQuestion = {
+      type: "input",
+      name: "singleName",
+      message:
+        "What is the name of your post type (example: post)?",
+      default: singleNameValue,
+      when: () => !singleNameValue,
+    };
+
+    inquirer.prompt(singleNameQuestion).then((answers) => {
+      singleNameValue = singleNameValue || answers.singleName;
+
+      // Create a directory for the new single template
+      fs.mkdirSync(`./template-singles/${singleNameValue}`);
+
+      // Read in the PHP template and compile it
+      const phpSingleTemplateSource = fs.readFileSync(
+        `./config/sources/single/${phpSingleTemplateName}`,
+        "utf8"
+      );
+      const phpTemplate = handlebars.compile(phpSingleTemplateSource);
+
+      // Render the PHP template
+      const renderedPHPTemplate = phpTemplate({
+        singleName: singleNameValue,
+      });
+      fs.writeFileSync(
+        `./template-singles/${singleNameValue}/single-${singleNameValue}.php`,
+        renderedPHPTemplate
+      );
+
+      // Read in the SCSS template and compile it
+      const scssSingleTemplateSource = fs.readFileSync(
+        `./config/sources/single/${scssSingleTemplateName}`,
+        "utf8"
+      );
+      const scssTemplate = handlebars.compile(scssSingleTemplateSource);
+
+      // Render the SCSS template
+      const renderedSCSSTemplate = scssTemplate({
+        singleName: singleNameValue,
+      });
+      fs.writeFileSync(
+        `./template-singles/${singleNameValue}/single-${singleNameValue}.scss`,
+        renderedSCSSTemplate
+      );
+
+      // Read in the JS template and compile it
+      const jsSingleTemplateSource = fs.readFileSync(
+        `./config/sources/single/${jsSingleTemplateName}`,
+        "utf8"
+      );
+      const jsTemplate = handlebars.compile(jsSingleTemplateSource);
+
+      // Render the JS template
+      const renderedJsTemplate = jsTemplate({
+        singleName: singleNameValue,
+      });
+      fs.writeFileSync(
+        `./template-singles/${singleNameValue}/single-${singleNameValue}.js`,
+        renderedJsTemplate
+      );
+
+      // Append import statement to main.scss file
+      const mainScssPath = "./src/scss/main.scss";
+      const importStatement = `@import './template-singles/${singleNameValue}/single-${singleNameValue}';\n`;
+      fs.appendFileSync(mainScssPath, importStatement);
+
+      console.log(`Single Template ${singleNameValue} generated successfully!`);
+    });
+  });
+
 program.parse(process.argv);

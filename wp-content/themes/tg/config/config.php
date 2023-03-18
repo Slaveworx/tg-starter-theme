@@ -1,12 +1,14 @@
 <?php
+
 namespace TG;
+
 use TG\Templates;
 use TG\Context;
 use TG\Helpers;
 
-require_once __DIR__.'/traits/Templates.php';
-require_once __DIR__.'/traits/Context.php';
-require_once __DIR__.'/traits/Helpers.php';
+require_once __DIR__ . '/traits/Templates.php';
+require_once __DIR__ . '/traits/Context.php';
+require_once __DIR__ . '/traits/Helpers.php';
 
 class TG
 {
@@ -48,6 +50,9 @@ class TG
 
         //Change default page templates directory
         add_filter('page_template', array($this, 'tg_page_templates_dir'));
+
+        //Change default single templates directory
+        add_filter('single_template', array($this, 'tg_single_templates_dir'));
 
         // Add Button to Clean Context Transient
         add_action('admin_bar_menu', array($this, 'add_cleanup_btn_to_admin_bar'), 999);

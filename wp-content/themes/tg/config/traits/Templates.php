@@ -21,6 +21,14 @@ trait Templates
                         $archive_template = get_stylesheet_directory() . '/template-archives/' . $subdirectory . '/' . $filename;
                         if (file_exists($archive_template)) {
                             $template = $archive_template;
+                            $slug = basename(dirname($template));
+                            $archive_template_name = pathinfo(basename($template), PATHINFO_FILENAME);
+                            // Load the JavaScript file if it exists
+                            $js_file = sprintf('%s/template-archives/%s/%s.js', get_template_directory(), $slug, $archive_template_name);
+                            $js_file_to_enqueue = sprintf('%s/static/js/template-archives/%s/%s.js', get_template_directory_uri(), $slug, $archive_template_name);
+                            if (file_exists($js_file)) {
+                                wp_enqueue_script($archive_template_name . "-min-archive-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                            }
                             break 2;
                         }
                     }
@@ -98,6 +106,79 @@ trait Templates
             // If no matching template has been found, fall back to the default template
             if (!$template_exists && !file_exists($template)) {
                 $template = get_page_template();
+            }
+        }
+
+        return $template;
+    }
+
+
+    /** Change Default Singles Templates Directory */
+    public function tg_single_templates_dir($template)
+    {
+        /**
+         * !TODO: Refactor this function to avoid repeated code
+         * ? Maybe the scripts enqueue can be externalized to Helpers trait...
+         */
+        if (is_singular()) {
+            $template_exists = null;
+            $post_type = get_post_type();
+            $template_slug = get_page_template_slug();
+
+            //load minified scripts for the custom single template
+            if ($template_slug) {
+                $slug = dirname($template_slug);
+                $template_name = pathinfo(basename($template_slug), PATHINFO_FILENAME);
+
+                // Load the JavaScript file if it exists
+                $js_file = sprintf('%s/template-singles/%s/%s.js', get_template_directory(), $slug, $template_name);
+                $js_file_to_enqueue = sprintf('%s/static/js/template-singles/%s/%s.js', get_template_directory_uri(), $slug, $template_name);
+                if (file_exists($js_file)) {
+                    wp_enqueue_script($template_name . "-min-single-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                }
+            }
+
+            // Check if the current custom set template file exists
+            if ($template_slug) {
+                $path = get_template_directory() . "/template-singles/" . $template_slug;
+                $template_exists = file_exists($path);
+                $template = $path;
+            }
+
+            if (empty($template_slug) || !$template_exists) {
+                // If no custom template has been set or the current template file doesn't exist, look for a matching file in the "template-singles" directory
+                $template_filenames = array(
+                    "single-{$post_type}.php",
+                    "{$post_type}.php",
+                    'single.php',
+                    'index.php',
+                );
+                foreach ($template_filenames as $filename) {
+                    $subdirectories = scandir(get_stylesheet_directory() . '/template-singles');
+                    foreach ($subdirectories as $subdirectory) {
+                        if ('.' !== $subdirectory && '..' !== $subdirectory) {
+                            $single_template = get_stylesheet_directory() . '/template-singles/' . $subdirectory . '/' . $filename;
+                            if (file_exists($single_template)) {
+
+                                $template = $single_template;
+                                $slug = basename(dirname($single_template));
+                                $template_name = pathinfo(basename($single_template), PATHINFO_FILENAME);
+                                // Load the JavaScript file if it exists
+                                $js_file = sprintf('%s/template-singles/%s/%s.js', get_template_directory(), $slug, $template_name);
+                                $js_file_to_enqueue = sprintf('%s/static/js/template-singles/%s/%s.js', get_template_directory_uri(), $slug, $template_name);
+                                if (file_exists($js_file)) {
+                                    wp_enqueue_script($template_name . "-min-single-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                                }
+                                break 2;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If no matching template has been found, fall back to the default template
+            if (!$template_exists && !file_exists($template)) {
+                $template = get_single_template();
             }
         }
 

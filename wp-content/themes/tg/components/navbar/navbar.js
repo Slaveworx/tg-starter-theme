@@ -50,7 +50,7 @@ jQuery(document).ready(($) => {
 
     prevScrollPos = currentScrollPos;
   });
-  navbar.css("transition", "opacity 0.2s ease-in-out");
+  navbar.css("transition", "opacity 350ms ease-in-out");
 
   // Fix Wp Admin Bar issue
   if ($("body").hasClass("logged-in")) {

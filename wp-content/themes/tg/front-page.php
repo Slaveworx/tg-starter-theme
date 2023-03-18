@@ -23,6 +23,7 @@ get_header();
     <?php TG::load_component("hero"); ?>
     <?php TG::load_component("faq-block"); ?>
     <?php TG::load_component("slider-full-width"); ?>
+    <?php TG::load_component("box"); ?>
 </main><!-- #main -->
 
 <?php

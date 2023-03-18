@@ -36,3 +36,52 @@
   }
 
 }
+
+
+/*##############################################
+#                     GRID                     #
+################################################*/
+
+$gap-sm: 1rem;
+$gap-md: 2rem;
+$gap-lg: 3rem;
+
+//min width for auto grid
+$auto-grid-sm: 10rem;
+$auto-grid-md: 20rem;
+$auto-grid-lg: 30rem;
+
+//Auto Grid Mixin shall be used in items with .grid class 
+@mixin autoGrid($min, $max:1fr){
+  grid-template-columns: repeat(auto-fit, minmax($min, $max));
+}
+
+.grid { display: grid; }
+.has-2-cols { grid-template-columns: repeat(2, 1fr); }
+.has-3-cols { grid-template-columns: repeat(3, 1fr); }
+.has-4-cols { grid-template-columns: repeat(4, 1fr); }
+.has-5-cols { grid-template-columns: repeat(5, 1fr); }
+.has-6-cols { grid-template-columns: repeat(6, 1fr); }
+.has-7-cols { grid-template-columns: repeat(7, 1fr); }
+.has-8-cols { grid-template-columns: repeat(8, 1fr); }
+.has-9-cols { grid-template-columns: repeat(9, 1fr); }
+.has-10-cols { grid-template-columns: repeat(10, 1fr); }
+.has-11-cols { grid-template-columns: repeat(11, 1fr); }
+.has-12-cols { grid-template-columns: repeat(12, 1fr); }
+
+.grid-auto-sm { grid-template-columns: repeat(auto-fit, minmax($auto-grid-sm, 1fr)); }
+.grid-auto-md { grid-template-columns: repeat(auto-fit, minmax($auto-grid-md, 1fr)); }
+.grid-auto-lg { grid-template-columns: repeat(auto-fit, minmax($auto-grid-lg, 1fr)); }
+
+
+.gap-sm { gap: $gap-sm; }
+.gap-md { gap: $gap-md; }
+.gap-lg { gap: $gap-lg; }
+
+.row-gap-sm { row-gap: $gap-sm; }
+.row-gap-md { row-gap: $gap-md; }
+.row-gap-lg { row-gap: $gap-lg; }
+
+.col-gap-sm { column-gap: $gap-sm; }
+.col-gap-md { column-gap: $gap-md; }
+.col-gap-lg { column-gap: $gap-lg; }

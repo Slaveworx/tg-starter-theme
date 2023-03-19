@@ -5,11 +5,10 @@ namespace TG;
 trait Helpers
 {
 
-    public static $dependencies = array();
-
     //************************************ */
     // Dependency Management
     //************************************ */
+    public static $dependencies = array();
 
     /**
      * Registers a dependency with the given handle, style source, and script source.
@@ -20,7 +19,7 @@ trait Helpers
      * @param array $script_args Optional. An array of arguments to pass to the wp_register_script() dependencies array.
      * @param bool $in_footer Optional. Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
      */
-    public static function add_dependency($handle, $style_src = "", $script_src = "", $scripts_args=array(), $inFooter=true)
+    public static function add_dependency($handle, $style_src = "", $script_src = "", $scripts_args = array(), $inFooter = true)
     {
         if (!empty($style_src)) {
             wp_register_style($handle, $style_src, array(), _S_VERSION);
@@ -49,6 +48,10 @@ trait Helpers
             }
         }
     }
+
+    //************************************ */
+    // Images
+    //************************************ */
 
     /**
      * Outputs an HTML img tag with the specified image source, CSS classes, and HTML attributes.
@@ -83,7 +86,10 @@ trait Helpers
     }
 
     /**
-     * Returns an image URL
+     * Returns the URL for a static image file in the theme's "static/img" directory.
+     * 
+     * @param string $img The filename of the image to retrieve.
+     * @return string The URL of the image file.
      */
     public static function img_url($img)
     {
@@ -113,12 +119,20 @@ trait Helpers
         echo $svg_code;
     }
 
+
+
+    //************************************ */
+    // Components
+    //************************************ */
+
+
     /**
-     * Includes a template part file from a specific folder in the theme directory.
+     * Includes a component from the Components folder in the theme directory.
      *
      * @param string $slug The slug name for the generic template.
+     * @param array $args Optional. Additional variables to pass to the included template.
      */
-    public static function load_component($slug)
+    public static function load_component($slug, $args = array())
     {
 
         $templates = array();
@@ -132,6 +146,12 @@ trait Helpers
         // Get the template file and include it.
         foreach ($templates as $template) {
             if (file_exists($template)) {
+
+                // Extract the $args array as variables to pass them to the included template.
+                if (!empty($args) && is_array($args)) {
+                    extract($args, EXTR_SKIP);
+                }
+                
                 include $template;
 
                 // Load the JavaScript file if it exists
@@ -144,6 +164,10 @@ trait Helpers
             }
         }
     }
+
+    //************************************ */
+    // Wordpress Related
+    //************************************ */
 
     /**
      * Creates a new custom post type with the specified name and optional arguments.
@@ -210,6 +234,10 @@ trait Helpers
         register_post_type($name_lc, $args);
     }
 
+
+    //************************************ */
+    // Misc
+    //************************************ */
 
     /** Will enqueue the custom admin styles */
     public static function custom_login_css()

@@ -1,0 +1,1 @@
+jQuery(document).ready(o=>{let l=o(".modal");o("#open-modal").click(function(e){e.preventDefault(),o(document.body).addClass("scroll-blocked"),l.fadeIn()}),o(".modal-close").click(function(){o(document.body).removeClass("scroll-blocked"),l.fadeOut()})});

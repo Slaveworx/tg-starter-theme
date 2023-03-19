@@ -27,7 +27,7 @@
     //SECONDARY
     &__secondary {
         @extend .btn;
-        color: $white !important;
+        color: $color-primary !important;
         padding: 1.3rem 2.3rem;
         background-color: transparent !important;
         border: 2px solid $color-primary;

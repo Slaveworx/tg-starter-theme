@@ -1,3 +1,10 @@
+//****************************************
+// 🆃🅶                                     
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+//* This file contains the theme's main automation scripts
+//****************************************
+
 import gulp from "gulp";
 import dartSass from "sass";
 import gulpSass from "gulp-sass";

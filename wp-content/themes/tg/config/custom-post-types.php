@@ -1,10 +1,14 @@
 <?php
+//****************************************
+                                        
+// 🆃🅶                                     
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+// * This file should be used to create all your Custom Post Types                       
+                                        
+//****************************************
 
 namespace TG;
-
-/**
- * CREATE CUSTOM POST TYPES
- */
 
 
 TG::create_cpt(

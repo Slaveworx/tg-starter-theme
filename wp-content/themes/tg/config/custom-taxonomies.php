@@ -1,9 +1,14 @@
 <?php
-/**
- * CREATE CUSTOM TAXONOMIES
- */
+//****************************************
+                                        
+// 🆃🅶                                     
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+// * This file should be used to create all your Custom Taxonomies                     
+                                        
+//****************************************
 
-// Add new taxonomy, NOT hierarchical (like tags)
+
 $labels = array(
     'name' => _x('Tags', 'taxonomy general name'),
     'singular_name' => _x('Tag', 'taxonomy singular name'),

@@ -1,4 +1,12 @@
 <?php
+//****************************************
+
+// 🆃🅶                                     
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+// * This file handles everything regarding templates             
+
+//****************************************
 
 namespace TG;
 
@@ -6,9 +14,9 @@ trait Templates
 {
 
     /** Change the default archive templates directory.
-    * @param string $template The path to the current archive template file.
-    * @return string The path to the updated archive template file.
-    */
+     * @param string $template The path to the current archive template file.
+     * @return string The path to the updated archive template file.
+     */
     public function tg_archive_templates_dir($template)
     {
         if (is_archive()) {
@@ -55,7 +63,13 @@ trait Templates
     }
 
     /**
-     * Change Default Templates Directory (HELPER)
+     * Filters the path of the current template before including it.
+     * Determines the appropriate template file for the current post or page,
+     * and enqueues the corresponding JavaScript file if it exists. Supports
+     * custom templates located in "template-singles" and "template-pages" directories.
+     * @param string $template The path of the template to include.
+     * @param string $type The type of template being loaded, either 'page' or 'single'.
+     * @return string The modified template path.
      */
     private function tg_templates_dir($template, $type)
     {
@@ -141,7 +155,13 @@ trait Templates
     }
 
 
-    /** Make Wordpress look for page templates in the custom folder */
+    /**
+     * Filters the list of available page templates in the WordPress admin.
+     * Modifies the list of available page templates by including custom templates
+     * located in the 'template-pages' directory and its subdirectories.
+     * @param array $page_templates An associative array of page templates in the format of 'template file' => 'Template Name'.
+     * @return array The modified list of page templates.
+     */
     function modify_wp_default_page_templates_dir($page_templates)
     {
         $template_dir = get_stylesheet_directory() . '/template-pages';

@@ -1,4 +1,9 @@
 <?php
+//****************************************
+// 🆃🅶                                     
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+//****************************************
 /**
  * Template part for displaying results in search pages
  *
@@ -15,21 +20,17 @@
 
 		<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
-			<?php
-			tg_posted_on();
-			tg_posted_by();
-			?>
+			
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
-	<?php tg_post_thumbnail(); ?>
 
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
-		<?php tg_entry_footer(); ?>
+
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

@@ -21,7 +21,7 @@ namespace TG;
 
     <div class="site-branding">
         
-        <a href="<?php echo home_url("/");?>"><?php TG::img("logo.png", ["logo"]);?></a>
+        <a href="<?php echo home_url("/");?>"><?php TG::img("logo.png", ["logo"], ['alt="TG Starter theme"']);?></a>
         
 
     </div><!-- .site-branding -->

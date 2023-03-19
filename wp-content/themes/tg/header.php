@@ -1,5 +1,7 @@
 <?php
+
 namespace TG;
+
 /**
  * The header for our theme
  *
@@ -17,6 +19,11 @@ namespace TG;
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="<?php if (!empty(get_bloginfo('description'))) : echo get_bloginfo('description');
+										else : echo get_bloginfo('name');
+										endif; ?>">
+	<meta name="keywords" content="starter theme, wordpress, tg starter theme">
+	<link rel="canonical" href="<?php echo get_permalink(); ?>">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<?php wp_head(); ?>
@@ -26,9 +33,7 @@ namespace TG;
 	<?php wp_body_open(); ?>
 	<?php TG::load_component("navbar"); ?>
 	<div id="page" class="site">
-		
+
 		<a class="skip-link screen-reader-text" href="#primary">
 			<?php esc_html_e('Skip to content', THEME_TEXT_DOMAIN); ?>
 		</a>
-
-		

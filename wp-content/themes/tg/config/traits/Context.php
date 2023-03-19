@@ -6,6 +6,7 @@ trait Context
 {
 
     private static $context_transient_name = "tg_transient_all_posts_cache_context";
+    public static $dependencies = array();
 
     /** Set Context Values */
     public static function set_context($key, $value)

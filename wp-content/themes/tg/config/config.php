@@ -26,6 +26,10 @@ class TG
         require_once(get_template_directory() . "/config/scripts.php"); //#
         //#################################################################
 
+        //### CONDITIONAL STYLES & SCRIPTS ################################
+        require_once(get_template_directory() . "/config/conditionals.php");
+        //#################################################################
+
         //### HELPERS #####################################################
         require_once(get_template_directory() . "/config/helpers.php"); //#
         //#################################################################

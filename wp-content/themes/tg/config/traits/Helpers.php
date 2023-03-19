@@ -4,6 +4,52 @@ namespace TG;
 
 trait Helpers
 {
+
+    public static $dependencies = array();
+
+    //************************************ */
+    // Dependency Management
+    //************************************ */
+
+    /**
+     * Registers a dependency with the given handle, style source, and script source.
+     * 
+     * @param string $handle The unique handle for the dependency.
+     * @param string $style_src The URL of the stylesheet to register for the dependency.
+     * @param string $script_src The URL of the script to register for the dependency.
+     * @param array $script_args Optional. An array of arguments to pass to the wp_register_script() dependencies array.
+     * @param bool $in_footer Optional. Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
+     */
+    public static function add_dependency($handle, $style_src = "", $script_src = "", $scripts_args=array(), $inFooter=true)
+    {
+        if (!empty($style_src)) {
+            wp_register_style($handle, $style_src, array(), _S_VERSION);
+            self::$dependencies[$handle]['style'] = $handle;
+        }
+        if (!empty($script_src)) {
+            wp_register_script($handle, $script_src, $scripts_args, _S_VERSION, $inFooter);
+            self::$dependencies[$handle]['script'] = $handle;
+        }
+    }
+
+    /**
+     * Enqueues the styles and scripts for the given dependency.
+     * 
+     * @param string $handle The unique handle for the dependency.
+     */
+    public static function use_dependency($handle)
+    {
+        $dep = isset(self::$dependencies[$handle]) ? self::$dependencies[$handle] : false;
+        if ($dep) {
+            if (!empty($dep['style'])) {
+                wp_enqueue_style($dep['style']);
+            }
+            if (!empty($dep['script'])) {
+                wp_enqueue_script($dep['script']);
+            }
+        }
+    }
+
     /**
      * Outputs an HTML img tag with the specified image source, CSS classes, and HTML attributes.
      *
@@ -30,7 +76,10 @@ trait Helpers
             endforeach;
         endif;
 
-        echo sprintf('<img src="%s" %s %s/>', $template_dir . $name, 'class="' . $class_string . '"', $attribute_string);
+        //for google page ranking purposes, automatically add explicit width and height attributes to image
+        $image_size = getimagesize($template_dir . $name);
+
+        echo sprintf('<img src="%s" width="%s" height="%s" %s %s/>', $template_dir . $name, $image_size[0], $image_size[1], 'class="' . $class_string . '"', $attribute_string);
     }
 
     /**
@@ -110,33 +159,33 @@ trait Helpers
         $name_uc = ucfirst($name);
 
         $default_labels = array(
-            'name'                  => _x( $name_uc . 's', 'Post Type General Name', THEME_TEXT_DOMAIN ),
-            'singular_name'         => _x( $name_uc, 'Post Type Singular Name', THEME_TEXT_DOMAIN ),
-            'menu_name'             => __( $name_uc . 's', THEME_TEXT_DOMAIN ),
-            'name_admin_bar'        => __( $name_uc . 's', THEME_TEXT_DOMAIN ),
-            'archives'              => __( 'Item Archives', THEME_TEXT_DOMAIN ),
-            'attributes'            => __( 'Item Attributes', THEME_TEXT_DOMAIN ),
-            'parent_item_colon'     => __( 'Parent Item:', THEME_TEXT_DOMAIN ),
-            'all_items'             => __( 'All Items', THEME_TEXT_DOMAIN ),
-            'add_new_item'          => __( 'Add New Item', THEME_TEXT_DOMAIN ),
-            'add_new'               => __( 'Add New', THEME_TEXT_DOMAIN ),
-            'new_item'              => __( 'New Item', THEME_TEXT_DOMAIN ),
-            'edit_item'             => __( 'Edit Item', THEME_TEXT_DOMAIN ),
-            'update_item'           => __( 'Update Item', THEME_TEXT_DOMAIN ),
-            'view_item'             => __( 'View Item', THEME_TEXT_DOMAIN ),
-            'view_items'            => __( 'View Items', THEME_TEXT_DOMAIN ),
-            'search_items'          => __( 'Search Item', THEME_TEXT_DOMAIN ),
-            'not_found'             => __( 'Not found', THEME_TEXT_DOMAIN ),
-            'not_found_in_trash'    => __( 'Not found in Trash', THEME_TEXT_DOMAIN ),
-            'featured_image'        => __( 'Featured Image', THEME_TEXT_DOMAIN ),
-            'set_featured_image'    => __( 'Set featured image', THEME_TEXT_DOMAIN ),
-            'remove_featured_image' => __( 'Remove featured image', THEME_TEXT_DOMAIN ),
-            'use_featured_image'    => __( 'Use as featured image', THEME_TEXT_DOMAIN ),
-            'insert_into_item'      => __( 'Insert into item', THEME_TEXT_DOMAIN ),
-            'uploaded_to_this_item' => __( 'Uploaded to this item', THEME_TEXT_DOMAIN ),
-            'items_list'            => __( 'Items list', THEME_TEXT_DOMAIN ),
-            'items_list_navigation' => __( 'Items list navigation', THEME_TEXT_DOMAIN ),
-            'filter_items_list'     => __( 'Filter items list', THEME_TEXT_DOMAIN ),
+            'name'                  => _x($name_uc . 's', 'Post Type General Name', THEME_TEXT_DOMAIN),
+            'singular_name'         => _x($name_uc, 'Post Type Singular Name', THEME_TEXT_DOMAIN),
+            'menu_name'             => __($name_uc . 's', THEME_TEXT_DOMAIN),
+            'name_admin_bar'        => __($name_uc . 's', THEME_TEXT_DOMAIN),
+            'archives'              => __('Item Archives', THEME_TEXT_DOMAIN),
+            'attributes'            => __('Item Attributes', THEME_TEXT_DOMAIN),
+            'parent_item_colon'     => __('Parent Item:', THEME_TEXT_DOMAIN),
+            'all_items'             => __('All Items', THEME_TEXT_DOMAIN),
+            'add_new_item'          => __('Add New Item', THEME_TEXT_DOMAIN),
+            'add_new'               => __('Add New', THEME_TEXT_DOMAIN),
+            'new_item'              => __('New Item', THEME_TEXT_DOMAIN),
+            'edit_item'             => __('Edit Item', THEME_TEXT_DOMAIN),
+            'update_item'           => __('Update Item', THEME_TEXT_DOMAIN),
+            'view_item'             => __('View Item', THEME_TEXT_DOMAIN),
+            'view_items'            => __('View Items', THEME_TEXT_DOMAIN),
+            'search_items'          => __('Search Item', THEME_TEXT_DOMAIN),
+            'not_found'             => __('Not found', THEME_TEXT_DOMAIN),
+            'not_found_in_trash'    => __('Not found in Trash', THEME_TEXT_DOMAIN),
+            'featured_image'        => __('Featured Image', THEME_TEXT_DOMAIN),
+            'set_featured_image'    => __('Set featured image', THEME_TEXT_DOMAIN),
+            'remove_featured_image' => __('Remove featured image', THEME_TEXT_DOMAIN),
+            'use_featured_image'    => __('Use as featured image', THEME_TEXT_DOMAIN),
+            'insert_into_item'      => __('Insert into item', THEME_TEXT_DOMAIN),
+            'uploaded_to_this_item' => __('Uploaded to this item', THEME_TEXT_DOMAIN),
+            'items_list'            => __('Items list', THEME_TEXT_DOMAIN),
+            'items_list_navigation' => __('Items list navigation', THEME_TEXT_DOMAIN),
+            'filter_items_list'     => __('Filter items list', THEME_TEXT_DOMAIN),
         );
 
         $labels = wp_parse_args($labels, $default_labels);
@@ -162,9 +211,9 @@ trait Helpers
     }
 
 
-    /** Will enqueue the custom admin styles */ 
-    public static function custom_login_css() {
+    /** Will enqueue the custom admin styles */
+    public static function custom_login_css()
+    {
         wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login-styles.css');
     }
-    
 }

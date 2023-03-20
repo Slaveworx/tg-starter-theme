@@ -12,9 +12,9 @@
 
 
 
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 <!-- footer component -->
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 
 <footer id="colophon" class="site-footer" data-row-index="<?php echo $row_index;?>">
     <div class="site-info">

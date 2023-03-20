@@ -13,9 +13,9 @@ namespace TG;
 
 
 
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 <!-- text-left-img-right component -->
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 
 <section class="text-left-img-right" data-row-index="<?php echo $row_index; ?>">
     <div class="grid grid-auto-lg">

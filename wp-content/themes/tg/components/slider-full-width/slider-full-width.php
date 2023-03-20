@@ -15,10 +15,9 @@ TG::use_dependency("swiper");
 ?>
 
 
-
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 <!-- slider-full-width component -->
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 
 <section class="slider-full-width" data-row-index="<?php echo $row_index;?>">
 

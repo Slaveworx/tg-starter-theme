@@ -13,9 +13,9 @@ namespace TG;
 
 
 
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 <!-- gradient-section component -->
-<!-- ------------------------------- -->
+<!-- ******************************** -->
 
 <section class="gradient-section" data-row-index="<?php echo $row_index;?>">
     <div class="container-small">

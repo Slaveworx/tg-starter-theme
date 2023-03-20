@@ -1,6 +1,7 @@
 <?php
 
 namespace TG;
+TG::use_dependency("jquery-min");
 TG::use_dependency("swiper");
 
 //****************************************
@@ -20,7 +21,7 @@ TG::use_dependency("swiper");
 <!-- slider-full-width component -->
 <!-- ------------------------------- -->
 
-<section class="slider-full-width">
+<section class="slider-full-width" data-row-index="<?php echo $row_index;?>">
 
 
     <!-- Swiper -->

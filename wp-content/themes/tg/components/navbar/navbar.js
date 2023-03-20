@@ -1,65 +1,66 @@
-jQuery(document).ready(($) => {
+document.addEventListener("DOMContentLoaded", () => {
   //*********************************/
   // navbar
   // @version 1.0
   // @package tg
   //*********************************/
 
-  //Open and Close Navbar
-  const headerNav = $("#site-navigation");
-  const navBurger = $(".theme-burger-wrapper");
-  const navbar = $(".site-header");
-  const body = $(document.body);
+  // Open and Close Navbar
+  const headerNav = document.getElementById("site-navigation");
+  const navBurger = document.querySelector(".theme-burger-wrapper");
+  const navbar = document.querySelector(".site-header");
+  const body = document.body;
 
-  navBurger.click(() => {
-    const visibility = headerNav.attr("data-visible");
+  navBurger.addEventListener("click", () => {
+    const visibility = headerNav.getAttribute("data-visible");
 
     if (visibility === "false") {
       //when clicked to open
-      body.toggleClass("scroll-blocked");
-      headerNav.attr("data-visible", "true");
-      navBurger.toggleClass("close");
-      navbar.addClass("menu-open");
+      body.classList.toggle("scroll-blocked");
+      headerNav.setAttribute("data-visible", "true");
+      navBurger.classList.toggle("close");
+      navbar.classList.add("menu-open");
     } else {
-      body.toggleClass("scroll-blocked");
-      headerNav.attr("data-visible", "false");
-      navBurger.toggleClass("close");
-      navbar.removeClass("menu-open");
+      body.classList.toggle("scroll-blocked");
+      headerNav.setAttribute("data-visible", "false");
+      navBurger.classList.toggle("close");
+      navbar.classList.remove("menu-open");
     }
   });
 
   // ON SCROLL EFFECTS
-  let vh = $(window).height();
+  let vh = window.innerHeight;
   let initialFold = 100;
   let prevScrollPos = 0;
 
-  $(window).on("scroll", function () {
-    let currentScrollPos = $(window).scrollTop();
+  window.addEventListener("scroll", () => {
+    let currentScrollPos = window.pageYOffset;
 
     if (currentScrollPos > initialFold) {
-      navbar.addClass("fixed");
+      navbar.classList.add("fixed");
       if (currentScrollPos > prevScrollPos) {
-        navbar.css("opacity", 1);
+        navbar.style.opacity = 1;
       } else {
         let opacity = Math.max(0, 1 - (currentScrollPos - initialFold) / vh);
-        navbar.css("opacity", opacity);
+        navbar.style.opacity = opacity;
       }
     } else {
-      navbar.removeClass("fixed").css("opacity", 1);
+      navbar.classList.remove("fixed");
+      navbar.style.opacity = 1;
     }
 
     prevScrollPos = currentScrollPos;
   });
-  navbar.css("transition", "opacity 350ms ease-in-out");
+  navbar.style.transition = "opacity 350ms ease-in-out";
 
   // Fix Wp Admin Bar issue
-  if ($("body").hasClass("logged-in")) {
-    $("html").attr("style", "margin: 0 !important");
+  if (body.classList.contains("logged-in")) {
+    document.documentElement.style.margin = "0 !important";
 
-    if ($(window).width() < 782) {
-      $("body").attr("style", "margin-top: 32px !important");
+    if (window.innerWidth < 782) {
+      body.style.marginTop = "32px !important";
     } else {
-      $("body").attr("style", "margin-top: 46px !important");
+      body.style.marginTop = "46px !important";
     }
   }
 });

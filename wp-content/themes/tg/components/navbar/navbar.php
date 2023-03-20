@@ -1,7 +1,5 @@
 <?php
 namespace TG;
-TG::use_dependency("jquery-min");
-
 
 //****************************************
                                         
@@ -20,7 +18,7 @@ TG::use_dependency("jquery-min");
 <!-- navbar component -->
 <!-- ------------------------------- -->
 
-<header id="masthead" class="site-header">
+<header id="masthead" class="site-header" data-row-index="<?php echo $row_index;?>">
 
     <div class="site-branding">
         

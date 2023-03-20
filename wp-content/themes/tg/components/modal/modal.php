@@ -16,7 +16,7 @@
 <!-- modal component -->
 <!-- ------------------------------- -->
 
-<div class="modal">
+<div class="modal" data-row-index="<?php echo $row_index;?>">
 
     <div class="modal__header">
         <div class="modal-close"></div>

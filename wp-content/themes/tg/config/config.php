@@ -1,11 +1,11 @@
 <?php
 //****************************************
-                                        
+
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
 // * This file contais all theme config                        
-                                        
+
 //****************************************
 
 namespace TG;
@@ -13,16 +13,19 @@ namespace TG;
 use TG\Templates;
 use TG\Context;
 use TG\Helpers;
+use TG\Optimization;
 
 require_once __DIR__ . '/traits/Templates.php';
 require_once __DIR__ . '/traits/Context.php';
 require_once __DIR__ . '/traits/Helpers.php';
+require_once __DIR__ . '/traits/Optimization.php';
 
 class TG
 {
     use Templates;
     use Context;
     use Helpers;
+    use Optimization;
 
     public function __construct()
     {
@@ -44,6 +47,12 @@ class TG
 
         // Dequeue Jquery
         add_action('init', array($this, 'jquery_remove'));
+
+        //Remove type attribute and trailing slash from enqueued styles
+        add_filter('style_loader_tag', array($this, 'remove_type_attribute_and_trailing_slash'), 10, 2);
+
+        // Remove type attribute and trailing slash from enqueued scripts
+        add_filter('script_loader_tag', array($this, 'remove_type_attribute_and_trailing_slash'), 10, 2);
 
         // Add theme Support
         add_action('after_setup_theme', array($this, 'theme_supports'));
@@ -77,7 +86,6 @@ class TG
 
         //Enqueue theme's custom admin login styles (to customize, change ./config/sources/assets/css/)login-styles.css)
         add_action('login_enqueue_scripts', array($this, 'custom_login_css'));
-
     }
 
     /** Register Custom Post Types. */
@@ -97,7 +105,7 @@ class TG
         require_once("theme-support.php");
     }
 
-    
+
     /** Removes Jquery from wordpress Core */
     public function jquery_remove()
     {

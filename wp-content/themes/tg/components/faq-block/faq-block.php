@@ -16,7 +16,7 @@
 <!-- faq-block component -->
 <!-- ------------------------------- -->
 
-<section class="faq-block">
+<section class="faq-block" data-row-index="<?php echo $row_index;?>">
     <div class="container">
 
         <h2 class="faq-block__title">FAQs Block</h2>

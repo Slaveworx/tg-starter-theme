@@ -16,7 +16,7 @@
 <!-- footer component -->
 <!-- ------------------------------- -->
 
-<footer id="colophon" class="site-footer">
+<footer id="colophon" class="site-footer" data-row-index="<?php echo $row_index;?>">
     <div class="site-info">
         <a href="<?php echo esc_url(__('https://tiagogalvao.com', THEME_TEXT_DOMAIN)); ?>">
             <?php

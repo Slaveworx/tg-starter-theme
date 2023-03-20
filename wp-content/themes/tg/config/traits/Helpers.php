@@ -1,11 +1,11 @@
 <?php
 //****************************************
-                                        
+
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
 // * This file contains all Helper Functions           
-                                        
+
 //****************************************
 
 namespace TG;
@@ -90,7 +90,7 @@ trait Helpers
         //for google page ranking purposes, automatically add explicit width and height attributes to image
         $image_size = getimagesize($template_dir . $name);
 
-        echo sprintf('<img src="%s" width="%s" height="%s" %s %s/>', $template_dir . $name, $image_size[0], $image_size[1], 'class="' . $class_string . '"', $attribute_string);
+        echo sprintf('<img src="%s" width="%s" height="%s" %s %s>', $template_dir . $name, $image_size[0], $image_size[1], 'class="' . $class_string . '"', $attribute_string);
     }
 
     /**
@@ -142,6 +142,10 @@ trait Helpers
      */
     public static function load_component($slug, $args = array())
     {
+        static $row_index = 0;
+
+        // Increment the row index for each new component instance.
+        $row_index++;
 
         $templates = array();
 
@@ -159,7 +163,10 @@ trait Helpers
                 if (!empty($args) && is_array($args)) {
                     extract($args, EXTR_SKIP);
                 }
-                
+
+                // Pass the row index as a variable to the included template.
+                $args['row_index'] = $row_index;
+
                 include $template;
 
                 // Load the JavaScript file if it exists

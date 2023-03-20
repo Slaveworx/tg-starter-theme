@@ -1,5 +1,8 @@
 <?php
 namespace TG;
+TG::use_dependency("jquery-min");
+
+
 //****************************************
                                         
 // 🆃🅶                                     

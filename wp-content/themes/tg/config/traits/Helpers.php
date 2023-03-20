@@ -166,7 +166,7 @@ trait Helpers
                 $js_file = sprintf('%s/components/%s/%s.js', get_template_directory(), $slug, $slug);
                 $js_file_to_enqueue = sprintf('%s/static/js/components/%s/%s.js', get_template_directory_uri(), $slug, $slug);
                 if (file_exists($js_file)) {
-                    wp_enqueue_script($slug . "-min-component", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                    wp_enqueue_script($slug . "-min-component", $js_file_to_enqueue, array(), _S_VERSION, true);
                 }
                 return;
             }

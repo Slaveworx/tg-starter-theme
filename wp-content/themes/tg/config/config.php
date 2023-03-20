@@ -35,12 +35,15 @@ class TG
         //#################################################################
 
         //### CONDITIONAL STYLES & SCRIPTS ################################
-        require_once(get_template_directory() . "/config/conditionals.php");
+        require_once(get_template_directory() . "/config/dependencies.php");
         //#################################################################
 
         //### HELPERS #####################################################
         require_once(get_template_directory() . "/config/helpers.php"); //#
         //#################################################################
+
+        // Dequeue Jquery
+        add_action('init', array($this, 'jquery_remove'));
 
         // Add theme Support
         add_action('after_setup_theme', array($this, 'theme_supports'));
@@ -74,6 +77,7 @@ class TG
 
         //Enqueue theme's custom admin login styles (to customize, change ./config/sources/assets/css/)login-styles.css)
         add_action('login_enqueue_scripts', array($this, 'custom_login_css'));
+
     }
 
     /** Register Custom Post Types. */
@@ -91,5 +95,14 @@ class TG
     public function theme_supports()
     {
         require_once("theme-support.php");
+    }
+
+    
+    /** Removes Jquery from wordpress Core */
+    public function jquery_remove()
+    {
+        if (!is_admin()) {
+            wp_deregister_script('jquery');
+        }
     }
 }

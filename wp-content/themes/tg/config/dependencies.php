@@ -13,6 +13,14 @@ namespace TG;
 //* HERE you register Styles & Scripts that are not always needed and shall be enqueueue only when needed
  ******************************************************************************************************/
 
+ //JQUERY
+TG::add_dependency(
+    'jquery-min',
+    '',
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'
+);
+
+
 //SWIPER
 TG::add_dependency(
     'swiper',

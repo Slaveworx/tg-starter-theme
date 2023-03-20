@@ -38,7 +38,7 @@ trait Templates
                             $js_file = sprintf('%s/template-archives/%s/%s.js', get_template_directory(), $slug, $archive_template_name);
                             $js_file_to_enqueue = sprintf('%s/static/js/template-archives/%s/%s.js', get_template_directory_uri(), $slug, $archive_template_name);
                             if (file_exists($js_file)) {
-                                wp_enqueue_script($archive_template_name . "-min-archive-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                                wp_enqueue_script($archive_template_name . "-min-archive-template", $js_file_to_enqueue, array(), _S_VERSION, true);
                             }
                             break 2;
                         }
@@ -90,7 +90,7 @@ trait Templates
             $js_file = sprintf('%s/template-%ss/%s/%s.js', get_template_directory(), $type, $slug, $template_name);
             $js_file_to_enqueue = sprintf('%s/static/js/template-%ss/%s/%s.min.js', get_template_directory_uri(), $type, $slug, $template_name);
             if (file_exists($js_file)) {
-                wp_enqueue_script($template_name . "-min-{$type}-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                wp_enqueue_script($template_name . "-min-{$type}-template", $js_file_to_enqueue, array(), _S_VERSION, true);
             }
         }
 
@@ -133,7 +133,7 @@ trait Templates
                             $js_file_to_enqueue = sprintf('%s/static/js/template-%ss/%s/%s.min.js', get_template_directory_uri(), $type, $slug, $template_name);
 
                             if (file_exists($js_file)) {
-                                wp_enqueue_script($template_name . "-min-{$type}-template", $js_file_to_enqueue, array('jquery'), _S_VERSION, true);
+                                wp_enqueue_script($template_name . "-min-{$type}-template", $js_file_to_enqueue, array(), _S_VERSION, true);
                             }
                             break 2;
                         }

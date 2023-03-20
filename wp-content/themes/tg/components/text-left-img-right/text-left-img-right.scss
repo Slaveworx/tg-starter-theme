@@ -24,6 +24,10 @@
 
     .grid {
         @include autoGrid(50rem);
+
+        @include when(phone) {
+            @include autoGrid(100%);
+        }
     }
 
     .left-block {

@@ -23,7 +23,7 @@ namespace TG;
 
         <div class="left-block">
             <div class="wrapper">
-                <?php TG::img("dummy.jpeg", ["left-block__image"]); ?>
+                <?php TG::img("dummy.jpeg", "Just a dummy image to serve as example", ["left-block__image"]); ?>
             </div>
         </div>
 

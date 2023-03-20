@@ -9,6 +9,9 @@
 @import 'framework/buttons';
 @import 'framework/base';
 
+//STYLES FOR DEFAULT WORDPRESS PAGES
+@import 'wordpress-default/404';
+
 //COMPONENTS & TEMPLATES (AUTO IMPORTS - LEAVE AT LEAST ONE LINE OF BLANK SPACE AFTER THE LAST IMPORTS)
 @import './components/navbar/navbar';
 @import './components/footer/footer';

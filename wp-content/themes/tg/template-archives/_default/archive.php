@@ -16,7 +16,7 @@ get_header();
 ?>
 
 <main id="primary" class="site-main">
-	<div class="container">
+	<div class="container-medium">
 		<?php if (have_posts()) : ?>
 
 			<header class="page-header">

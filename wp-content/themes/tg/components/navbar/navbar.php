@@ -1,12 +1,13 @@
 <?php
+
 namespace TG;
 
 //****************************************
-                                        
+
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0                            
-                                        
+
 //****************************************
 // COMPONENT: navbar
 //****************************************
@@ -18,12 +19,12 @@ namespace TG;
 <!-- navbar component -->
 <!-- ------------------------------- -->
 
-<header id="masthead" class="site-header" data-row-index="<?php echo $row_index;?>">
+<header id="masthead" class="site-header" data-row-index="<?php echo $row_index; ?>">
 
     <div class="site-branding">
-        
-        <a href="<?php echo home_url("/");?>"><?php TG::img("logo.png", ["logo"], ['alt="TG Starter theme"']);?></a>
-        
+
+        <a href="<?php echo home_url("/"); ?>"><?php TG::img("logo.png", "TG Starter Theme Logo", ["logo"]); ?></a>
+
 
     </div><!-- .site-branding -->
 

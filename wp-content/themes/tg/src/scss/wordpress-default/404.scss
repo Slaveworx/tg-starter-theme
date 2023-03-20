@@ -1,0 +1,34 @@
+.error404 {
+
+    .container-medium {
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .not-found {
+        width: 100%;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+
+        .page-header {
+            &__image {
+                margin-inline: auto;
+            }
+
+            &__title {
+                margin-block: 3rem;
+            }
+        }
+
+        .page-content {
+            &__text {}
+        }
+    }
+
+
+
+}

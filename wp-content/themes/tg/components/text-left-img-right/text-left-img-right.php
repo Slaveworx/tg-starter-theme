@@ -30,7 +30,7 @@ namespace TG;
 
         <div class="right-block">
             <div class="wrapper">
-                <?php TG::img("dummy.jpeg", ["right-block__image"]); ?>
+                <?php TG::img("dummy.jpeg","Just a dummy image to serve as example", ["right-block__image"]); ?>
             </div>
 
         </div>

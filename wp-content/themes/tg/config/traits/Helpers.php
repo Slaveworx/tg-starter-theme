@@ -70,7 +70,7 @@ trait Helpers
      * 
      * @return void This function does not return a value; it simply outputs HTML to the page.
      */
-    public static function img($name, $classes = array(), $attributes = array())
+    public static function img($name, $alt = "An image", $classes = array(), $attributes = array())
     {
         $template_dir = get_template_directory_uri() . "/static/img/";
         $class_string = "";
@@ -82,6 +82,10 @@ trait Helpers
             endforeach;
         endif;
 
+        if (strlen($class_string) > 0) :
+            $class_string = 'class="' . $class_string . '"';
+        endif;
+
         if (sizeof($attributes) > 0) : foreach ($attributes as $attribute) :
                 $attribute_string .= $attribute;
             endforeach;
@@ -90,7 +94,7 @@ trait Helpers
         //for google page ranking purposes, automatically add explicit width and height attributes to image
         $image_size = getimagesize($template_dir . $name);
 
-        echo sprintf('<img src="%s" width="%s" height="%s" %s %s>', $template_dir . $name, $image_size[0], $image_size[1], 'class="' . $class_string . '"', $attribute_string);
+        echo sprintf('<img src="%s" alt="%s" width="%s" height="%s" %s %s>', $template_dir . $name, $alt, $image_size[0], $image_size[1], $class_string, $attribute_string);
     }
 
     /**

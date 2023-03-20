@@ -1,5 +1,7 @@
 <?php
-//namespace TG; ---> * Uncomment this line if you will use any of the Theme functions in this file
+namespace TG;
+TG::use_dependency("zepto");
+
 //****************************************
 
 // 🆃🅶                                     
@@ -16,7 +18,7 @@
 <!-- modal component -->
 <!-- ------------------------------- -->
 
-<div class="modal" data-row-index="<?php echo $row_index;?>">
+<div class="modal" data-row-index="<?php echo $row_index; ?>">
 
     <div class="modal__header">
         <div class="modal-close"></div>

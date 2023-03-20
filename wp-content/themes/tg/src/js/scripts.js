@@ -1,6 +1,5 @@
-(function ($, root, undefined) {
-  $(function () {
-    "use strict";
-    
-  }); //FILE END
-})(jQuery, this);
+document.addEventListener("DOMContentLoaded", () => {
+  "use strict";
+
+  // Your code here
+});

@@ -1,7 +1,6 @@
 <?php
 
 namespace TG;
-TG::use_dependency("jquery-min");
 TG::use_dependency("swiper");
 
 //****************************************

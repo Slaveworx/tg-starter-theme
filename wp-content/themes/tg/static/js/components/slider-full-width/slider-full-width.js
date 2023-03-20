@@ -1,1 +1,1 @@
-jQuery(document).ready(e=>{new Swiper("#slider-full-width",{pagination:{el:".swiper-pagination",dynamicBullets:!0}})});
+document.addEventListener("DOMContentLoaded",()=>{new Swiper("#slider-full-width",{pagination:{el:".swiper-pagination",dynamicBullets:!0}})});

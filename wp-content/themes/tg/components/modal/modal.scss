@@ -18,7 +18,9 @@ $modal-close-icon-color-hover: $color-primary;
 //The Modal
 .modal {
     isolation: isolate;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -32,6 +34,11 @@ $modal-close-icon-color-hover: $color-primary;
     min-width: 90rem !important;
     max-height: 100%;
     max-width: 90rem;
+
+    &.visible {
+        visibility: visible;
+        opacity: 1;
+    }
 
     @include when(tab-port) {
         max-width: unset;

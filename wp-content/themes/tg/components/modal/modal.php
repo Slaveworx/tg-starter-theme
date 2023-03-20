@@ -1,6 +1,4 @@
 <?php
-namespace TG;
-TG::use_dependency("zepto");
 
 //****************************************
 

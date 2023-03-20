@@ -1,0 +1,64 @@
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+//##############################################
+// text-left-img-right
+// @version 1.0
+// @package tg
+//##############################################
+
+//general variables
+//$example-var: red;
+
+//desktop variables
+//$example-var-desktop: blue;
+
+//mobile variables
+//$example-var-mobile: blue;
+
+/*##############################################*/
+
+.text-left-img-right {
+    min-height: 100vh;
+    background-color: $light-gray;
+
+    .grid {
+        @include autoGrid(50rem);
+    }
+
+    .left-block {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .wrapper {
+            max-width: 50rem;
+            padding: 2.5rem;
+        }
+
+        &__title {
+            margin-block: 2.5rem;
+        }
+
+        &__description {
+            /** add code here*/
+        }
+    }
+
+    .right-block {
+        height: 100vh;
+
+        .wrapper {
+            height: 100%;
+        }
+
+        &__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    }
+}

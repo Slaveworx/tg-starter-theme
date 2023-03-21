@@ -8,10 +8,8 @@
                                         
 //****************************************
 
-namespace TG;
 
-
-TG::create_cpt(
+TG\TG::create_cpt(
     "portfolio",
     array(
         'menu_position'     => 0,
@@ -21,7 +19,7 @@ TG::create_cpt(
     array('menu_name' => _x('Portfolio', THEME_TEXT_DOMAIN))
 );
 
-TG::create_cpt(
+TG\TG::create_cpt(
     "technology",
     array(
         'menu_position'     => 0,
@@ -31,7 +29,7 @@ TG::create_cpt(
     array('menu_name' => _x('Technologies', THEME_TEXT_DOMAIN))
 );
 
-TG::create_cpt(
+TG\TG::create_cpt(
     "course",
     array(
         'menu_position'     => 0,

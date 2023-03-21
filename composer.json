@@ -1,7 +1,7 @@
 {
   "name": "tiagogalvao/tgtheme",
   "type": "wordpress-theme",
-  "description": "TG Theme based in underscores. Implements Timber (Twig).",
+  "description": "TG Theme based in underscores. Includes a useful CLI for automation and follows all best practices.",
   "keywords": [
     "WordPress",
     "Themes"

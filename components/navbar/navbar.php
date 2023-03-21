@@ -1,6 +1,6 @@
 <?php
 
-namespace TG;
+global $tg;
 
 //****************************************
 
@@ -23,7 +23,7 @@ namespace TG;
 
     <div class="site-branding">
 
-        <a href="<?php echo home_url("/"); ?>"><?php TG::img("logo.png", "TG Starter Theme Logo", ["logo"]); ?></a>
+        <a href="<?php echo home_url("/"); ?>"><?php $tg->img("logo.png", "TG Starter Theme Logo", ["logo"]); ?></a>
 
 
     </div><!-- .site-branding -->

@@ -94,7 +94,7 @@ trait Helpers
         //for google page ranking purposes, automatically add explicit width and height attributes to image
         $image_size = getimagesize($template_dir . $name);
 
-        echo sprintf('<img src="%s" alt="%s" width="%s" height="%s" %s %s>', $template_dir . $name, $alt, $image_size[0], $image_size[1], $class_string, $attribute_string);
+        echo sprintf('<img loading="lazy" src="%s" alt="%s" width="%s" height="%s" %s %s>', $template_dir . $name, $alt, $image_size[0], $image_size[1], $class_string, $attribute_string);
     }
 
     /**
@@ -262,5 +262,26 @@ trait Helpers
     public static function custom_login_css()
     {
         wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login-styles.css');
+    }
+
+    /** Will enqueue the fonts.css file that results from the font loading optimization */
+    public static function enqueue_font_optimization_file()
+    {
+        wp_enqueue_style('optimized-fonts', get_template_directory_uri() . '/static/css/fonts.css', array(), _S_VERSION, 'print');
+    }
+
+    /** Will change  the status of the font imports after the fonts are loaded */
+    public static function change_optimized_font_imports_status()
+    {
+?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var fontStyles = document.getElementById('optimized-fonts-css');
+                if (fontStyles) {
+                    fontStyles.media = 'all';
+                }
+            });
+        </script>
+<?php
     }
 }

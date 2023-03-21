@@ -1,4 +1,5 @@
 <?php
+
 //****************************************
 
 // 🆃🅶                                     
@@ -9,13 +10,22 @@
 //****************************************
 
 //*********************************************************************************************
+//Enqueue your GOOGLE FONTS
+//*********************************************************************************************
+
+TG\TG::use_google_font("inter", "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+
+//Watches for imported google fonts (!!! DO NOT REMOVE THESE LINES !!!)
+TG\TG::watch_for_imported_google_fonts();
+TG\TG::clean_unused_fonts();
+
+//*********************************************************************************************
 //Enqueue Styles that need to be always present
 //*********************************************************************************************
+
 function tg_styles()
 {
-
-
-    wp_enqueue_style('theme-custom-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', array(), _S_VERSION);
     wp_enqueue_style('theme-custom-styles', get_template_directory_uri() . '/static/css/main.css', array(), _S_VERSION);
     wp_enqueue_style('style-css', get_template_directory_uri() . '/style.css', array(), _S_VERSION);
 }

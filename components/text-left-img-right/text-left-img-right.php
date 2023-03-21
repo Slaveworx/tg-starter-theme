@@ -1,5 +1,5 @@
 <?php
-namespace TG;
+global $tg;
 //****************************************
 
 // 🆃🅶                                     
@@ -30,7 +30,7 @@ namespace TG;
 
         <div class="right-block">
             <div class="wrapper">
-                <?php TG::img("dummy.jpeg","Just a dummy image to serve as example", ["right-block__image"]); ?>
+                <?php $tg->img("dummy.jpeg","Just a dummy image to serve as example", ["right-block__image"]); ?>
             </div>
 
         </div>

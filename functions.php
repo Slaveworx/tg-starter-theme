@@ -1,6 +1,6 @@
 <?php
 
-namespace TG;
+global $tg;
 
 /**
  * TG Theme Functions & Definitions
@@ -28,4 +28,4 @@ if (!defined('THEME_TEXT_DOMAIN')) {
 require_once(get_template_directory() . "/config/config.php"); //#
 //################################################################
 
-new TG();
+$tg = new TG\TG();

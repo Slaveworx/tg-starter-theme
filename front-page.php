@@ -1,6 +1,6 @@
 <?php
 
-namespace TG;
+global $tg;
 
 /**
  * The template for displaying front page
@@ -17,16 +17,15 @@ namespace TG;
 
 get_header();
 ?>
-<?php TG::get_context(); ?>
 
 <main id="primary" class="site-main">
-    <?php TG::load_component("hero"); ?>
-    <?php TG::load_component("left-right-section"); ?>
-    <?php TG::load_component("faq-block"); ?>
-    <?php TG::load_component("slider-full-width"); ?>
-    <?php TG::load_component("text-right-img-left"); ?>
-    <?php TG::load_component("text-left-img-right"); ?>
-    <?php TG::load_component("gradient-section"); ?>
+    <?php $tg->load_component("hero"); ?>
+    <?php $tg->load_component("left-right-section"); ?>
+    <?php $tg->load_component("faq-block"); ?>
+    <?php $tg->load_component("slider-full-width"); ?>
+    <?php $tg->load_component("text-right-img-left"); ?>
+    <?php $tg->load_component("text-left-img-right"); ?>
+    <?php $tg->load_component("gradient-section"); ?>
 </main><!-- #main -->
 
 <?php

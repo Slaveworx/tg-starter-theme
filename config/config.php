@@ -45,6 +45,12 @@ class TG
         require_once(get_template_directory() . "/config/helpers.php"); //#
         //#################################################################
 
+        // Enqueue the optimized fonts.css file
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_font_optimization_file'));
+
+        //Changes Status of optimized font imports after loading
+        add_action('wp_footer', array($this, 'change_optimized_font_imports_status'));
+
         // Dequeue Jquery
         add_action('init', array($this, 'jquery_remove'));
 

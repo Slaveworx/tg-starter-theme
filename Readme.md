@@ -2,7 +2,7 @@
 
 ![WordPress Version](https://img.shields.io/wordpress/v/akismet.svg?style=flat-square) ![GitHub release](https://img.shields.io/github/release/slaveworx/tg-starter-theme.svg?style=flat-square) ![GitHub](https://img.shields.io/github/license/slaveworx/tg-starter-theme.svg?style=flat-square)
 
-# :regional_indicator_t::regional_indicator_g: Wordpress Starter Theme
+# :regional_indicator_t: :regional_indicator_g: Wordpress Starter Theme
 
 </div>
 

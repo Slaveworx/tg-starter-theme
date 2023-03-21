@@ -2,7 +2,7 @@
 
 ![WordPress Version](https://img.shields.io/wordpress/v/akismet.svg?style=flat-square) ![GitHub release](https://img.shields.io/github/release/slaveworx/tg-starter-theme.svg?style=flat-square) ![GitHub](https://img.shields.io/github/license/slaveworx/tg-starter-theme.svg?style=flat-square)
 
-# :star2: TG Starter Theme :star2:
+# :regional_indicator_t::regional_indicator_g: Wordpress Starter Theme
 
 </div>
 
@@ -21,10 +21,8 @@ The future of WordPress development that combines elegance, efficiency, and cutt
 - :trophy: **Follows SEO and development best practices** to maximize search engine rankings.
 - :100: **100% Google PageSpeed Insights score** for lightning-fast load times and enhanced user experience.
 
-Unlock the full potential of your website with TG Starter Theme. Start creating remarkable, high-performance websites today and elevate your web development journey to new heights.
+Unlock the full potential of your website with TG Wordpress Starter Theme. Start creating remarkable, high-performance websites today and elevate your web development journey to new heights.
 
-<div align="center">
+📖 [Read our Documentation](https://github.com/slaveworx/tg-starter-theme/wiki)
 
-[![forthebadge made-with-wordpress](https://forthebadge.com/images/badges/made-with-wordpress.svg)](https://wordpress.org/) [![forthebadge uses-sass](https://forthebadge.com/images/badges/uses-sass.svg)](https://sass-lang.com/) [![forthebadge uses-js](https://forthebadge.com/images/badges/uses-js.svg)](https://www.javascript.com/)
 
-</div>

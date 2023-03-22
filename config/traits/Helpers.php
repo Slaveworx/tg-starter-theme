@@ -264,24 +264,4 @@ trait Helpers
         wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login-styles.css');
     }
 
-    /** Will enqueue the fonts.css file that results from the font loading optimization */
-    public static function enqueue_font_optimization_file()
-    {
-        wp_enqueue_style('optimized-fonts', get_template_directory_uri() . '/static/css/fonts.css', array(), _S_VERSION, 'print');
-    }
-
-    /** Will change  the status of the font imports after the fonts are loaded */
-    public static function change_optimized_font_imports_status()
-    {
-?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var fontStyles = document.getElementById('optimized-fonts-css');
-                if (fontStyles) {
-                    fontStyles.media = 'all';
-                }
-            });
-        </script>
-<?php
-    }
 }

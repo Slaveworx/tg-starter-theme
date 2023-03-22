@@ -4,6 +4,7 @@ import { Command } from "commander";
 import inquirer from "inquirer";
 import fs from "fs";
 import handlebars from "handlebars";
+import { exec } from "child_process";
 
 const program = new Command();
 
@@ -121,6 +122,25 @@ program
     ).then(({ singleName }) => {
       createTemplate("archive", `./template-archives/${singleName}`, { fileName: singleName, archiveName: singleName });
       createTemplate("single", `./template-singles/${singleName}`, { fileName: singleName, singleName: singleName });
+    });
+  });
+
+  /** RUN GULP COMMAND TO OPTIMIZE FONTS */
+  program
+  .command("optimize:fonts")
+  .alias("dev") // shortcut
+  .description("Run the gulp command")
+  .action(() => {
+    exec("gulp optimise-fonts", (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`Error: ${stderr}`);
+        return;
+      }
+      console.log(`Output: ${stdout}`);
     });
   });
 

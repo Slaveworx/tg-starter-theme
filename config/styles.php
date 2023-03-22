@@ -9,16 +9,6 @@
 
 //****************************************
 
-//*********************************************************************************************
-//Enqueue your GOOGLE FONTS
-//*********************************************************************************************
-
-TG\TG::use_google_font("inter", "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-
-
-//Watches for imported google fonts (!!! DO NOT REMOVE THESE LINES !!!)
-TG\TG::watch_for_imported_google_fonts();
-TG\TG::clean_unused_fonts();
 
 //*********************************************************************************************
 //Enqueue Styles that need to be always present

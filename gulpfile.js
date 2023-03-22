@@ -15,6 +15,9 @@ import dotenv from "dotenv";
 import { deleteSync } from "del";
 import replace from "gulp-replace";
 import chokidar from "chokidar";
+import ttf2woff2 from 'gulp-ttf2woff2'; //fonts
+import through2 from 'through2'; // fonts
+import { unlinkSync } from 'fs'; //fonts
 
 dotenv.config();
 
@@ -27,10 +30,12 @@ const dirs = {
     pages: "./template-pages",
     archives: "./template-archives",
     singles: "./template-singles",
+    fonts: "./static/fonts"
   },
   dest: {
     css: "./static/css",
     js: "./static/js",
+    fonts: "./static/fonts"
   },
 };
 
@@ -59,6 +64,20 @@ gulp.task("sass", function () {
     .pipe(gulp.dest(dirs.dest.css))
     .pipe(browserSync.stream());
 });
+
+
+gulp.task("optimise-fonts", function () {
+  return gulp.src(`${dirs.src.fonts}/*.ttf`)
+    .pipe(ttf2woff2())
+    .pipe(through2.obj(function (file, _, cb) {
+      const ttfFilePath = file.path.replace(/\.woff2$/, '.ttf');
+      unlinkSync(ttfFilePath);
+      this.push(file);
+      cb();
+    }))
+    .pipe(gulp.dest(`${dirs.dest.fonts}`));
+});
+
 
 gulp.task("minify-components-js", function () {
   return minifyJS(jsFiles.components, `${dirs.dest.js}/components`);
@@ -89,12 +108,13 @@ gulp.task("serve", function () {
   gulp.watch(`${dirs.src.pages}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.archives}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.singles}/**/*.scss`, gulp.series("sass"));
+  // gulp.watch(`${dirs.src.fonts}/**/*.ttf`, gulp.series("optimize-fonts"));
   gulp.watch(jsFiles.components, gulp.series("minify-components-js"));
   gulp.watch(jsFiles.pages, gulp.series("minify-pages-js"));
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));
   gulp.watch(jsFiles.singles, gulp.series("minify-singles-js"));
   gulp.watch(jsFiles.scripts, gulp.series("scripts"));
-  gulp.watch("**/*").on("change", browserSync.reload);
+  gulp.watch(["**/*", "!static/fonts/**/*", "!config/**/*"]).on("change", browserSync.reload);
 
   //Components Garbage Collector
   chokidar

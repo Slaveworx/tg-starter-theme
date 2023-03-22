@@ -82,4 +82,29 @@ trait Optimization
 
         return implode("\n", $preloadLinks);
     }
+
+    public static function tg_custom_cache_mechanism()
+    {
+        // Set cache TTL to 1 year (31536000 seconds)
+        $cache_ttl = 31536000;
+
+        // Check if the rules have already been added
+        $htaccess_file = ABSPATH . '.htaccess';
+        $htaccess_contents = file_get_contents($htaccess_file);
+
+        if (USE_CACHE && strpos($htaccess_contents, '# Begin TG Starter Theme Cache Settings') === false) {
+            // Add the custom rules to the .htaccess file
+            $new_rules = "# Begin TG Starter Theme Cache Settings\n";
+            $new_rules .= "# Set cache TTL for static assets to 1 year (31536000 seconds)\n";
+            $new_rules .= "RewriteCond %{REQUEST_FILENAME} !-f\n";
+            $new_rules .= "RewriteCond %{REQUEST_FILENAME} !-d\n";
+            $new_rules .= "RewriteRule \.(?:ico|css|js|gif|jpe?g|png|svg|webp|woff2?|ttf|otf)$ - [L,E=Cache-Control:max-age=$cache_ttl]\n";
+            $new_rules .= "# End TG Starter Theme Cache Settings\n\n";
+            file_put_contents($htaccess_file, $new_rules, FILE_APPEND | LOCK_EX);
+        } elseif (!USE_CACHE && strpos($htaccess_contents, '# Begin TG Starter Theme Cache Settings') !== false) {
+            // Remove the custom rules from the .htaccess file
+            $htaccess_contents = preg_replace('/# Begin TG Starter Theme Cache Settings.*?# End TG Starter Theme Cache Settings\n\n/s', '', $htaccess_contents);
+            file_put_contents($htaccess_file, $htaccess_contents, LOCK_EX);
+        }
+    }
 }

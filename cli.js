@@ -127,7 +127,7 @@ program
 
   /** RUN GULP COMMAND TO OPTIMIZE FONTS */
   program
-  .command("optimize:fonts")
+  .command("optimise:fonts")
   .alias("dev") // shortcut
   .description("Run the gulp command")
   .action(() => {

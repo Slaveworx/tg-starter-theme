@@ -24,11 +24,19 @@
 
     .grid {
         @include autoGrid(50rem);
+
+        @include when(phone) {
+            @include autoGrid(100%);
+        }
     }
 
     .wrapper {
         max-width: 50rem;
         padding: 2.5rem;
+
+        @include when(phone) {
+            max-width: 100%;
+        }
     }
 
     .left-block {
@@ -40,9 +48,8 @@
 
         &__title {
             margin-block: 2.5rem;
+            width: fit-content;
         }
-
-        &__description {}
     }
 
     .right-block {

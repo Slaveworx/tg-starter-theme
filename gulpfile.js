@@ -1,6 +1,6 @@
 //****************************************
-// 🆃🅶                                     
-// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// 🆃🅶
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
 //* This file contains the theme's main automation scripts
 //****************************************
@@ -15,9 +15,11 @@ import dotenv from "dotenv";
 import { deleteSync } from "del";
 import replace from "gulp-replace";
 import chokidar from "chokidar";
-import ttf2woff2 from 'gulp-ttf2woff2'; //fonts
-import through2 from 'through2'; // fonts
-import { unlinkSync } from 'fs'; //fonts
+import ttf2woff2 from "gulp-ttf2woff2"; //fonts
+import through2 from "through2"; // fonts
+import { unlinkSync } from "fs"; //fonts
+import fs from "fs";
+import path from "path";
 
 dotenv.config();
 
@@ -30,12 +32,17 @@ const dirs = {
     pages: "./template-pages",
     archives: "./template-archives",
     singles: "./template-singles",
-    fonts: "./static/fonts"
+    fonts: "./static/fonts",
   },
   dest: {
     css: "./static/css",
     js: "./static/js",
-    fonts: "./static/fonts"
+    fonts: "./static/fonts",
+  },
+  config: {
+    assets: {
+      scss: "./config/sources/assets/scss",
+    },
   },
 };
 
@@ -50,7 +57,8 @@ const jsFiles = {
 
 // Define functions to handle minification of JS files
 function minifyJS(src, dest) {
-  return gulp.src(src)
+  return gulp
+    .src(src)
     .pipe(uglify())
     .pipe(gulp.dest(dest))
     .pipe(browserSync.stream());
@@ -58,26 +66,70 @@ function minifyJS(src, dest) {
 
 gulp.task("sass", function () {
   const sass = gulpSass(dartSass);
-  return gulp.src(`${dirs.src.scss}/main.scss`)
+  return gulp
+    .src(`${dirs.src.scss}/main.scss`)
     .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
     .pipe(autoprefixer({ cascade: false }))
     .pipe(gulp.dest(dirs.dest.css))
     .pipe(browserSync.stream());
 });
 
+// gulp.task("optimise-fonts", function () {
+//   return gulp.src(`${dirs.src.fonts}/*.ttf`)
+//     .pipe(ttf2woff2())
+//     .pipe(through2.obj(function (file, _, cb) {
+//       const ttfFilePath = file.path.replace(/\.woff2$/, '.ttf');
+//       unlinkSync(ttfFilePath);
+//       this.push(file);
+//       cb();
+//     }))
+//     .pipe(gulp.dest(`${dirs.dest.fonts}`));
+// });
 
 gulp.task("optimise-fonts", function () {
-  return gulp.src(`${dirs.src.fonts}/*.ttf`)
-    .pipe(ttf2woff2())
-    .pipe(through2.obj(function (file, _, cb) {
-      const ttfFilePath = file.path.replace(/\.woff2$/, '.ttf');
-      unlinkSync(ttfFilePath);
-      this.push(file);
-      cb();
-    }))
-    .pipe(gulp.dest(`${dirs.dest.fonts}`));
-});
+  const optimizedFontsPath = `${dirs.config.assets.scss}/_optimized-fonts.scss`;
 
+  return (
+    gulp
+      .src(`${dirs.src.fonts}/*.ttf`)
+      .pipe(ttf2woff2())
+      .pipe(
+        through2.obj(function (file, _, cb) {
+          const ttfFilePath = file.path.replace(/\.woff2$/, ".ttf");
+          unlinkSync(ttfFilePath);
+          this.push(file);
+          cb();
+        })
+      )
+      // Create the @font-face statements and append them to the _optimized-fonts.scss file
+      .pipe(
+        through2.obj(function (file, _, cb) {
+          const fontNameWithWeight = path.basename(file.path, ".woff2");
+          const fontName = fontNameWithWeight.replace(/-.*$/, "");
+          const fontWeight = fontNameWithWeight.match(/-(\d+)/)
+            ? fontNameWithWeight.match(/-(\d+)/)[1]
+            : "normal";
+
+          const fontFace = `
+@font-face {
+  font-family: '${fontName}';
+  src: url('../fonts/${fontNameWithWeight}.woff2') format('woff2');
+  font-weight: ${fontWeight};
+  font-style: normal;
+  font-display: swap;
+}\n`;
+
+          fs.appendFile(optimizedFontsPath, fontFace, (err) => {
+            if (err) {
+              console.error("Error appending to file:", err);
+            }
+            cb(null, file);
+          });
+        })
+      )
+      .pipe(gulp.dest(`${dirs.dest.fonts}`))
+  );
+});
 
 gulp.task("minify-components-js", function () {
   return minifyJS(jsFiles.components, `${dirs.dest.js}/components`);
@@ -114,7 +166,7 @@ gulp.task("serve", function () {
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));
   gulp.watch(jsFiles.singles, gulp.series("minify-singles-js"));
   gulp.watch(jsFiles.scripts, gulp.series("scripts"));
-  gulp.watch(["**/*", "!static/fonts/**/*", "!config/**/*"]).on("change", browserSync.reload);
+  gulp.watch(["**/*"]).on("change", browserSync.reload);
 
   //Components Garbage Collector
   chokidar
@@ -122,7 +174,10 @@ gulp.task("serve", function () {
     .on("unlinkDir", function (dirPath) {
       const componentName = dirPath.split("\\").pop();
       console.log("Successfuly Deleted Component: ", componentName);
-      deleteSync(['static/js/components/' + `${componentName}`, '!static/js/components/']);
+      deleteSync([
+        "static/js/components/" + `${componentName}`,
+        "!static/js/components/",
+      ]);
       gulp
         .src("./src/scss/main.scss")
         .pipe(
@@ -134,13 +189,16 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
-    //Pages templates garbage collector
-    chokidar
+  //Pages templates garbage collector
+  chokidar
     .watch("./template-pages/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
       const templateName = dirPath.split("\\").pop();
       console.log("Successfuly Deleted Page Template: ", templateName);
-      deleteSync(['static/js/template-pages/' + `${templateName}`, '!static/js/template-pages/']);
+      deleteSync([
+        "static/js/template-pages/" + `${templateName}`,
+        "!static/js/template-pages/",
+      ]);
       gulp
         .src("./src/scss/main.scss")
         .pipe(
@@ -152,13 +210,16 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
-    //Archives garbage collector
-    chokidar
+  //Archives garbage collector
+  chokidar
     .watch("./template-archives/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
       const archiveName = dirPath.split("\\").pop();
       console.log("Successfuly Deleted Archive Template: ", archiveName);
-      deleteSync(['static/js/template-archives/' + `${archiveName}`, '!static/js/template-archives/']);
+      deleteSync([
+        "static/js/template-archives/" + `${archiveName}`,
+        "!static/js/template-archives/",
+      ]);
       gulp
         .src("./src/scss/main.scss")
         .pipe(
@@ -171,13 +232,16 @@ gulp.task("serve", function () {
         .pipe(gulp.dest("./src/scss/"));
     });
 
-    //Singles garbage collector
-    chokidar
+  //Singles garbage collector
+  chokidar
     .watch("./template-singles/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
       const singleName = dirPath.split("\\").pop();
       console.log("Successfuly Deleted Single Template: ", singleName);
-      deleteSync(['static/js/template-singles/' + `${singleName}`, '!static/js/template-singles/']);
+      deleteSync([
+        "static/js/template-singles/" + `${singleName}`,
+        "!static/js/template-singles/",
+      ]);
       gulp
         .src("./src/scss/main.scss")
         .pipe(
@@ -191,4 +255,15 @@ gulp.task("serve", function () {
     });
 });
 
-gulp.task("default", gulp.series("sass", "minify-components-js", "minify-pages-js", "minify-archives-js", "minify-singles-js", "scripts", "serve"));
+gulp.task(
+  "default",
+  gulp.series(
+    "sass",
+    "minify-components-js",
+    "minify-pages-js",
+    "minify-archives-js",
+    "minify-singles-js",
+    "scripts",
+    "serve"
+  )
+);

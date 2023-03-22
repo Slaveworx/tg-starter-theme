@@ -47,6 +47,9 @@ class TG
 
         // Dequeue Jquery
         add_action('init', array($this, 'jquery_remove'));
+        
+        //Manage built in cache setting
+        add_action('init', array($this, 'tg_custom_cache_mechanism'));
 
         //Remove type attribute and trailing slash from enqueued styles
         add_filter('style_loader_tag', array($this, 'remove_type_attribute_and_trailing_slash'), 10, 2);

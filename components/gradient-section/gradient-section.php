@@ -1,10 +1,10 @@
 <?php
-global $tg;
+namespace TG;
 //****************************************
 
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0                            
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0                            
 
 //****************************************
 // COMPONENT: gradient-section
@@ -22,6 +22,6 @@ global $tg;
         <h2 class="gradient-section__title">The button below will open a simple yet <strong>powerful</strong> modal!</h2>
         <p class="gradient-section__description">Modals are flexible, simple and easy to use in TG Starter Theme</p>
         <a href="#" id="open-modal" class="btn__primary gradient-section__cta">Open Modal</a>
-        <?php $tg->load_component("modal"); ?>
+        <?php TG::load_component("modal"); ?>
     </div>
 </section>

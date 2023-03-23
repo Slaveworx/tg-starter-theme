@@ -3,7 +3,7 @@
 
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
 // * This file contains all Optimizations           
 
 //****************************************
@@ -94,11 +94,42 @@ trait Optimization
 
         if (USE_CACHE && strpos($htaccess_contents, '# Begin TG Starter Theme Cache Settings') === false) {
             // Add the custom rules to the .htaccess file
-            $new_rules = "# Begin TG Starter Theme Cache Settings\n";
-            $new_rules .= "# Set cache TTL for static assets to 1 year (31536000 seconds)\n";
-            $new_rules .= "RewriteCond %{REQUEST_FILENAME} !-f\n";
-            $new_rules .= "RewriteCond %{REQUEST_FILENAME} !-d\n";
-            $new_rules .= "RewriteRule \.(?:ico|css|js|gif|jpe?g|png|svg|webp|woff2?|ttf|otf)$ - [L,E=Cache-Control:max-age=$cache_ttl]\n";
+            $new_rules = "\n# Begin TG Starter Theme Cache Settings\n";
+            $new_rules .= "<IfModule mod_expires.c>\n";
+            $new_rules .= "  ExpiresActive On\n";
+            $new_rules .= "  ExpiresDefault \"access plus 1 year\"\n";
+            $new_rules .= "  ExpiresByType image/jpeg \"access plus 1 year\"\n";
+            $new_rules .= "  ExpiresByType image/png \"access plus 1 year\"\n";
+            $new_rules .= "  ExpiresByType image/gif \"access plus 1 year\"\n";
+            $new_rules .= "  ExpiresByType image/svg+xml \"access plus 1 year\"\n";
+            $new_rules .= "  ExpiresByType image/webp \"access plus  1 year\"\n";
+            $new_rules .= " ExpiresByType image/x-icon \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType text/css \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType text/javascript \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType application/javascript \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType application/x-javascript \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType font/ttf \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType font/otf \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType application/font-woff \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType application/font-woff2 \"access plus 1 year\"\n";
+            $new_rules .= " ExpiresByType application/vnd.ms-fontobject \"access plus 1 year\"\n";
+            $new_rules .= "</IfModule>\n\n";
+            $new_rules .= "<IfModule mod_headers.c>\n";
+            $new_rules .= " <FilesMatch \"\.(ico|css|js|gif|jpe?g|png|svg|webp|woff2?|ttf|otf)$\">\n";
+            $new_rules .= " Header set Cache-Control \"public, max-age=31536000\"\n";
+            $new_rules .= " </FilesMatch>\n";
+            $new_rules .= "</IfModule>\n\n";
+            $new_rules .= "<IfModule mod_deflate.c>\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE text/plain\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE text/html\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE text/xml\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE text/css\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE application/xml\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE application/xhtml+xml\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE application/rss+xml\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE application/javascript\n";
+            $new_rules .= " AddOutputFilterByType DEFLATE application/x-javascript\n";
+            $new_rules .= "</IfModule>\n";
             $new_rules .= "# End TG Starter Theme Cache Settings\n\n";
             file_put_contents($htaccess_file, $new_rules, FILE_APPEND | LOCK_EX);
         } elseif (!USE_CACHE && strpos($htaccess_contents, '# Begin TG Starter Theme Cache Settings') !== false) {

@@ -1,10 +1,10 @@
 <?php
-//global $tg; ---> * Uncomment this line if you will use any of the Theme functions in this file
+//namespace TG; ---> * Uncomment this line if you will use any of the Theme functions in this file
 //****************************************
 
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0                            
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0                            
 
 //****************************************
 // COMPONENT: left-right-section

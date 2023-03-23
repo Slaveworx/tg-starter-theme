@@ -1,6 +1,10 @@
 <?php
-
-global $tg;
+//****************************************
+// 🆃🅶                                     
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
+//****************************************
+namespace TG;
 
 /**
  * TG Theme Functions & Definitions
@@ -25,7 +29,7 @@ if (!defined('THEME_TEXT_DOMAIN')) {
 }
 
 /**
- * Define if the theme should use efficient cache setting or not
+ * Define if the theme should use efficient cache setting or not (might not work in all servers)
  */
 if (!defined('USE_CACHE')) {
 	define('USE_CACHE', true);
@@ -35,4 +39,4 @@ if (!defined('USE_CACHE')) {
 require_once(get_template_directory() . "/config/config.php"); //#
 //################################################################
 
-$tg = new TG\TG();
+new TG();

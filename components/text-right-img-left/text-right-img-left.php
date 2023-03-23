@@ -1,11 +1,11 @@
 <?php
 
-global $tg;
+namespace TG;
 //****************************************
 
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0                            
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0                            
 
 //****************************************
 // COMPONENT: text-right-img-left
@@ -23,7 +23,7 @@ global $tg;
 
         <div class="left-block">
             <div class="wrapper">
-                <?php $tg->img("dummy.jpeg", "Just a dummy image to serve as example", ["left-block__image"]); ?>
+                <?php TG::img("dummy.jpeg", "Just a dummy image to serve as example", ["left-block__image"]); ?>
             </div>
         </div>
 

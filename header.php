@@ -2,9 +2,9 @@
 //****************************************
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
 //****************************************
-global $tg;
+namespace TG;
 
 /**
  * The header for our theme
@@ -30,12 +30,12 @@ global $tg;
 	<link rel="canonical" href="<?php echo get_permalink(); ?>">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
-	<?php echo $tg->generate_preload_links(); ?>
+	<?php echo TG::generate_preload_links(); ?>
 </head>
 
 <body <?php body_class(); ?>>
 	<?php wp_body_open(); ?>
-	<?php $tg->load_component("navbar"); ?>
+	<?php TG::load_component("navbar"); ?>
 	<div id="page" class="site">
 
 		<a class="skip-link screen-reader-text" href="#primary">

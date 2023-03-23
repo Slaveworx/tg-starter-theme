@@ -3,7 +3,7 @@
 //****************************************
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
 //****************************************
 /**
  * The template for displaying 404 pages (not found)
@@ -20,7 +20,7 @@ get_header();
 	<div class="container-medium">
 		<section class="error-404 not-found">
 			<header class="page-header">
-				<?php $tg->img("logo.png", "404 Image", ["page-header__image"]); ?>
+				<?php TG::img("logo.png", "404 Image", ["page-header__image"]); ?>
 
 				<h1 class="page-header__title">
 					<?php esc_html_e('Oops! That page can&rsquo;t be found.', THEME_TEXT_DOMAIN); ?>

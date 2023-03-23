@@ -1,5 +1,5 @@
 <?php
-global $tg;
+namespace TG;
 /**
  * The template for displaying the footer
  *
@@ -14,7 +14,7 @@ global $tg;
 
 </div><!-- #page -->
 
-<?php $tg->load_component("footer") ?>
+<?php TG::load_component("footer") ?>
 
 <?php wp_footer(); ?>
 

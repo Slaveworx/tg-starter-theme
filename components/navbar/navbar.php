@@ -23,7 +23,7 @@ namespace TG;
 
     <div class="site-branding">
 
-        <a href="<?php echo home_url("/"); ?>"><img class="logo" src="<?php echo get_template_directory_uri() . '/static/img/logo.png'; ?>" alt="TG Starter Theme Logo" width="48" height="48"></a>
+        <a href="<?php echo home_url("/"); ?>"><img class="logo" src="<?php echo get_template_directory_uri() . '/static/img/logo.svg'; ?>" alt="TG Starter Theme Logo" width="48" height="48"></a>
 
 
     </div><!-- .site-branding -->

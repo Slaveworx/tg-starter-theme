@@ -41,7 +41,7 @@ body.login p.message {
 }
 
 body.login div#login h1 a {
-    background-image: url('../img/logo.png');
+    background-image: url('../img/logo.svg');
     background-size: contain;
     width: 48px;
     height: 48px;

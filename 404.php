@@ -1,5 +1,5 @@
 <?php
-
+namespace TG;
 //****************************************
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
@@ -20,7 +20,7 @@ get_header();
 	<div class="container-medium">
 		<section class="error-404 not-found">
 			<header class="page-header">
-				<?php TG::img("logo.png", "404 Image", ["page-header__image"]); ?>
+				<img class="page-header__image" loading="lazy" src="<?php echo TG::img_url('logo.svg'); ?>" alt="404 Image" width="400" height="353">
 
 				<h1 class="page-header__title">
 					<?php esc_html_e('Oops! That page can&rsquo;t be found.', THEME_TEXT_DOMAIN); ?>

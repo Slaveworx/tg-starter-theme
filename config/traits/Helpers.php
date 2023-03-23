@@ -86,7 +86,8 @@ trait Helpers
             $class_string = 'class="' . $class_string . '"';
         endif;
 
-        if (sizeof($attributes) > 0) : foreach ($attributes as $attribute) :
+        if (sizeof($attributes) > 0) : 
+            foreach ($attributes as $attribute) :
                 $attribute_string .= $attribute;
             endforeach;
         endif;

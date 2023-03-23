@@ -1,0 +1,49 @@
+/*##############################################
+#               Default Templates              #
+################################################*/
+.page,
+.archive,
+.single {
+
+    header:not(#masthead) {
+        margin-block: 2.5rem;
+    }
+
+    .entry-content {
+        margin-block: 2.5rem;
+
+        img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+    }
+
+    .post-navigation {
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+
+            @include when(tab-port) {
+                flex-direction: column;
+            }
+        }
+    }
+
+    #comments {
+        margin-block: 2.5rem;
+
+        form {
+            .comment-form-comment {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #submit {
+                margin-block: 2.5rem;
+            }
+        }
+    }
+
+}

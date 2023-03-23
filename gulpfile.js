@@ -15,9 +15,9 @@ import dotenv from "dotenv";
 import { deleteSync } from "del";
 import replace from "gulp-replace";
 import chokidar from "chokidar";
-import ttf2woff2 from "gulp-ttf2woff2"; //fonts
-import through2 from "through2"; // fonts
-import { unlinkSync } from "fs"; //fonts
+import ttf2woff2 from "gulp-ttf2woff2";
+import through2 from "through2";
+import { unlinkSync } from "fs";
 import fs from "fs";
 import path from "path";
 
@@ -74,17 +74,7 @@ gulp.task("sass", function () {
     .pipe(browserSync.stream());
 });
 
-// gulp.task("optimise-fonts", function () {
-//   return gulp.src(`${dirs.src.fonts}/*.ttf`)
-//     .pipe(ttf2woff2())
-//     .pipe(through2.obj(function (file, _, cb) {
-//       const ttfFilePath = file.path.replace(/\.woff2$/, '.ttf');
-//       unlinkSync(ttfFilePath);
-//       this.push(file);
-//       cb();
-//     }))
-//     .pipe(gulp.dest(`${dirs.dest.fonts}`));
-// });
+
 
 gulp.task("optimise-fonts", function () {
   const optimizedFontsPath = `${dirs.config.assets.scss}/_optimized-fonts.scss`;

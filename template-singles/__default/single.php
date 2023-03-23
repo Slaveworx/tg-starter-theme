@@ -22,7 +22,7 @@ get_header();
 		while (have_posts()) :
 			the_post();
 
-			get_template_part('templates/partials/content', get_post_type());
+			get_template_part('partials/content', get_post_type());
 
 			the_post_navigation(
 				array(

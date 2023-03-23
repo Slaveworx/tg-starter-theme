@@ -39,3 +39,5 @@ add_theme_support(
 );
 
 add_theme_support('menus');
+
+add_theme_support( 'woocommerce' );

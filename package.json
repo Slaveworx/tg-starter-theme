@@ -1,7 +1,7 @@
 {
   "name": "tg",
   "version": "1.0.0",
-  "description": "Wordpress Start Theme",
+  "description": "Wordpress Starter Theme",
   "main": "index.js",
   "bin": {
     "tg": "./cli.js"
@@ -11,10 +11,15 @@
     "fs": "*",
     "tg": "file:cli.js"
   },
-  "scripts": {},
+  "scripts": {
+    "serve": "npx gulp"
+  },
   "keywords": [
-    "timber",
-    "wordpress"
+    "tg",
+    "wordpress",
+    "wp",
+    "tg starter theme",
+    "automation"
   ],
   "author": "Tiago Galvão",
   "license": "MIT",
@@ -22,6 +27,7 @@
     "browser-sync": "^2.27.5",
     "chokidar": "^3.5.3",
     "commander": "^2.20.3",
+    "cross-spawn": "^7.0.3",
     "del": "^7.0.0",
     "dotenv": "^16.0.3",
     "gulp": "^4.0.2",

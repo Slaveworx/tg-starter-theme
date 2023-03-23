@@ -29,66 +29,66 @@ class TG
 
     public function __construct()
     {
-        //### STYLES ######################################################
-        require_once(get_template_directory() . "/config/styles.php"); //##
-        //#################################################################
+        $this->load_config_files();
 
-        //### SCRIPTS #####################################################
-        require_once(get_template_directory() . "/config/scripts.php"); //#
-        //#################################################################
+        $this->register_actions_and_filters();
+    }
 
-        //### CONDITIONAL STYLES & SCRIPTS ################################
-        require_once(get_template_directory() . "/config/dependencies.php");
-        //#################################################################
+    private function load_config_files()
+    {
+        $config_files = [
+            'styles',
+            'scripts',
+            'dependencies',
+            'helpers'
+        ];
 
-        //### HELPERS #####################################################
-        require_once(get_template_directory() . "/config/helpers.php"); //#
-        //#################################################################
+        foreach ($config_files as $file) {
+            require_once get_template_directory() . "/config/{$file}.php";
+        }
+    }
 
-        // Dequeue Jquery
-        add_action('init', array($this, 'jquery_remove'));
-        
-        //Manage built in cache setting
-        add_action('init', array($this, 'tg_custom_cache_mechanism'));
+    private function register_actions_and_filters()
+    {
+        $actions = [
+            'init' => [
+                'register_post_types',
+                'register_taxonomies',
+                'add_all_posts_to_context',
+                'tg_custom_cache_mechanism',
+                'jquery_remove'
+            ],
 
-        //Remove type attribute and trailing slash from enqueued styles
-        add_filter('style_loader_tag', array($this, 'remove_type_attribute_and_trailing_slash'), 10, 2);
+            'admin_bar_menu' => ['add_cleanup_btn_to_admin_bar'],
+            'wp_ajax_clean_context_transient' => ['clean_context_transient'],
+            'login_enqueue_scripts' => ['custom_login_css'],
+            'after_setup_theme' => ['add_theme_supports']
+        ];
 
-        // Remove type attribute and trailing slash from enqueued scripts
-        add_filter('script_loader_tag', array($this, 'remove_type_attribute_and_trailing_slash'), 10, 2);
+        $filters = [
+            'style_loader_tag' => ['remove_type_attribute_and_trailing_slash'],
+            'script_loader_tag' => ['remove_type_attribute_and_trailing_slash'],
+            'theme_page_templates' => ['modify_wp_default_page_templates_dir'],
+            'archive_template' => ['tg_archive_templates_dir'],
+            'page_template' => ['tg_page_templates_dir'],
+            'single_template' => ['tg_single_templates_dir']
+        ];
 
-        // Add theme Support
-        add_action('after_setup_theme', array($this, 'theme_supports'));
+        foreach ($actions as $hook => $methods) {
+            foreach ($methods as $method) {
+                add_action($hook, array($this, $method));
+            }
+        }
 
-        // Register Custom Post Types
-        add_action('init', array($this, 'register_post_types'));
-
-        //Register Custom Taxonomies
-        add_action('init', array($this, 'register_taxonomies'));
-
-        //Add All Post Types to Context
-        add_action('init', array($this, 'add_all_posts_to_context'));
-
-        //Change wordpress's logic of where to look for available page templates
-        add_filter('theme_page_templates', array($this, 'modify_wp_default_page_templates_dir'));
-
-        //Change default archive page templates directory
-        add_filter('archive_template', array($this, 'tg_archive_templates_dir'));
-
-        //Change default page templates directory
-        add_filter('page_template', array($this, 'tg_page_templates_dir'));
-
-        //Change default single templates directory
-        add_filter('single_template', array($this, 'tg_single_templates_dir'));
-
-        // Add Buttons to Clean Context Transient
-        add_action('admin_bar_menu', array($this, 'add_cleanup_btn_to_admin_bar'), 999);
-
-        // Add Cleanup Function to Clean Transient
-        add_action('wp_ajax_clean_context_transient', array($this, 'clean_context_transient'));
-
-        //Enqueue theme's custom admin login styles (to customize, change ./config/sources/assets/css/)login-styles.css)
-        add_action('login_enqueue_scripts', array($this, 'custom_login_css'));
+        foreach ($filters as $hook => $methods) {
+            foreach ($methods as $method) {
+                if ($hook === 'style_loader_tag' || $hook === 'script_loader_tag') :
+                    add_filter($hook, array($this, $method), 10, 2);
+                else :
+                    add_filter($hook, array($this, $method));
+                endif;
+            }
+        }
     }
 
     /** Register Custom Post Types. */
@@ -103,13 +103,12 @@ class TG
     }
 
     /** Adds all theme supports */
-    public function theme_supports()
+    public function add_theme_supports()
     {
         require_once("theme-support.php");
     }
 
-
-    /** Removes Jquery from wordpress Core */
+    /** Removes Jquery from WordPress Core */
     public function jquery_remove()
     {
         if (!is_admin()) {

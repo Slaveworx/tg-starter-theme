@@ -86,7 +86,7 @@ trait Helpers
             $class_string = 'class="' . $class_string . '"';
         endif;
 
-        if (sizeof($attributes) > 0) : 
+        if (sizeof($attributes) > 0) :
             foreach ($attributes as $attribute) :
                 $attribute_string .= $attribute;
             endforeach;
@@ -259,10 +259,14 @@ trait Helpers
     // Misc
     //************************************ */
 
-    /** Will enqueue the custom admin styles */
+    /**
+     * Enqueues custom CSS styles for the WordPress login page.
+     *
+     * This function enqueues a custom CSS stylesheet for the login page, allowing
+     * for customization of the appearance of the login form.
+     */
     public static function custom_login_css()
     {
         wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login-styles.css');
     }
-
 }

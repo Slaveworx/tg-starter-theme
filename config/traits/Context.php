@@ -1,11 +1,11 @@
 <?php
 //****************************************
-                                        
+
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
 // * This file contains all things related to Context                  
-                                        
+
 //****************************************
 
 namespace TG;
@@ -16,7 +16,24 @@ trait Context
     private static $context_transient_name = "tg_transient_all_posts_cache_context";
     public static $dependencies = array();
 
-    /** Set Context Values */
+
+    //************************************ */
+    // Context Setup
+    //************************************ */
+
+    /**
+     * Sets the context for a given key and value.
+     *
+     * This function saves the updated context in the transient. If there's no context,
+     * an empty array is created. Then, it sets the key and value in the context
+     * and updates the transient with the new context.
+     *
+     * @param string $key   The key to store the value under.
+     * @param mixed  $value The value to store in the context.
+     *
+     * @return void
+     */
+
     public static function set_context($key, $value)
     {
         // Save the updated context in the transient
@@ -29,7 +46,20 @@ trait Context
         set_transient($transient_name, $context, HOUR_IN_SECONDS);
     }
 
-    /** Get Context Values */
+    /**
+     * Retrieves the context for a specified key or the entire context array.
+     *
+     * This function gets the context from the transient. If no key is specified,
+     * it returns the entire context array. If the context array exists and contains
+     * the specified key, it returns the value associated with that key. If the key
+     * is not found in the context array, an error message is returned.
+     *
+     * @param string|null $key Optional. The key to retrieve the value for. If not
+     *                          provided, the entire context array is returned.
+     *
+     * @return mixed The value associated with the specified key or the entire
+     *               context array, or an error message if the key is not found.
+     */
     public static function get_context($key = null)
     {
         // Get the context from the transient
@@ -54,7 +84,15 @@ trait Context
         return "Error: Value does not exist inside the global context.";
     }
 
-    /** Add All Post Types to Context */
+    /**
+     * Adds all posts to the context.
+     *
+     * This function checks if the retrieved posts are stored in the cache. If not, it retrieves
+     * them and stores them in the cache. Then, it updates the context with the post data.
+     * It handles all public post types and caches the results for an hour.
+     *
+     * @return void
+     */
     public static function add_all_posts_to_context()
     {
         // Check if the retrieved posts are stored in the cache.
@@ -87,11 +125,18 @@ trait Context
     }
 
 
-    /**
-     * TRANSIENTS CLEAN UP
-     */
+    //************************************ */
+    // Cleanup Transients
+    //************************************ */
 
-    /** Add Button to admin bar to Purge Context Transient */
+    /**
+     * Adds a cleanup button to the WordPress admin bar.
+     *
+     * This function creates a "Purge Context" button in the WordPress admin bar, allowing users to easily
+     * clear context transients. The button is displayed on both desktop and mobile devices.
+     *
+     * @return void
+     */
     public static function add_cleanup_btn_to_admin_bar()
     {
         global $wp_admin_bar;
@@ -114,7 +159,14 @@ trait Context
         }
     }
 
-    /** The actual cleanup */
+    /**
+     * Cleans the context transient.
+     *
+     * This function deletes the context transient and redirects the user to the home page.
+     * It checks the AJAX nonce before performing the operation for security purposes.
+     *
+     * @return void
+     */
     public static function clean_context_transient()
     {
         check_ajax_referer('clean_context_transient');

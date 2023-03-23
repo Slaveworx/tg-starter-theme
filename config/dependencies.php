@@ -1,4 +1,6 @@
 <?php
+
+namespace TG;
 //****************************************
 
 // 🆃🅶                                     
@@ -14,30 +16,30 @@
  ******************************************************************************************************/
 
 //JQUERY
-TG\TG::add_dependency(
+TG::add_dependency(
     'jquery-min',
     '',
-    'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'
+    get_template_directory_uri() . '/static/dependencies/js/jquery.min.js'
 );
 
 //ZEPTO (Lightweight Jquery Alternative) use Zepto(document).ready() instead of jQuery(document).ready() 
-TG\TG::add_dependency(
+TG::add_dependency(
     'zepto',
     '',
-    'https://zeptojs.com/zepto.min.js'
+    get_template_directory_uri() . '/static/dependencies/js/zepto.min.js'
 );
 
 
 //SWIPER
-TG\TG::add_dependency(
+TG::add_dependency(
     'swiper',
-    'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css',
-    'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js'
+    get_template_directory_uri() . '/static/dependencies/css/swiper-bundle.min.css',
+    get_template_directory_uri() . '/static/dependencies/js/swiper-bundle.min.js'
 );
 
 //FANCYBOX
-TG\TG::add_dependency(
+TG::add_dependency(
     'fancybox',
-    'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css',
-    'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'
+    get_template_directory_uri() . '/static/dependencies/css/fancybox.css',
+    get_template_directory_uri() . '/static/dependencies/js/fancybox.umd.js'
 );

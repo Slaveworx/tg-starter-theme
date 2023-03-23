@@ -37,9 +37,13 @@ trait Optimization
     //************************************ */
 
     /**
-     * Generates preload link tags for all font files found in the static/fonts directory.
-     * The generated links improve font loading performance by instructing the browser to download the fonts before they are requested.
-     * @return string The concatenated preload link tags for all font files.
+     * Generates preload link tags for font files in the theme's fonts directory.
+     *
+     * This function scans the theme's "static/fonts" directory for font files with extensions
+     * woff, woff2, ttf, otf, and eot. It then generates preload link tags for each font file,
+     * which can be inserted into the HTML head to improve font-loading performance.
+     *
+     * @return string A string containing the generated preload link tags, separated by newlines.
      */
 
     public static function generate_preload_links()
@@ -83,11 +87,19 @@ trait Optimization
         return implode("\n", $preloadLinks);
     }
 
+    //************************************ */
+    // Cache
+    //************************************ */
+
+    /**
+     * Adds or removes custom cache settings in the .htaccess file based on the USE_CACHE constant.
+     *
+     * This function checks if the custom cache settings for the TG Starter Theme have been added to the .htaccess file.
+     * If the USE_CACHE constant is set to true and the custom cache settings have not been added, it adds the settings.
+     * If the USE_CACHE constant is set to false and the custom cache settings are present, it removes the settings.
+     */
     public static function tg_custom_cache_mechanism()
     {
-        // Set cache TTL to 1 year (31536000 seconds)
-        $cache_ttl = 31536000;
-
         // Check if the rules have already been added
         $htaccess_file = ABSPATH . '.htaccess';
         $htaccess_contents = file_get_contents($htaccess_file);

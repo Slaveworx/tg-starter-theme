@@ -191,7 +191,7 @@ program
   .command("optimise:fonts")
   .description("Run the gulp command")
   .action(() => {
-    exec("gulp optimise-fonts", (error, stdout, stderr) => {
+    exec("npm run fonts", (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
         return;

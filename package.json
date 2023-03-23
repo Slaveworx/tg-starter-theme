@@ -12,7 +12,8 @@
     "tg": "file:cli.js"
   },
   "scripts": {
-    "serve": "npx gulp"
+    "serve": "npx gulp",
+    "fonts": "npx gulp optimise-fonts"
   },
   "keywords": [
     "tg",

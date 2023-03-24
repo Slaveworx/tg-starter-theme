@@ -25,7 +25,7 @@ $modal-close-icon-color-hover: $color-primary;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 999;
+    z-index: 9999999999;
     background-color: $modal-bg;
     border-radius: 3rem;
     width: 50vw;

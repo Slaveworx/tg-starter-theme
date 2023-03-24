@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ON SCROLL EFFECTS
   let vh = window.innerHeight;
-  let initialFold = 100;
+  let initialFold = 800;
   let prevScrollPos = 0;
 
   const bodyHeight = document.body.offsetHeight;

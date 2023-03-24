@@ -33,25 +33,29 @@ document.addEventListener("DOMContentLoaded", () => {
   let initialFold = 100;
   let prevScrollPos = 0;
 
-  window.addEventListener("scroll", () => {
-    let currentScrollPos = window.pageYOffset;
+  const bodyHeight = document.body.offsetHeight;
 
-    if (currentScrollPos > initialFold) {
-      navbar.classList.add("fixed");
-      if (currentScrollPos > prevScrollPos) {
-        navbar.style.opacity = 1;
+  if (bodyHeight > vh) {
+    window.addEventListener("scroll", () => {
+      let currentScrollPos = window.pageYOffset;
+
+      if (currentScrollPos > initialFold) {
+        navbar.classList.add("fixed");
+        if (currentScrollPos > prevScrollPos) {
+          navbar.style.opacity = 1;
+        } else {
+          let opacity = Math.max(0, 1 - (currentScrollPos - initialFold) / vh);
+          navbar.style.opacity = opacity;
+        }
       } else {
-        let opacity = Math.max(0, 1 - (currentScrollPos - initialFold) / vh);
-        navbar.style.opacity = opacity;
+        navbar.classList.remove("fixed");
+        navbar.style.opacity = 1;
       }
-    } else {
-      navbar.classList.remove("fixed");
-      navbar.style.opacity = 1;
-    }
 
-    prevScrollPos = currentScrollPos;
-  });
-  navbar.style.transition = "opacity 350ms ease-in-out";
+      prevScrollPos = currentScrollPos;
+    });
+    navbar.style.transition = "opacity 350ms ease-in-out";
+  }
 
   // Fix Wp Admin Bar issue
   if (body.classList.contains("logged-in")) {

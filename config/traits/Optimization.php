@@ -14,6 +14,105 @@ trait Optimization
 {
 
     //************************************ */
+    // Static Assets Optimization
+    //************************************ */
+
+    /**
+     * Dequeue blocking scripts and re-enqueue them with the 'defer' attribute.
+     *
+     * This function iterates through the PLUGIN_SCRIPTS array, checks if each script is enqueued,
+     * dequeues the script, and then re-enqueues it with the 'defer' attribute by setting the fifth
+     * parameter of wp_enqueue_script() to true. This optimizes the loading of the script files
+     * by allowing the browser to load the scripts asynchronously, thus improving the page load speed.
+     */
+    public function dequeue_blocking_scripts()
+    {
+        foreach (PLUGIN_SCRIPTS as $handle) {
+            if (wp_script_is($handle, 'enqueued')) {
+                wp_dequeue_script($handle);
+                wp_enqueue_script($handle, wp_scripts()->registered[$handle]->src, array(), wp_scripts()->registered[$handle]->ver, true);
+            }
+        }
+    }
+
+    /**
+     * Dequeue blocking styles and re-enqueue them with the 'print' media type.
+     *
+     * This function iterates through the PLUGIN_STYLES array, checks if each style is enqueued,
+     * dequeues the style, and then re-enqueues it with the 'print' media type by setting the fifth
+     * parameter of wp_enqueue_style() to 'print'. This method is used to optimize the loading of
+     * the stylesheets by initially setting them to a non-blocking media type, which can later be
+     * changed to 'all' using JavaScript.
+     */
+    public function dequeue_blocking_styles()
+    {
+        foreach (PLUGIN_STYLES as $handle) {
+            if (wp_style_is($handle, 'enqueued')) {
+                wp_dequeue_style($handle);
+                wp_enqueue_style($handle, wp_styles()->registered[$handle]->src, array(), wp_styles()->registered[$handle]->ver, 'print');
+            }
+        }
+    }
+
+    /**
+     * Add the 'defer' attribute to the script tags of enqueued PLUGIN_SCRIPTS.
+     *
+     * This function checks if the given script handle is part of the PLUGIN_SCRIPTS array.
+     * If it is, the 'defer' attribute is added to the script tag, which allows the browser
+     * to load the script asynchronously and in a non-blocking manner, improving the page load speed.
+     *
+     * @param string $tag    The complete script tag for the enqueued script.
+     * @param string $handle The script's registered handle.
+     * @param string $src    The source URL of the enqueued script.
+     * @return string        The modified script tag with the 'defer' attribute added.
+     */
+    public function add_defer_attribute($tag, $handle, $src)
+    {
+        if (in_array($handle, PLUGIN_SCRIPTS)) {
+            $tag = str_replace(' src', ' defer src', $tag);
+        }
+        return $tag;
+    }
+
+
+    /**
+     * Add the 'onload' attribute to the style tags of enqueued PLUGIN_STYLES.
+     *
+     * This function checks if the given style handle is part of the PLUGIN_STYLES array.
+     * If it is, and the 'media' attribute is not set to 'print', the 'media' attribute
+     * is changed to 'print' and the 'onload' attribute is added. If the 'media' attribute
+     * is already set to 'print', only the 'onload' attribute is added. The 'onload' attribute
+     * changes the 'media' attribute back to 'all' once the stylesheet has loaded, ensuring
+     * that the stylesheet is loaded in a non-blocking manner, improving page load speed.
+     *
+     * @param string $html   The complete style tag for the enqueued style.
+     * @param string $handle The style's registered handle.
+     * @param string $href   The source URL of the enqueued style.
+     * @param string $media  The media attribute value for the enqueued style.
+     * @return string        The modified style tag with the 'media' and 'onload' attributes added or updated.
+     */
+    public function add_style_onload_attribute($html, $handle, $href, $media)
+    {
+        if (in_array($handle, PLUGIN_STYLES)) {
+            // Check if media="print" or media='print' is present in the $html string
+            $media_print_present = strpos($html, 'media="print"') !== false || strpos($html, "media='print'") !== false;
+
+            // If media="print" or media='print' is not present, add media="print" and onload attribute
+            if (!$media_print_present) {
+                $html = preg_replace('/(media="[^"]*")/i', 'media="print" onload="this.media=\'all\'"', $html);
+                $html = preg_replace("/(media='[^']*')/i", "media='print' onload=\"this.media='all'\"", $html);
+            } else {
+                // If media="print" or media='print' is present, only add the onload attribute
+                $html = str_replace('media="print"', 'media="print" onload="this.media=\'all\'"', $html);
+                $html = str_replace("media='print'", "media='print' onload=\"this.media='all'\"", $html);
+            }
+        }
+        return $html;
+    }
+
+
+
+    //************************************ */
     // HTML Validation
     //************************************ */
 

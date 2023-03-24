@@ -62,12 +62,14 @@ class TG
             'admin_bar_menu' => ['add_cleanup_btn_to_admin_bar'],
             'wp_ajax_clean_context_transient' => ['clean_context_transient'],
             'login_enqueue_scripts' => ['custom_login_css'],
-            'after_setup_theme' => ['add_theme_supports']
+            'after_setup_theme' => ['add_theme_supports'],
+            'wp_print_scripts' => ['dequeue_blocking_scripts'],
+            'wp_print_styles' => ['dequeue_blocking_styles']
         ];
 
         $filters = [
-            'style_loader_tag' => ['remove_type_attribute_and_trailing_slash'],
-            'script_loader_tag' => ['remove_type_attribute_and_trailing_slash'],
+            'style_loader_tag' => ['remove_type_attribute_and_trailing_slash', 'add_style_onload_attribute'],
+            'script_loader_tag' => ['remove_type_attribute_and_trailing_slash', 'add_defer_attribute'],
             'theme_page_templates' => ['modify_wp_default_page_templates_dir'],
             'archive_template' => ['tg_archive_templates_dir'],
             'page_template' => ['tg_page_templates_dir'],
@@ -76,16 +78,23 @@ class TG
 
         foreach ($actions as $hook => $methods) {
             foreach ($methods as $method) {
-                add_action($hook, array($this, $method));
+                if ($hook === 'dequeue_blocking_scripts' || $hook === 'dequeue_blocking_styles') :
+                    add_filter($hook, array($this, $method), 100);
+                else :
+                    add_action($hook, array($this, $method));
+                endif;
             }
         }
 
         foreach ($filters as $hook => $methods) {
             foreach ($methods as $method) {
-                if ($hook === 'style_loader_tag' || $hook === 'script_loader_tag') :
-                    add_filter($hook, array($this, $method), 10, 2);
+                if ($hook === 'style_loader_tag') :
+                    $method === 'add_style_onload_attribute' ? add_filter($hook, array($this, $method), 10, 4) : add_filter($hook, array($this, $method), 10, 2);
+                elseif ($hook === 'script_loader_tag') :
+                    $method === 'add_defer_attribute' ? add_filter($hook, array($this, $method), 10, 3) : add_filter($hook, array($this, $method), 10, 2);
                 else :
                     add_filter($hook, array($this, $method));
+
                 endif;
             }
         }

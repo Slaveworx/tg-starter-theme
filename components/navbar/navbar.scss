@@ -23,21 +23,22 @@ $mobile-menu-item-hover-text-color: $black;
 /*##############################################*/
 
 .site-header {
+    position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background: $navbar-bg-color;
     backdrop-filter: blur(5px);
     width: 100%;
     padding: 3rem;
     height: $navbar-height;
-    z-index: 999;
+    z-index: 99999 !important;
 
     &.fixed {
         position: fixed;
         top: 0;
         left: 0;
-      }
+    }
 
 
     //BURGER
@@ -54,8 +55,8 @@ $mobile-menu-item-hover-text-color: $black;
             width: 3.8rem;
             height: 2.9rem;
             background-color: $burger-color;
-            -webkit-mask-image: url("/wp-content/themes/tg/static/img/burger.svg");
-            mask-image: url("/wp-content/themes/tg/static/img/burger.svg");
+            -webkit-mask-image: url("../img/burger.svg");
+            mask-image: url("../img/burger.svg");
 
         }
 
@@ -64,8 +65,8 @@ $mobile-menu-item-hover-text-color: $black;
             .burger-icon {
                 width: 2.4rem;
                 height: 2.4rem;
-                -webkit-mask-image: url("/wp-content/themes/tg/static/img/burger-close.svg");
-                mask-image: url("/wp-content/themes/tg/static/img/burger-close.svg");
+                -webkit-mask-image: url("../img/burger-close.svg");
+                mask-image: url("../img/burger-close.svg");
                 -webkit-mask-size: contain;
                 mask-size: contain;
                 mask-position: center;
@@ -82,10 +83,7 @@ $mobile-menu-item-hover-text-color: $black;
         .logo {
             width: auto;
             height: 45px;
-        }
-
-        @include when(tab-port) {
-            flex: 1;
+            min-width: 45px;
         }
     }
 
@@ -95,6 +93,7 @@ $mobile-menu-item-hover-text-color: $black;
         flex: 1;
         display: flex;
         justify-content: flex-end;
+        z-index: 999 !important;
 
 
         @include when(tab-port) {
@@ -120,6 +119,7 @@ $mobile-menu-item-hover-text-color: $black;
         //Menu Inner DIV
         .menu {
             margin-left: auto;
+            z-index: 999 !important;
 
             @include when(tab-port) {
                 margin-left: 0;
@@ -127,6 +127,8 @@ $mobile-menu-item-hover-text-color: $black;
             }
 
             ul {
+                position: relative;
+                z-index: 999 !important;
                 display: flex;
                 margin-inline: 5rem;
 
@@ -143,7 +145,7 @@ $mobile-menu-item-hover-text-color: $black;
 
                         a {
                             padding-block: 1.5rem;
-                            padding-inline: 1.5rem;
+                            padding-left: 3rem;
                             display: block;
                             color: $navbar-link-color !important;
 

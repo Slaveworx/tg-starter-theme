@@ -22,7 +22,7 @@ get_header();
 <!-- ******************************** -->
 <!-- WOOCOMMERCE -->
 <!-- ******************************** -->
-<main id="primary" class="site-main">
+<main id="primary" class="site-main woocommerce-theme-support">
 	<div class="container-medium">
 		<?php
 

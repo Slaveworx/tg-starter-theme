@@ -40,7 +40,7 @@ class TG
             'styles',
             'scripts',
             'dependencies',
-            'helpers'
+            'template-functions'
         ];
 
         foreach ($config_files as $file) {

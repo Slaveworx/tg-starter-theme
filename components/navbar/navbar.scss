@@ -54,8 +54,8 @@ $mobile-menu-item-hover-text-color: $black;
             width: 3.8rem;
             height: 2.9rem;
             background-color: $burger-color;
-            -webkit-mask-image: url("/wp-content/themes/tg/static/img/burger.svg");
-            mask-image: url("/wp-content/themes/tg/static/img/burger.svg");
+            -webkit-mask-image: url("../img/burger.svg");
+            mask-image: url("../img/burger.svg");
 
         }
 
@@ -64,8 +64,8 @@ $mobile-menu-item-hover-text-color: $black;
             .burger-icon {
                 width: 2.4rem;
                 height: 2.4rem;
-                -webkit-mask-image: url("/wp-content/themes/tg/static/img/burger-close.svg");
-                mask-image: url("/wp-content/themes/tg/static/img/burger-close.svg");
+                -webkit-mask-image: url("../img/burger-close.svg");
+                mask-image: url("../img/burger-close.svg");
                 -webkit-mask-size: contain;
                 mask-size: contain;
                 mask-position: center;

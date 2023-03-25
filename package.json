@@ -1,7 +1,7 @@
 {
   "name": "tg",
   "version": "1.0.0",
-  "description": "Wordpress Starter Theme",
+  "description": "TG Wordpress Starter Theme",
   "main": "index.js",
   "bin": {
     "tg": "./cli.js"
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "serve": "npx gulp",
-    "fonts": "npx gulp optimise-fonts"
+    "compress:fonts": "node ./config/scripts/font-compressor.cjs"
   },
   "keywords": [
     "tg",
@@ -31,14 +31,16 @@
     "cross-spawn": "^7.0.3",
     "del": "^7.0.0",
     "dotenv": "^16.0.3",
+    "glob": "^7.2.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
-    "gulp-ttf2woff2": "^4.0.1",
     "gulp-uglify": "^3.0.2",
     "handlebars": "^4.7.7",
     "inquirer": "^9.1.4",
-    "sass": "^1.58.3"
+    "sass": "^1.58.3",
+    "subset-font": "^2.0.0",
+    "ttf2woff2": "^5.0.0"
   }
 }

@@ -63,6 +63,8 @@ if (!defined('PLUGIN_STYLES')) {
 	define('PLUGIN_STYLES', array(
 		"classic-theme-styles",
 		"woocommerce-general",
+		"woocommerce-layout",
+		"woocommerce-smallscreen",
 		"jetpack_css"
 	));
 }

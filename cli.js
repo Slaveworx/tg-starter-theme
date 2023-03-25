@@ -191,23 +191,25 @@ program
     });
   });
 
-/** RUN GULP COMMAND TO OPTIMIZE FONTS */
-program
-  .command("optimise:fonts")
-  .description("Run the gulp command")
-  .action(() => {
-    exec("npm run fonts", (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.error(`Error: ${stderr}`);
-        return;
-      }
-      console.log(`Output: ${stdout}`);
-    });
-  });
+   /** RUN FONT OPTIMIZER */
+   program
+   .command("optimise:fonts")
+   .description("Run the font optimizer. Converts TTF fonts to woff2 and compresses them")
+   .action(() => {
+     const gulpProcess = spawn("npm", ["run", "compress:fonts"], { stdio: "inherit" });
+ 
+     gulpProcess.on("error", (error) => {
+       console.error(`Error: ${error.message}`);
+     });
+ 
+     gulpProcess.on("close", (code) => {
+       if (code !== 0) {
+         console.error(`Gulp process exited with code ${code}`);
+       } else {
+         console.log("Gulp process exited successfully.");
+       }
+     });
+   });
 
   /** RUN GULP COMMAND TO RUN SERVER AND WATCHERS */
   program

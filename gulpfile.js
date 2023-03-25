@@ -15,11 +15,6 @@ import dotenv from "dotenv";
 import { deleteSync } from "del";
 import replace from "gulp-replace";
 import chokidar from "chokidar";
-import ttf2woff2 from "gulp-ttf2woff2";
-import through2 from "through2";
-import { unlinkSync } from "fs";
-import fs from "fs";
-import path from "path";
 
 dotenv.config();
 
@@ -32,18 +27,11 @@ const dirs = {
     pages: "./template-pages",
     archives: "./template-archives",
     singles: "./template-singles",
-    fonts: "./static/fonts",
   },
   dest: {
     css: "./static/css",
     js: "./static/js",
-    fonts: "./static/fonts",
-  },
-  config: {
-    assets: {
-      scss: "./config/sources/assets/scss",
-    },
-  },
+  }
 };
 
 // Define JS files to be minified
@@ -72,53 +60,6 @@ gulp.task("sass", function () {
     .pipe(autoprefixer({ cascade: false }))
     .pipe(gulp.dest(dirs.dest.css))
     .pipe(browserSync.stream());
-});
-
-
-
-gulp.task("optimise-fonts", function () {
-  const optimizedFontsPath = `${dirs.config.assets.scss}/_optimized-fonts.scss`;
-
-  return (
-    gulp
-      .src(`${dirs.src.fonts}/*.ttf`)
-      .pipe(ttf2woff2())
-      .pipe(
-        through2.obj(function (file, _, cb) {
-          const ttfFilePath = file.path.replace(/\.woff2$/, ".ttf");
-          unlinkSync(ttfFilePath);
-          this.push(file);
-          cb();
-        })
-      )
-      // Create the @font-face statements and append them to the _optimized-fonts.scss file
-      .pipe(
-        through2.obj(function (file, _, cb) {
-          const fontNameWithWeight = path.basename(file.path, ".woff2");
-          const fontName = fontNameWithWeight.replace(/-.*$/, "");
-          const fontWeight = fontNameWithWeight.match(/-(\d+)/)
-            ? fontNameWithWeight.match(/-(\d+)/)[1]
-            : "normal";
-
-          const fontFace = `
-@font-face {
-  font-family: '${fontName}';
-  src: url('../fonts/${fontNameWithWeight}.woff2') format('woff2');
-  font-weight: ${fontWeight};
-  font-style: normal;
-  font-display: swap;
-}\n`;
-
-          fs.appendFile(optimizedFontsPath, fontFace, (err) => {
-            if (err) {
-              console.error("Error appending to file:", err);
-            }
-            cb(null, file);
-          });
-        })
-      )
-      .pipe(gulp.dest(`${dirs.dest.fonts}`))
-  );
 });
 
 gulp.task("minify-components-js", function () {
@@ -150,7 +91,6 @@ gulp.task("serve", function () {
   gulp.watch(`${dirs.src.pages}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.archives}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.singles}/**/*.scss`, gulp.series("sass"));
-  // gulp.watch(`${dirs.src.fonts}/**/*.ttf`, gulp.series("optimize-fonts"));
   gulp.watch(jsFiles.components, gulp.series("minify-components-js"));
   gulp.watch(jsFiles.pages, gulp.series("minify-pages-js"));
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));

@@ -4,7 +4,12 @@
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
-// * This file should be used to add your theme support functions                  
+// * This file should be used to add your theme support functions
+
+//************************************ */
+// Languages & Translations
+//************************************ */
+load_theme_textdomain(THEME_TEXT_DOMAIN, get_template_directory() . '/languages');
 
 //****************************************
 

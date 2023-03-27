@@ -1,4 +1,5 @@
 <?php
+namespace TG;
 //****************************************
                                         
 // 🆃🅶                                     
@@ -6,20 +7,17 @@
 // @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0                            
                                         
 //****************************************
-// COMPONENT: hero
+// SECTION TEMPLATE: {{ sectionName }}
 //****************************************
 ?>
 
-
-
 <!-- ******************************** -->
-<!-- hero component -->
+<!-- {{ sectionName }} section template -->
 <!-- ******************************** -->
 
-<section class="hero" data-row-index="<?php echo $row_index;?>">
-    <div class="container-small">
-        <h1 class="hero__title"><?php echo $title;?></h1>
-        <p class="hero__description"><?php echo $description;?></p>
-        <a href="<?php echo $btn_link;?>" class="hero__cta btn__primary"><?php echo $btn_text;?></a>
+
+<section class="{{ sectionName }}">
+    <div class="container-medium">
+        <!-- SECTION CODE WILL GO HERE -->
     </div>
 </section>

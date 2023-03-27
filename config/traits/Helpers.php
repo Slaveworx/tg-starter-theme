@@ -143,9 +143,9 @@ trait Helpers
      * Includes a component from the Components folder in the theme directory.
      *
      * @param string $slug The slug name for the generic template.
-     * @param array $args Optional. Additional variables to pass to the included template.
+     * @param array $props Optional. Additional variables to pass to the included component.
      */
-    public static function load_component($slug, $args = array())
+    public static function load_component($slug, $props = array())
     {
         static $row_index = 0;
 
@@ -164,13 +164,13 @@ trait Helpers
         foreach ($templates as $template) {
             if (file_exists($template)) {
 
-                // Extract the $args array as variables to pass them to the included template.
-                if (!empty($args) && is_array($args)) {
-                    extract($args, EXTR_SKIP);
+                // Extract the $props array as variables to pass them to the included template.
+                if (!empty($props) && is_array($props)) {
+                    extract($props, EXTR_SKIP);
                 }
 
                 // Pass the row index as a variable to the included template.
-                $args['row_index'] = $row_index;
+                $props['row_index'] = $row_index;
 
                 include $template;
 

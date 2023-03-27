@@ -15,6 +15,8 @@ import dotenv from "dotenv";
 import { deleteSync } from "del";
 import replace from "gulp-replace";
 import chokidar from "chokidar";
+import concat from "gulp-concat";
+import merge from "merge-stream";
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ const dirs = {
     pages: "./template-pages",
     archives: "./template-archives",
     singles: "./template-singles",
+    sections: "./template-parts/sections"
   },
   dest: {
     css: "./static/css",
@@ -41,15 +44,14 @@ const jsFiles = {
   archives: `${dirs.src.archives}/**/*.js`,
   singles: `${dirs.src.singles}/**/*.js`,
   scripts: `${dirs.src.js}/*.js`,
+  sections: `${dirs.src.sections}/**/*.js`
 };
 
 // Define functions to handle minification of JS files
-function minifyJS(src, dest) {
+function minifyJS(src) {
   return gulp
     .src(src)
-    .pipe(uglify())
-    .pipe(gulp.dest(dest))
-    .pipe(browserSync.stream());
+    .pipe(uglify());
 }
 
 gulp.task("sass", function () {
@@ -79,8 +81,22 @@ gulp.task("minify-singles-js", function () {
 });
 
 gulp.task("scripts", function () {
-  return minifyJS(jsFiles.scripts, dirs.dest.js);
+  // Concatenate section scripts
+  const concatSectionsStream = gulp
+    .src(jsFiles.sections)
+    .pipe(concat('sections.js'));
+
+  // Merge with other scripts
+  const allScriptsStream = merge(gulp.src(jsFiles.scripts), concatSectionsStream)
+    .pipe(concat('scripts.js'));
+
+  // Minify and save the final scripts file
+  return allScriptsStream
+    .pipe(uglify())
+    .pipe(gulp.dest(dirs.dest.js))
+    .pipe(browserSync.stream());
 });
+
 
 gulp.task("serve", function () {
   browserSync.init({ proxy: process.env.LOCAL_SITE });
@@ -91,12 +107,14 @@ gulp.task("serve", function () {
   gulp.watch(`${dirs.src.pages}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.archives}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.singles}/**/*.scss`, gulp.series("sass"));
+  gulp.watch(`${dirs.src.sections}/**/*.scss`, gulp.series("sass"));
   gulp.watch(jsFiles.components, gulp.series("minify-components-js"));
   gulp.watch(jsFiles.pages, gulp.series("minify-pages-js"));
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));
   gulp.watch(jsFiles.singles, gulp.series("minify-singles-js"));
   gulp.watch(jsFiles.scripts, gulp.series("scripts"));
-  gulp.watch(["**/*"]).on("change", browserSync.reload);
+  gulp.watch(jsFiles.sections, gulp.series("scripts"));
+  gulp.watch("**/*").on("change", browserSync.reload);
 
   //Components Garbage Collector
   chokidar
@@ -183,6 +201,25 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
+});
+
+
+//Sections Garbage Collector
+chokidar
+.watch("./template-parts/sections/", { ignored: /(^|[\/\\])\../ })
+.on("unlinkDir", function (dirPath) {
+  const sectionName = dirPath.split("\\").pop();
+  console.log("Successfuly Deleted Section Template: ", sectionName);
+  gulp
+    .src("./src/scss/main.scss")
+    .pipe(
+      replace(
+        //the quotes on the line below must be single quotes, otherwise it will not recognize any text
+        `@import './template-parts/sections/${sectionName}/section-${sectionName}';`,
+        ""
+      )
+    )
+    .pipe(gulp.dest("./src/scss/"));
 });
 
 gulp.task(

@@ -19,6 +19,7 @@ const templateNames = {
   archive: ["archive-php.hbs", "archive-scss.hbs", "archive-js.hbs"],
   page: ["page-php.hbs", "page-scss.hbs", "page-js.hbs"],
   single: ["single-php.hbs", "single-scss.hbs", "single-js.hbs"],
+  section: ["section-php.hbs", "section-scss.hbs", "section-js.hbs"],
 };
 
 const createTemplate = (type, targetDir, pageInfo) => {
@@ -168,6 +169,25 @@ program
       })
     );
   });
+
+  // GENERATE SECTION
+program
+.command("generate:section [sectionName]")
+.alias("S") // shortcut
+.description(
+  "Generate a new section template. (You can run the command without [sectionName])"
+)
+.action((sectionName) => {
+  promptName(
+    sectionName,
+    "What is the name of the section (example: hero-slider)?"
+  ).then(({ singleName }) =>
+    createTemplate("section", `./template-parts/sections/${singleName}`, {
+      fileName: singleName,
+      sectionName: singleName,
+    })
+  );
+});
 
 // COMBO COMMANDS
 /** SINGLE AND ARCHIVE*/

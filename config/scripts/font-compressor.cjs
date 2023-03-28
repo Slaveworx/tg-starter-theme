@@ -13,23 +13,67 @@ const cssOutputFile = path.resolve(
 const latinGlyphs =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžƒǺǻǼǽǾǿ";
 
-const fontFaceTemplate = (fontName, fileName) => {
+const fontFaceTemplate = (fontName, fileName, fontWeight, fontStyle) => {
   return `@font-face {
-    font-family: '${fontName}';
-    src: url('../fonts/${fileName}.woff2') format('woff2'),
-         url('../fonts/${fileName}.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  `;
+      font-family: '${fontName}';
+      src: url('../fonts/${fileName}.woff2') format('woff2'),
+           url('../fonts/${fileName}.woff') format('woff');
+      font-weight: ${fontWeight};
+      font-style: ${fontStyle};
+      font-display: swap;
+    }
+    `;
 };
 
-const extractFontName = (fontName) => {
+const extractFontNameAndProperties = (fontName) => {
   const regex =
     /(^.*?)(?:(?:[-_])?(Bold|Black|ExtraBold|SemiBold|Italic|Thin|Light|Medium|ExtraLight|Regular)(?:[-_]?Italic)?)?(\.[a-zA-Z0-9]+)?$/i;
   const match = fontName.match(regex);
-  return match && match[1] ? match[1] : fontName;
+  let fontStyle = "normal";
+  let fontWeight = "normal";
+  if (match && match[2]) {
+    switch (match[2]) {
+      case "Bold":
+        fontWeight = 700;
+        break;
+      case "Black":
+        fontWeight = 900;
+        break;
+      case "ExtraBold":
+        fontWeight = 800;
+        break;
+      case "SemiBold":
+        fontWeight = 600;
+        break;
+      case "Italic":
+        fontStyle = "italic";
+        break;
+      case "Thin":
+        fontWeight = 100;
+        break;
+      case "Light":
+        fontWeight = 300;
+        break;
+      case "Medium":
+        fontWeight = 500;
+        break;
+      case "ExtraLight":
+        fontWeight = 200;
+        break;
+      case "Regular":
+      default:
+        fontWeight = 400;
+        break;
+    }
+  }
+  if (fontName.includes("Italic")) {
+    fontStyle = "italic";
+  }
+  return {
+    fontName: match && match[1] ? match[1] : fontName,
+    fontWeight,
+    fontStyle,
+  };
 };
 
 glob(path.join(inputDir, "*.{ttf,otf,woff2}"), async (err, files) => {
@@ -45,7 +89,8 @@ glob(path.join(inputDir, "*.{ttf,otf,woff2}"), async (err, files) => {
       const fontData = fs.readFileSync(file);
       const fontFormat = path.extname(file).substring(1);
       const fileName = path.basename(file, path.extname(file));
-      const fontName = extractFontName(fileName);
+      const { fontName, fontWeight, fontStyle } =
+        extractFontNameAndProperties(fileName);
       const subsetName = "compressed";
 
       // Generate WOFF and WOFF2 formats
@@ -80,7 +125,12 @@ glob(path.join(inputDir, "*.{ttf,otf,woff2}"), async (err, files) => {
       fs.unlinkSync(file);
       console.log(`Removed the original font file '${file}'`);
 
-      cssContent += fontFaceTemplate(fontName, `${fileName}-${subsetName}`);
+      cssContent += fontFaceTemplate(
+        fontName,
+        `${fileName}-${subsetName}`,
+        fontWeight,
+        fontStyle
+      );
     } catch (error) {
       console.error(`Error processing file '${file}':`, error);
     }

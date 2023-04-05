@@ -48,10 +48,11 @@ const jsFiles = {
 };
 
 // Define functions to handle minification of JS files
-function minifyJS(src) {
+function minifyJS(src, dest) {
   return gulp
     .src(src)
-    .pipe(uglify());
+    .pipe(uglify())
+    .pipe(gulp.dest(dest)); // Add this line
 }
 
 gulp.task("sass", function () {

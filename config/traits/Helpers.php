@@ -61,6 +61,62 @@ trait Helpers
     // Images
     //************************************ */
 
+
+    /**
+     * Generates an optimised <img> tag for a WordPress image attachment.
+     *
+     * @param int $thumbnailID The ID of the image attachment.
+     * @param bool $lazy Optional. Whether to load the image lazily using the `loading` attribute. Default false.
+     * @param array $attrs Optional. An associative array of additional attributes to add to the <img> tag, including 'classes', 'id', and other general attributes.
+     */
+    public static function optimised_img($thumbnailID, $lazy = false, $attrs = array())
+    {
+        $src = wp_get_attachment_image_src($thumbnailID, 'full');
+        $srcset = wp_get_attachment_image_srcset($thumbnailID, 'full');
+        $sizes = wp_get_attachment_image_sizes($thumbnailID, 'full');
+        $alt = get_post_meta($thumbnailID, '_wp_attachment_image_alt', true);
+
+        // Get the image dimensions
+        $image_data = wp_get_attachment_metadata($thumbnailID);
+        $width = $image_data['width'];
+        $height = $image_data['height'];
+
+        $loading = $lazy ? 'lazy' : 'auto';
+
+        // Build the attributes string
+        $attributes_str = '';
+        foreach ($attrs as $key => $value) {
+            if ($key !== 'classes' && $key !== 'id') {
+                $attributes_str .= $key . '="' . esc_attr($value) . '" ';
+            }
+        }
+
+        // Build the class attribute string
+        $class_str = '';
+        if (isset($attrs['classes'])) {
+            $class_str = 'class="' . esc_attr($attrs['classes']) . '"';
+        }
+
+        // Build the ID attribute string
+        $id_str = '';
+        if (isset($attrs['id'])) {
+            $id_str = 'id="' . esc_attr($attrs['id']) . '"';
+        }
+
+        echo '<img src="' . esc_attr($src[0]) . '"
+          srcset="' . esc_attr($srcset) . '"
+          sizes="' . esc_attr($sizes) . '"
+          width="' . esc_attr($width) . '"
+          height="' . esc_attr($height) . '"
+          alt="' . esc_attr($alt) . '"
+          loading="' . esc_attr($loading) . '"
+          ' . $class_str . '
+          ' . $id_str . ' 
+          ' . $attributes_str . '/>';
+    }
+
+
+
     /**
      * Outputs an HTML img tag with the specified image source, CSS classes, and HTML attributes.
      *

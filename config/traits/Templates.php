@@ -88,7 +88,7 @@ trait Templates
 
             // Load the JavaScript file if it exists
             $js_file = sprintf('%s/template-%ss/%s/%s.js', get_template_directory(), $type, $slug, $template_name);
-            $js_file_to_enqueue = sprintf('%s/static/js/template-%ss/%s/%s.min.js', get_template_directory_uri(), $type, $slug, $template_name);
+            $js_file_to_enqueue = sprintf('%s/static/js/template-%ss/%s/%s.js', get_template_directory_uri(), $type, $slug, $template_name);
             if (file_exists($js_file)) {
                 wp_enqueue_script($template_name . "-min-{$type}-template", $js_file_to_enqueue, array(), _S_VERSION, true);
             }
@@ -130,7 +130,7 @@ trait Templates
                             $template_name = pathinfo(basename($template_path), PATHINFO_FILENAME);
                             // Load the JavaScript file if it exists
                             $js_file = sprintf('%s/template-%ss/%s/%s.js', get_template_directory(), $type, $slug, $template_name);
-                            $js_file_to_enqueue = sprintf('%s/static/js/template-%ss/%s/%s.min.js', get_template_directory_uri(), $type, $slug, $template_name);
+                            $js_file_to_enqueue = sprintf('%s/static/js/template-%ss/%s/%s.js', get_template_directory_uri(), $type, $slug, $template_name);
 
                             if (file_exists($js_file)) {
                                 wp_enqueue_script($template_name . "-min-{$type}-template", $js_file_to_enqueue, array(), _S_VERSION, true);

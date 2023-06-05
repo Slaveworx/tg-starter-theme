@@ -113,7 +113,9 @@
 
     @media only screen and (max-width: $breakpoint) {
         @content
-    };
+    }
+
+    ;
 
 
 }
@@ -123,11 +125,44 @@
 @mixin when-above($breakpoint) {
 
     @media only screen and (min-width: $breakpoint) {
-        @content
-    };
+        @content;
+    }
+}
 
+// Height Media Queries
+@mixin when-landscape-above($breakpoint) {
+
+    @media only screen and (min-height: $breakpoint) and (orientation: landscape) {
+        @content;
+    }
 
 }
+
+@mixin when-landscape-below($breakpoint) {
+
+    @media only screen and (max-height: $breakpoint) and (orientation: landscape) {
+        @content;
+    }
+}
+
+
+@mixin when-height-above($breakpoint) {
+
+    @media only screen and (min-height: $breakpoint){
+        @content;
+    }
+
+}
+
+@mixin when-height-below($breakpoint) {
+
+    @media only screen and (max-height: $breakpoint){
+        @content;
+    }
+}
+
+
+
 
 
 

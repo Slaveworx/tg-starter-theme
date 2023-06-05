@@ -30,12 +30,15 @@ trait Helpers
     public static function add_dependency($handle, $style_src = "", $script_src = "", $scripts_args = array(), $inFooter = true)
     {
         if (!empty($style_src)) {
-            wp_register_style($handle, $style_src, array(), _S_VERSION);
-            self::$dependencies[$handle]['style'] = $handle;
+            self::$dependencies[$handle]['style'] = $style_src;
         }
+
         if (!empty($script_src)) {
-            wp_register_script($handle, $script_src, $scripts_args, _S_VERSION, $inFooter);
-            self::$dependencies[$handle]['script'] = $handle;
+            self::$dependencies[$handle]['script'] = array(
+                'src' => $script_src,
+                'args' => $scripts_args,
+                'in_footer' => $inFooter,
+            );
         }
     }
 
@@ -49,10 +52,13 @@ trait Helpers
         $dep = isset(self::$dependencies[$handle]) ? self::$dependencies[$handle] : false;
         if ($dep) {
             if (!empty($dep['style'])) {
-                wp_enqueue_style($dep['style']);
+                if (!empty($dep['style'])) {
+                    wp_enqueue_style($handle, $dep['style'], array(), _S_VERSION);
+                }
             }
             if (!empty($dep['script'])) {
-                wp_enqueue_script($dep['script']);
+                $script = $dep['script'];
+                wp_enqueue_script($handle, $script['src'], $script['args'], _S_VERSION, $script['in_footer']);
             }
         }
     }
@@ -323,6 +329,6 @@ trait Helpers
      */
     public static function custom_login_css()
     {
-        wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login-styles.css');
+        wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login_styles.css');
     }
 }

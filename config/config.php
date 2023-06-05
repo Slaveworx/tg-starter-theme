@@ -55,10 +55,9 @@ class TG
                 'register_post_types',
                 'register_taxonomies',
                 'add_all_posts_to_context',
-                'tg_custom_cache_mechanism',
-                'jquery_remove'
+                'tg_custom_cache_mechanism'
             ],
-
+            'wp_enqueue_scripts' => ['jquery_remove'],
             'admin_bar_menu' => ['add_cleanup_btn_to_admin_bar'],
             'wp_ajax_clean_context_transient' => ['clean_context_transient'],
             'login_enqueue_scripts' => ['custom_login_css'],

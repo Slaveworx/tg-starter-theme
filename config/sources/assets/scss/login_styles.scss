@@ -1,0 +1,252 @@
+@import '../../../../src/scss/framework/variables';
+@import '../../../../src/scss/framework/typography';
+@import '../../../../src/scss/framework/mixins';
+@import '../../../../src/scss/framework/grid';
+@import '../../../../src/scss/framework/general';
+@import '../../../../src/scss/framework/animations';
+@import '../../../../src/scss/framework/reset';
+@import '../../../../src/scss/framework/buttons';
+@import '../../../../src/scss/framework/base';
+
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+//##############################################
+// Admin Login
+// @version 1.0
+// @package tg
+//##############################################
+//general variables
+/*Page*/
+$login-bg-color: $white;
+
+/*Login Form*/
+$login-form-bg-color: rgba(0, 0, 0, 0.1);
+$login-form-box-shadow-color: rgba(255, 255, 255, 0.1);
+
+/*Labels*/
+$labels-color: $black;
+$labels-font-weight: $bold;
+
+/*Buttons*/
+$submit-btn-color: $color-primary;
+$submit-btn-hover-color: $color-secondary;
+$submit-btn-focus-outline-color: $color-secondary;
+
+/*Inputs*/
+$checkbox-color: rgba(0, 0, 0, 0.2);
+$checkbox-checked-color: $color-primary;
+$icons-color: $color-primary;
+$input-text-color: $black;
+$input-bg-color: rgba(0, 0, 0, 0.1);
+$input-focus-outline-color: $color-primary;
+
+/*Errors and Messages*/
+$error-box-bg-color: rgba(255, 255, 255, 0.1);
+$error-box-border-color: $color-primary;
+$message-box-bg-color: rgba(255, 255, 255, 0.1);
+$message-box-border-color: rgb(22, 99, 47);
+
+/*Links*/
+$links-color: $black;
+$links-hover-color: $color-primary;
+/*##############################################*/
+
+body.login {
+    background-color: $login-bg-color;
+
+
+
+    #login {
+        width: 100%;
+        height: fit-content;
+
+        @include when-below(600px) {
+            width: fit-content;
+            padding-top: 10rem;
+        }
+
+        // LOGO
+        h1 {
+            width: fit-content;
+            margin-inline: auto;
+
+            a {
+
+                background-image: url('../img/logo.svg');
+                background-size: contain;
+                width: 4.8rem;
+                height: 4.8rem;
+            }
+
+
+        }
+
+
+        // FORM
+
+        form {
+            margin-inline: auto;
+            background-color: $login-form-bg-color;
+            backdrop-filter: blur(0.5rem);
+            border-radius: 1.6rem;
+            border: none;
+            box-shadow: 0 0.2rem 0.6rem $login-form-box-shadow-color;
+            padding: 3rem;
+            width: 50rem;
+            height: fit-content;
+
+            @include when-below(600px) {
+                width: fit-content;
+                margin-inline: 1.5rem;
+            }
+
+            #wp-submit {
+                transition: all 350ms ease-in-out;
+                background-color: $submit-btn-color;
+                border-radius: 1.6rem;
+                border: none;
+                padding: 0.5rem 3rem;
+                font-size: 1.6rem;
+                font-weight: 600;
+
+                &:hover {
+                    background-color: $submit-btn-hover-color;
+                }
+
+                &:focus {
+                    outline: 0.2rem solid $submit-btn-focus-outline-color;
+                    border-radius: 1.6rem;
+                }
+            }
+
+            .forgetmenot {
+                #rememberme {
+                    position: absolute;
+                    opacity: 0;
+                    pointer-events: none;
+                    vertical-align: middle;
+
+                    &:checked+label:before {
+                        background-color: $checkbox-checked-color;
+                    }
+                }
+
+                label {
+                    color: $labels-color;
+                    font-size: 1.8rem;
+                    font-weight: $labels-font-weight;
+                    position: relative;
+                    padding-left: 3rem;
+                    cursor: pointer;
+
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        left: 0;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        background: $checkbox-color;
+                    }
+                }
+            }
+
+
+
+
+            label {
+                color: $labels-color;
+                font-size: 1.8rem;
+                font-weight: $labels-font-weight;
+            }
+
+
+            button {
+                top: 2rem;
+
+                &:focus,
+                &:active {
+
+                    border: none;
+                    outline: none;
+                    box-shadow: none;
+                }
+
+                .dashicons.dashicons-visibility:before,
+                .dashicons.dashicons-hidden:before {
+                    color: $icons-color;
+                }
+
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                border-radius: 1.6rem;
+                background: $input-bg-color;
+                backdrop-filter: blur(0.5rem);
+                min-height: 5.2rem;
+                font-size: 1.8rem;
+                font-weight: 500;
+                padding: 1rem;
+                border: none;
+                margin-block: 1.5rem;
+                width: 100%;
+                color: $input-text-color;
+
+                &:focus {
+
+                    outline: 0.2rem solid $input-focus-outline-color;
+                    border-radius: 1.6rem;
+                }
+            }
+        }
+
+
+        #login_error {
+            border: 0.3rem solid $error-box-border-color;
+            width: 53rem;
+            border-radius: 1.6rem;
+            height: fit-content;
+            margin-inline: auto;
+            background: $error-box-bg-color;
+
+            @include when-below(600px) {
+                width: auto;
+                margin-inline: 1.5rem;
+            }
+        }
+
+        .message {
+            border: 0.3rem solid $message-box-border-color;
+            width: 53rem;
+            border-radius: 1.6rem;
+            height: fit-content;
+            margin-inline: auto;
+            background: $message-box-bg-color;
+
+            @include when-below(600px) {
+                width: auto;
+                margin-inline: 1.5rem;
+            }
+        }
+
+        #nav,
+        #backtoblog {
+            width: fit-content;
+            margin-inline: auto;
+
+            a {
+                color: $links-color;
+
+                &:hover {
+                    color: $links-hover-color;
+                }
+            }
+
+        }
+
+
+    }
+}

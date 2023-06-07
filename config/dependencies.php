@@ -5,7 +5,7 @@ namespace TG;
 
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 2.0.0
 // * This file should be used to enqueue your CONDITIONAL STYLES AND SCRIPTS                        
 
 //****************************************

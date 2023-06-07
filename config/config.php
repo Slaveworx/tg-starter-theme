@@ -3,7 +3,7 @@
 
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 1.0.0
+// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 2.0.0
 // * This file contais all theme config                        
 
 //****************************************
@@ -57,6 +57,7 @@ class TG
                 'add_all_posts_to_context',
                 'tg_custom_cache_mechanism'
             ],
+            'admin_notices' => ['check_for_theme_updates'],
             'wp_enqueue_scripts' => ['jquery_remove'],
             'admin_bar_menu' => ['add_cleanup_btn_to_admin_bar'],
             'wp_ajax_clean_context_transient' => ['clean_context_transient'],
@@ -120,7 +121,33 @@ class TG
     public function jquery_remove()
     {
         if (!is_admin()) {
-            wp_deregister_script('jquery');
+            if (!USE_JQUERY) :
+                wp_deregister_script('jquery');
+            endif;
+        }
+    }
+
+    public function check_for_theme_updates()
+    {
+
+        if (is_admin()) {
+            $theme_data = wp_get_theme();
+            $current_version = preg_replace('/[^0-9.]/', '', $theme_data->get('Version'));
+
+            $github_api_url = 'https://api.github.com/repos/slaveworx/tg-starter-theme/releases/latest';
+            $response = wp_remote_get($github_api_url, array('timeout' => 20));
+
+            if (!is_wp_error($response) && $response['response']['code'] === 200) {
+                $release_data = json_decode(wp_remote_retrieve_body($response), true);
+                $latest_version = preg_replace('/[^0-9.]/', '', $release_data['name']);
+
+                if (version_compare($current_version, $latest_version, '<')) {
+                    $update_url = $release_data['html_url'];
+                    $notice_message = '🚀 A new version of TG Starter Theme is available! ( v.' . $latest_version . ' ) Please <a href="' . $update_url . '">update now</a>.';
+
+                    echo '<div class="notice notice-warning is-dismissible"><p>' . $notice_message . '</p></div>';
+                }
+            }
         }
     }
 }

@@ -132,7 +132,7 @@ gulp.task("serve", function () {
   chokidar
     .watch("./components/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
-      const componentName = dirPath.split("\\").pop();
+      const componentName = dirPath.split("\\").pop().split('/').pop();
       console.log("Successfuly Deleted Component: ", componentName);
       deleteSync([
         "static/js/components/" + `${componentName}`,
@@ -153,7 +153,7 @@ gulp.task("serve", function () {
   chokidar
     .watch("./template-pages/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
-      const templateName = dirPath.split("\\").pop();
+      const templateName = dirPath.split("\\").pop().split('/').pop();
       console.log("Successfuly Deleted Page Template: ", templateName);
       deleteSync([
         "static/js/template-pages/" + `${templateName}`,
@@ -174,7 +174,7 @@ gulp.task("serve", function () {
   chokidar
     .watch("./template-archives/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
-      const archiveName = dirPath.split("\\").pop();
+      const archiveName = dirPath.split("\\").pop().split('/').pop();
       console.log("Successfuly Deleted Archive Template: ", archiveName);
       deleteSync([
         "static/js/template-archives/" + `${archiveName}`,
@@ -196,7 +196,7 @@ gulp.task("serve", function () {
   chokidar
     .watch("./template-singles/", { ignored: /(^|[\/\\])\../ })
     .on("unlinkDir", function (dirPath) {
-      const singleName = dirPath.split("\\").pop();
+      const singleName = dirPath.split("\\").pop().split('/').pop();
       console.log("Successfuly Deleted Single Template: ", singleName);
       deleteSync([
         "static/js/template-singles/" + `${singleName}`,
@@ -219,7 +219,7 @@ gulp.task("serve", function () {
 chokidar
   .watch("./template-parts/sections/", { ignored: /(^|[\/\\])\../ })
   .on("unlinkDir", function (dirPath) {
-    const sectionName = dirPath.split("\\").pop();
+    const sectionName = dirPath.split("\\").pop().split('/').pop();
     console.log("Successfuly Deleted Section Template: ", sectionName);
     gulp
       .src("./src/scss/main.scss")

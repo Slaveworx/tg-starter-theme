@@ -1,11 +1,8 @@
 <?php
 //namespace TG; ---> * Uncomment this line if you will use any of the Theme functions in this file
 //****************************************
-
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 2.0.0                            
-
 //****************************************
 // COMPONENT: left-right-section
 //****************************************

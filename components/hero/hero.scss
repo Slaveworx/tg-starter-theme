@@ -7,37 +7,36 @@
 // @package tg
 //##############################################
 
-//general variables
-//$example-var: red;
-
-//desktop variables
-//$example-var-desktop: blue;
-
-//mobile variables
-//$example-var-mobile: blue;
-
-/*##############################################*/
-
 .hero {
     height: 100vh;
     min-height: 100vh;
-    background: linear-gradient(tomato, crimson);
     display: flex;
     align-items: center;
+    position: relative;
 
     .container-small {
         width: 100%;
     }
 
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: #e5e5f7;
+        opacity: 0.05;
+        background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #e5e5f7 40px), repeating-linear-gradient(#444cf755, #444cf7);
+    }
+
     &__title {
         font-family: $heading-font;
-        color: $white;
-        font-weight: $bold;
+        color: $black;
+        font-weight: $light;
     }
 
     &__description {
-        color: $white;
+        color: $black;
         font-size: 1.8rem;
+        font-weight: $light;
         padding-block: 2.5rem;
     }
 

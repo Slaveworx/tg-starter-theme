@@ -7,20 +7,10 @@
 // @package tg
 //##############################################
 
-//general variables
-//$example-var: red;
-
-//desktop variables
-//$example-var-desktop: blue;
-
-//mobile variables
-//$example-var-mobile: blue;
-
-/*##############################################*/
 
 .text-right-img-left {
     min-height: 100vh;
-    background-color: $light-gray;
+    background-color: $color-secondary;
 
     .grid {
         @include autoGrid(50rem);
@@ -65,11 +55,13 @@
         }
 
         &__title {
+            font-family: $default-font;
+            font-weight: $light;
             margin-block: 2.5rem;
         }
 
         &__description {
-            /** add code here*/
+            font-weight: $light;
         }
     }
 

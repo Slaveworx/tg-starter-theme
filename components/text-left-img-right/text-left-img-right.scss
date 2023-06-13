@@ -20,7 +20,7 @@
 
 .text-left-img-right {
     min-height: 100vh;
-    background-color: $light-gray;
+    background-color: $color-secondary;
 
     .grid {
         @include autoGrid(50rem);
@@ -44,10 +44,11 @@
 
         &__title {
             margin-block: 2.5rem;
+            font-weight: $light;
         }
 
         &__description {
-            /** add code here*/
+            font-weight: $light;
         }
     }
 

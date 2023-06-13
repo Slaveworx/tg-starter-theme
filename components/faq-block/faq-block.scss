@@ -51,10 +51,10 @@ $faq-answer-padding-inline: 2rem;
         margin-inline: auto;
         padding-block: $faq-block-title-padding-block;
         text-align: center;
-        @include font(6rem, semibold, $faq-block-title-color);
+        @include font(6rem, light, $faq-block-title-color);
 
         @include when(tab-port) {
-            @include font(4.2rem, semibold, $faq-block-title-color);
+            @include font(4.2rem, light, $faq-block-title-color);
         }
     }
 
@@ -113,13 +113,13 @@ $faq-answer-padding-inline: 2rem;
         }
 
         &__answer {
-            @include font(1.8rem, regular, $faq-answer-text-color);
+            @include font(1.8rem, light, $faq-answer-text-color);
             background: $faq-answer-bg-color;
             padding-block: $faq-answer-padding-block;
             padding-inline: $faq-answer-padding-inline;
 
             @include when(tab-port) {
-                @include font(1.6rem, regular, $black);
+                @include font(1.6rem, light, $black);
             }
         }
 

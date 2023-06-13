@@ -9,7 +9,7 @@
 
 //general variables
 $modal-bg: $color-secondary;
-$modal-close-icon-color: $white;
+$modal-close-icon-color: $black;
 $modal-close-icon-color-hover: $color-primary;
 
 /*##############################################*/
@@ -92,12 +92,12 @@ $modal-close-icon-color-hover: $color-primary;
         }
 
         .title {
-            color: $white;
+            color: $black;
             padding-block: 2.5rem;
         }
 
         .description {
-            color: $white;
+            color: $black;
         }
 
     }

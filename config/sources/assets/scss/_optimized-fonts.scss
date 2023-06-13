@@ -1,57 +1,33 @@
 @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Bold-compressed.woff2') format('woff2'),
-         url('../fonts/Montserrat-Bold-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Light-compressed.woff2') format('woff2'),
-         url('../fonts/Montserrat-Light-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Medium-compressed.woff2') format('woff2'),
-         url('../fonts/Montserrat-Medium-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Regular-compressed.woff2') format('woff2'),
-         url('../fonts/Montserrat-Regular-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-SemiBold-compressed.woff2') format('woff2'),
-         url('../fonts/Montserrat-SemiBold-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Raleway';
-    src: url('../fonts/Raleway-Bold-compressed.woff2') format('woff2'),
-         url('../fonts/Raleway-Bold-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Raleway';
-    src: url('../fonts/Raleway-SemiBold-compressed.woff2') format('woff2'),
-         url('../fonts/Raleway-SemiBold-compressed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  
+      font-family: 'SourceSansPro';
+      src: url('../fonts/SourceSansPro-Bold-compressed.woff2') format('woff2'),
+           url('../fonts/SourceSansPro-Bold-compressed.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'SourceSansPro';
+      src: url('../fonts/SourceSansPro-Light-compressed.woff2') format('woff2'),
+           url('../fonts/SourceSansPro-Light-compressed.woff') format('woff');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'SourceSansPro';
+      src: url('../fonts/SourceSansPro-Regular-compressed.woff2') format('woff2'),
+           url('../fonts/SourceSansPro-Regular-compressed.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'SourceSansPro';
+      src: url('../fonts/SourceSansPro-Semibold-compressed.woff2') format('woff2'),
+           url('../fonts/SourceSansPro-Semibold-compressed.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    

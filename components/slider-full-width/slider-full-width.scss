@@ -7,17 +7,6 @@
 // @package tg
 //##############################################
 
-//general variables
-//$example-var: red;
-
-//desktop variables
-//$example-var-desktop: blue;
-
-//mobile variables
-//$example-var-mobile: blue;
-
-/*##############################################*/
-
 .slider-full-width {
     width: 100%;
     height: 100%;
@@ -46,7 +35,7 @@
             }
 
             .swiper-pagination-bullet-active {
-                background: crimson;
+                background: $color-secondary;
             }
 
             .swiper-pagination-bullet-active-prev {

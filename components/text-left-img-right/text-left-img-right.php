@@ -1,17 +1,13 @@
 <?php
+
 namespace TG;
 //****************************************
-
 // 🆃🅶                                     
-// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 2.0.0                            
-
+// Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                                     
 //****************************************
 // COMPONENT: text-left-img-right
 //****************************************
 ?>
-
-
 
 <!-- ******************************** -->
 <!-- text-left-img-right component -->
@@ -30,7 +26,7 @@ namespace TG;
 
         <div class="right-block">
             <div class="wrapper">
-                <?php TG::img("dummy.jpeg","Just a dummy image to serve as example", ["right-block__image"]); ?>
+                <?php TG::img("img2.webp", "Just a dummy image to serve as example", ["right-block__image"]); ?>
             </div>
 
         </div>

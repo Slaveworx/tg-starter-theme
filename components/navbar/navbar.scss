@@ -12,7 +12,8 @@ $navbar-height: 6rem;
 $burger-color: $color-primary;
 $burger-close-color: $color-primary;
 //desktop variables
-$navbar-bg-color: rgba(255, 255, 255, 0.97);
+$navbar-bg-color: rgba(255, 255, 255, 0.3);
+$navbar-bg-color-fixed: rgba(255, 255, 255, 0.97);
 $navbar-link-color: $black;
 $navbar-link-hover-color: $color-primary;
 //mobile variables
@@ -38,6 +39,7 @@ $mobile-menu-item-hover-text-color: $black;
         position: fixed;
         top: 0;
         left: 0;
+        background: $navbar-bg-color-fixed;
     }
 
 
@@ -166,6 +168,10 @@ $mobile-menu-item-hover-text-color: $black;
                     padding-inline: 1.5rem;
 
                     a {
+                        font-family: $default-font;
+                        font-weight: $regular;
+                        letter-spacing: 0.1rem;
+                        text-transform: uppercase;
                         color: $navbar-link-color !important;
 
                         &:hover,

@@ -5,7 +5,7 @@
 It means changing them might break other parts of the framework
 */
 $color-primary: crimson;
-$color-secondary: tomato;
+$color-secondary: #e5e5f7;
 $gray-text: #909090;
 $form-bg: rgba(255, 255, 255, 15%);
 $light-gray: #EBEBEB;
@@ -27,9 +27,9 @@ $black-bold: 900 !important;
 /*##############################################
 #               FONT VARIABLES                 #
 ################################################*/
-$heading-font: 'Raleway',
+$heading-font: 'SourceSansPro',
 sans-serif;
-$default-font: 'Montserrat',
+$default-font: 'SourceSansPro',
 sans-serif !important;
 
 /*##############################################

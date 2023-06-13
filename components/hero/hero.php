@@ -1,10 +1,7 @@
 <?php
 //****************************************
-
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
-// @𝑣𝑒𝑟𝑠𝑖𝑜𝑛 2.0.0                            
-
 //****************************************
 // COMPONENT: hero
 //****************************************
@@ -17,6 +14,7 @@
 <!-- ******************************** -->
 
 <section class="hero" data-row-index="<?php echo $row_index; ?>">
+    <div class="hero__overlay"></div>
     <div class="container-small">
         <h1 class="hero__title"><?php echo $title; ?></h1>
         <p class="hero__description"><?php echo $description; ?></p>

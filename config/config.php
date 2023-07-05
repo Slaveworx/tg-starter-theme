@@ -120,11 +120,9 @@ class TG
     /** Removes Jquery from WordPress Core */
     public function jquery_remove()
     {
-        if (!is_admin()) {
-            if (!USE_JQUERY) :
-                wp_deregister_script('jquery');
-            endif;
-        }
+        if (USE_JQUERY === false) :
+            wp_deregister_script('jquery');
+        endif;
     }
 
     public function check_for_theme_updates()

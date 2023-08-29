@@ -1,0 +1,74 @@
+// assign default value to all undefined variables
+
+$scheme-name: "default" !default;
+
+// core variables
+
+$text-color: var(--tg--menu_txt_color) !default;
+$base-color: var(--tg--menu_bg_color) !default;
+$icon-color: var(--tg--menu_icon_color) !default;
+$highlight-color: var(--tg--menu_selected_color) !default;
+$notification-color: var(--tg--bubble_notification_bg_color) !default;
+
+
+// global
+
+$body-background: var(--tg--body_bg_color) !default;
+
+$link: var(--tg--links_txt_color) !default;
+$link-focus: var(--tg--links_hover_color) !default;
+
+
+$button-color: var(--tg--btn_bg_color) !default;
+$button-text-color: var(--tg--btn_txt_color) !default;
+
+$form-checked: #7e8993 !default;
+
+// admin menu & admin-bar
+
+$menu-text: $text-color !default;
+$menu-icon: $icon-color !default;
+$menu-background: $base-color !default;
+
+$menu-highlight-text: var(--tg--menu_selected_txt_color) !default;
+$menu-highlight-icon: var(--tg--menu_selected_icon_color) !default;
+$menu-highlight-background: var(--tg--menu_hover_color) !default;
+
+$menu-current-text: $menu-highlight-text !default;
+$menu-current-icon: $menu-highlight-icon !default;
+$menu-current-background: var(--tg--menu_selected_color) !default;
+
+$menu-submenu-text: var(--tg--submenu_txt_color) !default;
+$menu-submenu-background: var(--tg--submenu_bg_color) !default;
+$menu-submenu-background-alt: $menu-background !default;
+
+$menu-submenu-focus-text: $highlight-color !default;
+$menu-submenu-current-text: var(--tg--submenu_selected_txt_color) !default;
+
+$menu-bubble-text: var(--tg--bubble_notification_txt_color) !default;
+$menu-bubble-background: $notification-color !default;
+$menu-bubble-current-text: var(--tg--bubble_notification_txt_color) !default;
+$menu-bubble-current-background: $notification-color !default;
+
+$menu-collapse-text: $menu-icon !default;
+$menu-collapse-icon: $menu-icon !default;
+$menu-collapse-focus-text: $text-color !default;
+$menu-collapse-focus-icon: $menu-highlight-icon !default;
+
+$adminbar-avatar-frame: $menu-background !default;
+$adminbar-input-background: $menu-background !default;
+
+$adminbar-recovery-exit-text: $menu-bubble-text !default;
+$adminbar-recovery-exit-background: $menu-bubble-background !default;
+$adminbar-recovery-exit-background-alt: $adminbar-recovery-exit-background !default;
+
+$menu-customizer-text: $text-color !default;
+
+// Dashboard Colors
+
+$custom-welcome-panel: "true" !default;
+$dashboard-accent-1: $menu-submenu-background !default;
+$dashboard-accent-2: $menu-background !default;
+$dashboard-icon-background: $dashboard-accent-2 !default;
+
+$low-contrast-theme: "false" !default;

@@ -20,6 +20,11 @@ require_once __DIR__ . '/traits/Context.php';
 require_once __DIR__ . '/traits/Helpers.php';
 require_once __DIR__ . '/traits/Optimization.php';
 
+//**************************************************************/
+// PLUGINS
+//***************************************************************/
+require_once __DIR__ . '/plugins/tg-custom-admin/tg-custom-admin.php';
+
 class TG
 {
     use Templates;
@@ -40,6 +45,7 @@ class TG
             'styles',
             'scripts',
             'dependencies',
+            'custom-taxonomies',
             'template-functions'
         ];
 
@@ -53,7 +59,6 @@ class TG
         $actions = [
             'init' => [
                 'register_post_types',
-                'register_taxonomies',
                 'add_all_posts_to_context',
                 'tg_custom_cache_mechanism'
             ],
@@ -62,6 +67,7 @@ class TG
             'admin_bar_menu' => ['add_cleanup_btn_to_admin_bar'],
             'wp_ajax_clean_context_transient' => ['clean_context_transient'],
             'login_enqueue_scripts' => ['custom_login_css'],
+            'admin_enqueue_scripts' => ['custom_admin_css'],
             'after_setup_theme' => ['add_theme_supports'],
             'wp_print_scripts' => ['dequeue_blocking_scripts'],
             'wp_print_styles' => ['dequeue_blocking_styles']
@@ -104,11 +110,6 @@ class TG
     public function register_post_types()
     {
         require_once("custom-post-types.php");
-    }
-    /** Register Custom Taxonomies. */
-    public function register_taxonomies()
-    {
-        require_once("custom-taxonomies.php");
     }
 
     /** Adds all theme supports */

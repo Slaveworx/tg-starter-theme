@@ -24,6 +24,7 @@ dotenv.config();
 const dirs = {
   src: {
     loginSass: "./config/sources/assets/scss",
+    adminSass: "./config/sources/assets/scss/custom-admin",
     scss: "./src/scss",
     js: "./src/js",
     components: "./components",
@@ -36,6 +37,7 @@ const dirs = {
     css: "./static/css",
     js: "./static/js",
     loginSass: "./config/sources/assets/css",
+    adminSass: "./config/sources/assets/css",
   },
 };
 
@@ -71,6 +73,16 @@ gulp.task("login-sass", function () {
     .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
     .pipe(autoprefixer({ cascade: false }))
     .pipe(gulp.dest(dirs.dest.loginSass))
+    .pipe(browserSync.stream());
+});
+
+gulp.task("admin-sass", function () {
+  const sass = gulpSass(dartSass);
+  return gulp
+    .src(`${dirs.src.adminSass}/admin_styles.scss`)
+    .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+    .pipe(autoprefixer({ cascade: false }))
+    .pipe(gulp.dest(dirs.dest.adminSass))
     .pipe(browserSync.stream());
 });
 
@@ -115,6 +127,7 @@ gulp.task("serve", function () {
   // Watch for changes in files and execute tasks accordingly
   gulp.watch(`${dirs.src.scss}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.loginSass}/*.scss`, gulp.series("login-sass"));
+  gulp.watch(`${dirs.src.adminSass}/*.scss`, gulp.series("admin-sass"));
   gulp.watch(`${dirs.src.components}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.pages}/**/*.scss`, gulp.series("sass"));
   gulp.watch(`${dirs.src.archives}/**/*.scss`, gulp.series("sass"));
@@ -237,6 +250,7 @@ gulp.task(
   "default",
   gulp.series(
     "login-sass",
+    "admin-sass",
     "sass",
     "minify-components-js",
     "minify-pages-js",

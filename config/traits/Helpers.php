@@ -321,6 +321,62 @@ trait Helpers
     // Misc
     //************************************ */
 
+
+    /**
+     * Array Dissector: Displays nested arrays with color-coded depth levels.
+     * 
+     * - Renders each depth with a unique color.
+     * - Emphasizes main indices and adjusts text color for deep levels.
+     * - Uses gradient for header.
+     *
+     * @param array $array The array to display.
+     * @param int $depth (optional) The current nesting level, defaulting to 0.
+     * @return void Outputs the styled array content.
+     */
+
+    public static function dissect($array, $depth = 0)
+    {
+        $colors = array('#09203f', '#537895', '#8da9c4', '#c5d4e2', '#e1e9f0', '#f3f7fa');
+        $keyColors = array('#81D4FA', '#4FC3F7', '#01579B', '#0288D1', '#0277BD', '#01579B');
+        $color = $colors[$depth % count($colors)];
+        $keyColor = $keyColors[$depth % count($colors)];
+        $textColor = ($depth >= count($colors) - 3) ? '#000' : '#fff';
+
+        if ($depth == 0) {
+            echo "<div style='margin-block: 30px;background: linear-gradient(to top, #bdc3c7, #2c3e50); color: #fff; padding: 30px; border:2px solid #000'>";
+            echo "🆃🅶<br>";
+            echo "Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ<br>";
+            echo "𝑣𝑒𝑟𝑠𝑖𝑜𝑛 2.0.0<br>";
+            echo "𝐴𝑟𝑟𝑎𝑦 𝐷𝑖𝑠𝑠𝑒𝑐𝑡𝑜𝑟 - 𝑇𝑖𝑎𝑔𝑜 𝑀. 𝐺𝑎𝑙𝑣𝑎̃𝑜 - © 2023<br><br>";
+            echo "Items in Array: " . count($array) . " | ";
+
+            if (empty($array)) {
+                echo "The array is empty.<br>";
+            } else {
+                echo "The array is not empty.<br>";
+            }
+
+            echo "<hr style='border-color: #fff;'>";
+        }
+
+        echo '<pre style="padding: 30px;color: ' . $textColor . ';background-color: ' . $color . '; margin-left: ' . (20 * $depth) . 'px; white-space: pre-wrap;">';
+        foreach ($array as $key => $value) {
+            echo '<span style="display: inline-block;font-weight: bold; padding: 1px; margin-block: 4px; margin-right: 5px; background-color: rgba(0,0,0,0.04); font-style: italic; color: ' . $keyColor . '">' . $key . ' => </span>';
+            if (is_array($value)) {
+                echo '<br>';
+                self::dissect($value, $depth + 1);
+            } else {
+                echo $value . '<br>';
+            }
+        }
+        echo '</pre>';
+
+        if ($depth == 0) {
+            echo "</div>";
+        }
+    }
+
+
     /**
      * Enqueues custom CSS styles for the WordPress login page.
      *
@@ -329,6 +385,20 @@ trait Helpers
      */
     public static function custom_login_css()
     {
-        wp_enqueue_style('login-styles', get_template_directory_uri() . '/config/sources/assets/css/login_styles.css');
+        wp_enqueue_style('tg-login-styles', get_template_directory_uri() . '/config/sources/assets/css/login_styles.css');
+    }
+
+    /**
+     * Enqueues custom CSS styles for the WordPress ADMIN page.
+     *
+     * This function enqueues a custom CSS stylesheet for the wp admin page, allowing
+     * for customization of the appearance of the admin dashboard
+     */
+    public static function custom_admin_css()
+    {
+        $enable_customizer = get_option('enable_customizer');
+        if ($enable_customizer) {
+            wp_enqueue_style('tg-admin-styles', get_template_directory_uri() . '/config/sources/assets/css/admin_styles.css', array('acf-pro-input', 'acf-input'));
+        }
     }
 }

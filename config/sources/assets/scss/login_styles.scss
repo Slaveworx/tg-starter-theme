@@ -8,6 +8,7 @@
 @import '../../../../src/scss/framework/buttons';
 @import '../../../../src/scss/framework/base';
 
+
 /*##############################################
 #                  VARIABLES                   #
 ################################################*/
@@ -51,6 +52,45 @@ $message-box-border-color: rgb(22, 99, 47);
 $links-color: $black;
 $links-hover-color: $color-primary;
 /*##############################################*/
+
+// Styles for Admin Email verification prompt
+body.login {
+
+    .admin-email-confirm-form {
+
+        //normal links
+
+        a {
+            color: $color-primary;
+        }
+
+        .admin-email__heading {
+            font-size: 2rem;
+        }
+
+        //Update Button
+        a.button.button-large {
+            background-color: transparent;
+            border: 2px solid $submit-btn-focus-outline-color !important;
+            color: $black;
+        }
+
+        //Correct Email Button
+        input.button {
+            background-color: $submit-btn-color;
+            border: none;
+            box-shadow: none;
+
+            &:hover {
+                filter: grayscale(30%);
+            }
+        }
+
+
+    }
+
+
+}
 
 body.login {
     background-color: $login-bg-color;

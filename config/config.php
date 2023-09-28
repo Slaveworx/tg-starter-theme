@@ -133,7 +133,7 @@ class TG
             $theme_data = wp_get_theme();
             $current_version = preg_replace('/[^0-9.]/', '', $theme_data->get('Version'));
 
-            $github_api_url = 'https://api.github.com/repos/slaveworx/tg-starter-theme/releases/latest';
+            $github_api_url = 'https://api.github.com/repos/iamtiagogalvao/tg-starter-theme/releases/latest';
             $response = wp_remote_get($github_api_url, array('timeout' => 20));
 
             if (!is_wp_error($response) && $response['response']['code'] === 200) {

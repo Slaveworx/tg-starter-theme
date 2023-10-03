@@ -226,6 +226,8 @@ trait Helpers
         foreach ($templates as $template) {
             if (file_exists($template)) {
 
+                do_action('tg_before_' . $slug . '_component');
+
                 // Extract the $props array as variables to pass them to the included template.
                 if (!empty($props) && is_array($props)) {
                     extract($props, EXTR_SKIP);
@@ -242,6 +244,9 @@ trait Helpers
                 if (file_exists($js_file)) {
                     wp_enqueue_script($slug . "-min-component", $js_file_to_enqueue, array(), _S_VERSION, true);
                 }
+
+                do_action('tg_after_' . $slug . '_component');
+
                 return;
             }
         }

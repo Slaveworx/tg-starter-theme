@@ -11,12 +11,10 @@
 namespace TG;
 
 use TG\Templates;
-use TG\Context;
 use TG\Helpers;
 use TG\Optimization;
 
 require_once __DIR__ . '/traits/Templates.php';
-require_once __DIR__ . '/traits/Context.php';
 require_once __DIR__ . '/traits/Helpers.php';
 require_once __DIR__ . '/traits/Optimization.php';
 
@@ -28,7 +26,6 @@ require_once __DIR__ . '/plugins/tg-custom-admin/tg-custom-admin.php';
 class TG
 {
     use Templates;
-    use Context;
     use Helpers;
     use Optimization;
 
@@ -59,13 +56,10 @@ class TG
         $actions = [
             'init' => [
                 'register_post_types',
-                'add_all_posts_to_context',
                 'tg_custom_cache_mechanism'
             ],
             'admin_notices' => ['check_for_theme_updates'],
             'wp_enqueue_scripts' => ['jquery_remove'],
-            'admin_bar_menu' => ['add_cleanup_btn_to_admin_bar'],
-            'wp_ajax_clean_context_transient' => ['clean_context_transient'],
             'login_enqueue_scripts' => ['custom_login_css'],
             'admin_enqueue_scripts' => ['custom_admin_css'],
             'after_setup_theme' => ['add_theme_supports'],

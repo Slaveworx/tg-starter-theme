@@ -204,19 +204,21 @@ if (!class_exists('TGAdminCustomiser')) {
 
             // Get all admin menu items
             global $menu;
-            foreach ($menu as $index => $item) {
-                if ($item[0] !== '') {
-                    add_settings_field(
-                        'menu-item-' . $index,
-                        $item[0],
-                        array($this, 'tg_custom_menu_item_callback'),
-                        'color-setting-admin', // use 'color-setting-admin' instead of 'custom-menu-settings'
-                        'custom-menu-section',
-                        array('index' => $index, 'item' => $item)
-                    );
-                    register_setting('color_option_group', 'menu-item-' . $index, 'intval'); // use 'color_option_group' instead of 'custom-menu-settings'
+            if ($menu) :
+                foreach ($menu as $index => $item) {
+                    if ($item[0] !== '') {
+                        add_settings_field(
+                            'menu-item-' . $index,
+                            $item[0],
+                            array($this, 'tg_custom_menu_item_callback'),
+                            'color-setting-admin', // use 'color-setting-admin' instead of 'custom-menu-settings'
+                            'custom-menu-section',
+                            array('index' => $index, 'item' => $item)
+                        );
+                        register_setting('color_option_group', 'menu-item-' . $index, 'intval'); // use 'color_option_group' instead of 'custom-menu-settings'
+                    }
                 }
-            }
+            endif;
         }
 
 

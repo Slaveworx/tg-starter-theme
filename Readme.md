@@ -46,7 +46,8 @@ To install and use **`TG Starter Theme`**, follow these steps:
 3. Add the exported folder to your wordpress theme's folder.
 4. Navigate to the **`tg`** folder via your terminal.
 5. Run **`npm install`** to install all dependencies.
-6. Open the **`.env`** file in the project folder and change the **`LOCAL_SITE`** variable to match your development WordPress installation URL. For example:
+6. Run **`npm link`** to link local packages.
+7. Open the **`.env`** file in the project folder and change the **`LOCAL_SITE`** variable to match your development WordPress installation URL. For example:
 
 ```php
 LOCAL_SITE=your-local-server-url.local

@@ -18,7 +18,6 @@ const templateNames = {
   archive: ["archive-php.hbs", "archive-scss.hbs", "archive-js.hbs"],
   page: ["page-php.hbs", "page-scss.hbs", "page-js.hbs"],
   single: ["single-php.hbs", "single-scss.hbs", "single-js.hbs"],
-  section: ["section-php.hbs", "section-scss.hbs", "section-js.hbs"],
 };
 
 const createTemplate = (type, targetDir, pageInfo) => {

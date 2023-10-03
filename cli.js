@@ -9,7 +9,6 @@ import { Command } from "commander";
 import inquirer from "inquirer";
 import fs from "fs";
 import handlebars from "handlebars";
-import { exec } from "child_process";
 import spawn from "cross-spawn";
 
 const program = new Command();
@@ -170,24 +169,7 @@ program
     );
   });
 
-  // GENERATE SECTION
-program
-.command("generate:section [sectionName]")
-.alias("S") // shortcut
-.description(
-  "Generate a new section template. (You can run the command without [sectionName])"
-)
-.action((sectionName) => {
-  promptName(
-    sectionName,
-    "What is the name of the section (example: hero-slider)?"
-  ).then(({ singleName }) =>
-    createTemplate("section", `./template-parts/sections/${singleName}`, {
-      fileName: singleName,
-      sectionName: singleName,
-    })
-  );
-});
+
 
 // COMBO COMMANDS
 /** SINGLE AND ARCHIVE*/

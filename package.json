@@ -1,19 +1,20 @@
 {
   "name": "tg",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "TG Wordpress Starter Theme",
   "main": "index.js",
   "bin": {
-    "tg": "./cli.js"
+    "tg": "./config/scripts/cli.js"
   },
   "type": "module",
   "dependencies": {
     "fs": "*",
-    "tg": "file:cli.js"
+    "tg": "file:./config/scripts/cli.js"
   },
   "scripts": {
-    "serve": "npx gulp",
-    "compress:fonts": "node ./config/scripts/font-compressor.cjs"
+    "serve": "npx gulp --gulpfile ./config/scripts/gulpfile.js --cwd .",
+    "compress:fonts": "node ./config/scripts/font-compressor.cjs",
+    "postinstall": "node ./config/scripts/post-install.mjs"
   },
   "keywords": [
     "tg",

@@ -130,7 +130,10 @@ gulp.task("serve", function () {
   gulp.watch(jsFiles.archives, gulp.series("minify-archives-js"));
   gulp.watch(jsFiles.singles, gulp.series("minify-singles-js"));
   gulp.watch(jsFiles.scripts, gulp.series("scripts"));
-  gulp.watch("**/*").on("change", browserSync.reload);
+  gulp.watch(["./**/*", "!./node_modules/**/*", `!${dirs.dest.css}`, `!${dirs.dest.loginSass}`]).on("change", function (path, stats) {
+    console.log(`File ${path} was changed, running tasks...`);
+    browserSync.reload();
+  });
 
   //Components Garbage Collector
   chokidar

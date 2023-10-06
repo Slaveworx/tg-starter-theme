@@ -1,0 +1,33 @@
+/*##############################################
+#                  VARIABLES                   #
+################################################*/
+//##############################################
+// welcome
+// @package tg
+//##############################################
+
+.welcome {
+    display: flex;
+    height: 70vh;
+    align-items: center;
+
+    .container {
+        flex: 1;
+    }
+
+    &__monogram {
+        margin: auto;
+        max-width: 10rem;
+    }
+
+    &__title {
+        font-family: $default-font;
+        font-weight: $regular;
+        color: $color-primary;
+        max-width: 60rem;
+        text-align: center;
+        margin: auto;
+        font-size: 3rem;
+        padding-top: 3rem;
+    }
+}

@@ -7,11 +7,17 @@
 //****************************************
 ?>
 
-
-
 <!-- ******************************** -->
 <!-- footer component -->
 <!-- ******************************** -->
+
+<?php 
+//****************************************
+//                PROPS                  *
+//****************************************
+// Define your component props here
+// ### Example: $message = $message ?? "No message was passed to the component";
+?>
 
 <footer id="colophon" class="site-footer" data-row-index="<?php echo $row_index;?>">
     <div class="site-info">

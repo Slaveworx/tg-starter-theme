@@ -10,10 +10,17 @@ namespace TG;
 //****************************************
 ?>
 
-
 <!-- ******************************** -->
 <!-- navbar component -->
 <!-- ******************************** -->
+
+<?php 
+//****************************************
+//                PROPS                  *
+//****************************************
+// Define your component props here
+// ### Example: $message = $message ?? "No message was passed to the component";
+?>
 
 <header id="masthead" class="site-header" data-row-index="<?php echo $row_index; ?>">
 

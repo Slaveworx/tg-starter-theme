@@ -16,9 +16,14 @@ import { deleteSync } from "del";
 import replace from "gulp-replace";
 import chokidar from "chokidar";
 import concat from "gulp-concat";
-import merge from "merge-stream";
+import chalk from "chalk";
 
 dotenv.config();
+
+// Define chalk templates and config
+const error = chalk.white.bold.bgRed;
+const success = chalk.white.bold.bgGreen;
+const info = chalk.white.bold.bgBlueBright;
 
 // Define input and output directories
 const dirs = {
@@ -51,7 +56,7 @@ const jsFiles = {
 
 // Define functions to handle minification of JS files
 function minifyJS(src, dest) {
-  return gulp.src(src).pipe(uglify()).pipe(gulp.dest(dest)); // Add this line
+  return gulp.src(src).pipe(uglify()).pipe(gulp.dest(dest));
 }
 
 gulp.task("sass", function () {
@@ -115,7 +120,23 @@ gulp.task("scripts", function () {
 
 
 gulp.task("serve", function () {
-  browserSync.init({ proxy: process.env.LOCAL_SITE });
+  browserSync.init({
+    proxy: process.env.LOCAL_SITE,
+    logLevel: "debug",
+    logConnections: true,
+    logFileChanges: true,
+    logSnippet: true,
+    open: true
+  });
+
+  browserSync.emitter.on('init', () => {
+    console.log(success('BrowserSync is ready!'));
+  });
+
+  browserSync.emitter.on('service:exit', () => {
+    console.log(error('BrowserSync is exiting...'));
+  });
+
 
   // Watch for changes in files and execute tasks accordingly
   gulp.watch(`${dirs.src.scss}/**/*.scss`, gulp.series("sass"));
@@ -131,16 +152,28 @@ gulp.task("serve", function () {
   gulp.watch(jsFiles.singles, gulp.series("minify-singles-js"));
   gulp.watch(jsFiles.scripts, gulp.series("scripts"));
   gulp.watch(["./**/*", "!./node_modules/**/*", `!${dirs.dest.css}`, `!${dirs.dest.loginSass}`]).on("change", function (path, stats) {
-    console.log(`File ${path} was changed, running tasks...`);
+    console.log(info(`File ${path} was changed, running tasks...`));
     browserSync.reload();
   });
 
   //Components Garbage Collector
   chokidar
-    .watch("./components/", { ignored: /(^|[\/\\])\../ })
+    .watch("./components/**/*", { ignored: /(^|[\/\\])\../ })
+    .on("unlink", function (filePath) {
+      // Handle deletion of .js files
+      if (filePath.endsWith('.js')) {
+        const componentName = filePath.split("\\").pop().split('/').pop().replace('.js', '');
+        console.log(success(`Successfully Deleted Component JS File: ${componentName} `));
+
+        deleteSync([
+          "static/js/components/" + `${componentName}`,
+          "!static/js/components/",
+        ]);
+      }
+    })
     .on("unlinkDir", function (dirPath) {
       const componentName = dirPath.split("\\").pop().split('/').pop();
-      console.log("Successfuly Deleted Component: ", componentName);
+      console.log(success(`Successfully Deleted Component: ${componentName} `));
       deleteSync([
         "static/js/components/" + `${componentName}`,
         "!static/js/components/",
@@ -156,12 +189,25 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
+
   //Pages templates garbage collector
   chokidar
-    .watch("./template-pages/", { ignored: /(^|[\/\\])\../ })
+    .watch("./template-pages/**/*", { ignored: /(^|[\/\\])\../ })
+    .on("unlink", function (filePath) {
+      // Handle deletion of .js files
+      if (filePath.endsWith('.js')) {
+        const templateName = filePath.split("\\").pop().split('/').pop().replace('.js', '');
+        console.log(success(`Successfully Deleted Page Template JS File: ${templateName} `));
+
+        deleteSync([
+          "static/js/template-pages/" + `${templateName}`,
+          "!static/js/template-pages/",
+        ]);
+      }
+    })
     .on("unlinkDir", function (dirPath) {
       const templateName = dirPath.split("\\").pop().split('/').pop();
-      console.log("Successfuly Deleted Page Template: ", templateName);
+      console.log(success(`Successfully Deleted Page Template: ${templateName} `));
       deleteSync([
         "static/js/template-pages/" + `${templateName}`,
         "!static/js/template-pages/",
@@ -177,12 +223,26 @@ gulp.task("serve", function () {
         )
         .pipe(gulp.dest("./src/scss/"));
     });
+
+
   //Archives garbage collector
   chokidar
     .watch("./template-archives/", { ignored: /(^|[\/\\])\../ })
+    .on("unlink", function (filePath) {
+      // Handle deletion of .js files
+      if (filePath.endsWith('.js')) {
+        const archiveName = filePath.split("\\").pop().split('/').pop().replace('.js', '');
+        console.log(success(`Successfully Deleted Archive Template JS File: ${archiveName} `));
+
+        deleteSync([
+          "static/js/template-archives/" + `${archiveName}`,
+          "!static/js/template-archives/",
+        ]);
+      }
+    })
     .on("unlinkDir", function (dirPath) {
       const archiveName = dirPath.split("\\").pop().split('/').pop();
-      console.log("Successfuly Deleted Archive Template: ", archiveName);
+      console.log(success(`Successfully Deleted Archive Template: ${archiveName} `));
       deleteSync([
         "static/js/template-archives/" + `${archiveName}`,
         "!static/js/template-archives/",
@@ -202,9 +262,21 @@ gulp.task("serve", function () {
   //Singles garbage collector
   chokidar
     .watch("./template-singles/", { ignored: /(^|[\/\\])\../ })
+    .on("unlink", function (filePath) {
+      // Handle deletion of .js files
+      if (filePath.endsWith('.js')) {
+        const singleName = filePath.split("\\").pop().split('/').pop().replace('.js', '');
+        console.log(success(`Successfully Deleted Single Template JS File: ${singleName} `));
+
+        deleteSync([
+          "static/js/template-singles/" + `${singleName}`,
+          "!static/js/template-singles/",
+        ]);
+      }
+    })
     .on("unlinkDir", function (dirPath) {
       const singleName = dirPath.split("\\").pop().split('/').pop();
-      console.log("Successfuly Deleted Single Template: ", singleName);
+      console.log(success(`Successfully Deleted Single Template: ${singleName} `));
       deleteSync([
         "static/js/template-singles/" + `${singleName}`,
         "!static/js/template-singles/",

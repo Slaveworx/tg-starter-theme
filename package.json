@@ -42,7 +42,6 @@
     "gulp-uglify": "3.0.2",
     "handlebars": "4.7.7",
     "inquirer": "9.1.4",
-    "merge-stream": "2.0.0",
     "sass": "1.62.1",
     "subset-font": "2.0.0"
   }

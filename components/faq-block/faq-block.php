@@ -7,11 +7,17 @@
 //****************************************
 ?>
 
-
-
 <!-- ******************************** -->
 <!-- faq-block component -->
 <!-- ******************************** -->
+
+<?php 
+//****************************************
+//                PROPS                  *
+//****************************************
+// Define your component props here
+// ### Example: $message = $message ?? "No message was passed to the component";
+?>
 
 <section class="faq-block" data-row-index="<?php echo $row_index;?>">
     <div class="container">

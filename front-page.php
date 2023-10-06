@@ -22,13 +22,7 @@ get_header();
 
 
 <main id="primary" class="site-main">
-    <?php TG::load_component("hero", ['title' => 'This is TG Starter Theme', 'description' => 'A modern wordpress starter themes packed with amazing features to give you the freshest developer joy!', 'btn_link' => '#', 'btn_text' => 'Check out our features']); ?>
-    <?php TG::load_component("left-right-section"); ?>
-    <?php TG::load_component("faq-block"); ?>
-    <?php TG::load_component("slider-full-width"); ?>
-    <?php TG::load_component("text-right-img-left"); ?>
-    <?php TG::load_component("text-left-img-right"); ?>
-    <?php TG::load_component("gradient-section"); ?>
+    <?php TG::load_component('welcome'); ?>
 </main><!-- #main -->
 
 <?php

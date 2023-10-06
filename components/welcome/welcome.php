@@ -1,17 +1,19 @@
 <?php
-//****************************************
+
+namespace TG;
+//****************************************                                      
 // 🆃🅶                                     
 // Wᴏʀᴅᴘʀᴇss Sᴛᴀʀᴛᴇʀ Tʜᴇᴍᴇ                  
 //****************************************
-// COMPONENT: hero
+// COMPONENT: welcome
 //****************************************
 ?>
 
 <!-- ******************************** -->
-<!-- hero component -->
+<!-- welcome component -->
 <!-- ******************************** -->
 
-<?php 
+<?php
 //****************************************
 //                PROPS                  *
 //****************************************
@@ -19,11 +21,10 @@
 // ### Example: $message = $message ?? "No message was passed to the component";
 ?>
 
-<section class="hero" data-row-index="<?php echo $row_index; ?>">
-    <div class="hero__overlay"></div>
-    <div class="container-small">
-        <h1 class="hero__title"><?php echo $title; ?></h1>
-        <p class="hero__description"><?php echo $description; ?></p>
-        <a href="<?php echo $btn_link; ?>" class="hero__cta btn__primary"><?php echo $btn_text; ?></a>
+
+<section class="welcome" data-row-index="<?php echo $row_index; ?>">
+    <div class="container">
+        <img class="welcome__monogram" src="<?php echo get_template_directory_uri() . '/static/img/monogram.svg'; ?>" alt="TG Starter Theme Logo">
+        <h1 class="welcome__title">Start Creating with TG Starter Theme</h1>
     </div>
 </section>

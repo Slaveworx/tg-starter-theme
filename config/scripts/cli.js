@@ -10,6 +10,13 @@ import inquirer from "inquirer";
 import fs from "fs";
 import handlebars from "handlebars";
 import spawn from "cross-spawn";
+import chalk from "chalk";
+
+
+// Define chalk templates and config
+const error = chalk.white.bold.bgRed;
+const info = chalk.white.bold.bgBlueBright;
+const highlight = chalk.black.bold.bgWhite;
 
 const program = new Command();
 
@@ -49,10 +56,10 @@ const createTemplate = (type, targetDir, pageInfo) => {
   }${pageInfo.fileName}';\n`;
   fs.appendFileSync(mainScssPath, importStatement);
 
-  console.log(
-    `${type[0].toUpperCase() + type.slice(1)} Template ${
+  console.log(highlight('\n\n * ') +
+    info(` ${type[0].toUpperCase() + type.slice(1)} Template ${
       pageInfo.fileName
-    } generated successfully!`
+    } generated successfully! \n\n`)
   );
 };
 
@@ -200,14 +207,14 @@ program
      const gulpProcess = spawn("npm", ["run", "compress:fonts"], { stdio: "inherit" });
  
      gulpProcess.on("error", (error) => {
-       console.error(`Error: ${error.message}`);
+       console.error(error(`Error: ${error.message}`));
      });
  
      gulpProcess.on("close", (code) => {
        if (code !== 0) {
-         console.error(`Gulp process exited with code ${code}`);
+         console.error(error(`Gulp process exited with code ${code}`));
        } else {
-         console.log("Gulp process exited successfully.");
+         console.log(highlight(' * ') + info("Gulp process exited successfully."));
        }
      });
    });
@@ -225,9 +232,9 @@ program
 
     gulpProcess.on("close", (code) => {
       if (code !== 0) {
-        console.error(`Gulp process exited with code ${code}`);
+        console.error(error(`Gulp process exited with code ${code}`));
       } else {
-        console.log("Gulp process exited successfully.");
+        console.log(highlight(' * ') + info("Gulp process exited successfully."));
       }
     });
   });

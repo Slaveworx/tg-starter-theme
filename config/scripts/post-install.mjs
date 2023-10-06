@@ -35,8 +35,15 @@ async function postInstall() {
     console.log(chalk.red.bold('Press ENTER key to accept defaults'))
 
     try {
-        const answers = await inquirer.prompt(questionsAndDefaults);
-        await createEnvFile(answers.dev_url);
+        if (process.stdout.isTTY) {
+            // Run interactive code
+            const answers = await inquirer.prompt(questionsAndDefaults);
+            await createEnvFile(answers.dev_url);
+        } else {
+            // Handle non-interactive case
+            console.log(chalk.yellow('Non-interactive shell detected, skipping input.'));
+            await createEnvFile(questionsAndDefaults[0].default);
+        }
         console.log(chalk.whiteBright.bgGreenBright.bold('\n\nINITIAL CONFIGURATION WAS COMPLETED SUCCESSFULLY!\n\n'));
     } catch (error) {
         console.error(chalk.red('Error:'), error);
